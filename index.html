@@ -1,5 +1,666 @@
-<!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>바이블트리 통합 베타</title>
-<style>
-*{box-sizing:border-box}body{margin:0;background:#f5f3f9;color:#241d2c;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;word-break:keep-all}.app{max-width:480px;min-height:100svh;margin:auto;background:#fff;padding:40px 22px 110px;box-shadow:0 0 45px #2b194114}.brand{display:flex;align-items:center;gap:12px;margin-bottom:34px}.logo{display:grid;place-items:center;width:50px;height:50px;border-radius:17px;background:#7143b8;color:#fff;font-size:27px}.brand b{display:block;font-size:21px}.brand span{font-size:12px;color:#746b7d}.hero{padding:26px 22px;border-radius:24px;background:linear-gradient(145deg,#7143b8,#4c2b85);color:#fff}.hero small{opacity:.78}.hero h1{margin:7px 0 10px;font-size:27px;line-height:1.35}.hero p{margin:0;opacity:.86;font-size:14px;line-height:1.75}.start{display:block;margin-top:19px;padding:14px;border-radius:14px;background:#fff;color:#593195;text-align:center;text-decoration:none;font-weight:900}.title{margin:30px 0 12px;font-size:15px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.card{display:block;padding:18px 15px;border:1px solid #e5dfec;border-radius:17px;color:inherit;text-decoration:none;background:#fff}.card i{display:block;font-style:normal;font-size:25px}.card b{display:block;margin-top:7px}.card span{font-size:11px;color:#776e80}.info{margin-top:25px;padding:14px;border-radius:14px;background:#f2ecfa;color:#62546e;font-size:12px;line-height:1.7}.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(480px,100%);display:flex;justify-content:space-around;padding:10px 8px calc(10px + env(safe-area-inset-bottom));border-top:1px solid #eee;background:#fffc}.nav a{color:#766d7e;text-decoration:none;font-size:11px;text-align:center}.nav i{display:block;font-style:normal;font-size:20px}.nav .on{color:#7143b8;font-weight:800}@media(min-width:520px){.app{margin-top:20px;min-height:calc(100svh - 40px);border-radius:24px}}
-</style></head><body><main class="app"><div class="brand"><div class="logo">🌳</div><div><b>BibleTree</b><span>말씀으로 자라는 하루</span></div></div><section class="hero"><small>2026년 7월 20일 · 청년</small><h1>기존 기능은 그대로,<br>집중 묵상은 새롭게</h1><p>예전에 구현한 모든 연령별 화면과 묵상 기록을 그대로 둘러보고, 청년 말씀에서 새 집중 묵상 모드를 시작해 보세요.</p><a class="start" href="young-beta.html">청년 말씀에서 시작하기 →</a></section><h2 class="title">기존 구현 페이지</h2><div class="grid"><a class="card" href="https://fastkorea12-png.github.io/blbletree/high.html"><i>📘</i><b>고학년 묵상</b><span>기존 페이지 그대로</span></a><a class="card" href="https://fastkorea12-png.github.io/blbletree/youth.html"><i>🌿</i><b>청소년 묵상</b><span>기존 페이지 그대로</span></a><a class="card" href="young-beta.html"><i>🌳</i><b>청년 묵상</b><span>집중 모드 연결</span></a><a class="card" href="https://fastkorea12-png.github.io/blbletree/records.html"><i>✍️</i><b>묵상 기록</b><span>기존 기록 화면</span></a></div><p class="info">이 베타는 기존 서비스나 운영 데이터에 영향을 주지 않습니다. 기존 화면은 원본 목업을 그대로 불러오며, 집중 묵상 기록은 현재 브라우저에만 저장됩니다.</p></main><nav class="nav"><a class="on" href="index.html"><i>⌂</i>홈</a><a href="https://fastkorea12-png.github.io/blbletree/high.html"><i>📘</i>고학년</a><a href="https://fastkorea12-png.github.io/blbletree/youth.html"><i>🌿</i>청소년</a><a href="young-beta.html"><i>🌳</i>청년</a><a href="https://fastkorea12-png.github.io/blbletree/records.html"><i>✍️</i>기록</a></nav></body></html>
++
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<base href="https://bibletree.healthyeduministry.com/main/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#22c55e">
+
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1659XVK3DD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-1659XVK3DD');
+    </script>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="바이블트리 - 매일 성경묵상(QT)과 주일공과를 함께하는 신앙 성장 앱. 묵상 나눔, 커뮤니티 기능 제공">
+    <meta name="keywords" content="바이블트리, bibletree, 묵상, 성경묵상, QT, 큐티, 신앙, 주일공과, 매일묵상, 말씀묵상, 성경읽기, 기독교">
+    <link rel="canonical" href="https://bibletree.healthyeduministry.com/main/index.jsp">
+
+    <!-- Naver Webmaster Tools -->
+    <meta name="naver-site-verification" content="ea630dbcd812c5b23376ed93b64c6d2fd9c738ec">
+
+    <!-- Google Search Console -->
+    <meta name="google-site-verification" content="">
+
+    <!-- Open Graph (카카오톡, 페이스북 공유) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="바이블트리 - 매일 성경묵상 QT">
+    <meta property="og:description" content="바이블트리 - 매일 성경묵상(QT)과 주일공과를 함께하는 신앙 성장 앱. 묵상 나눔, 커뮤니티 기능 제공">
+    <meta property="og:image" content="https://bibletree.healthyeduministry.com/html/img/og-image.jpg">
+    <meta property="og:url" content="https://bibletree.healthyeduministry.com/main/index.jsp">
+    <meta property="og:site_name" content="바이블트리 | Bibletree - 매일 성경 묵상 QT">
+    <meta property="og:locale" content="ko_KR">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="바이블트리 - 매일 성경묵상 QT">
+    <meta name="twitter:description" content="바이블트리 - 매일 성경묵상(QT)과 주일공과를 함께하는 신앙 성장 앱. 묵상 나눔, 커뮤니티 기능 제공">
+    <meta name="twitter:image" content="https://bibletree.healthyeduministry.com/html/img/og-image.jpg">
+
+    <!-- iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="바이블트리 | Bibletree - 매일 성경 묵상 QT">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://bibletree.healthyeduministry.com/#website",
+                "url": "https://bibletree.healthyeduministry.com",
+                "name": "바이블트리 | Bibletree - 매일 성경 묵상 QT",
+                "description": "바이블트리 - 매일 성경묵상(QT)과 주일공과를 함께하는 신앙 성장 앱. 묵상 나눔, 커뮤니티 기능 제공",
+                "publisher": {
+                    "@id": "https://bibletree.healthyeduministry.com/#organization"
+                },
+                "inLanguage": ["ko-KR", "vi-VN", "en-US"],
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": {
+                        "@type": "EntryPoint",
+                        "urlTemplate": "https://bibletree.healthyeduministry.com/main/calendar.jsp?date={search_term_string}"
+                    },
+                    "query-input": "required name=search_term_string"
+                }
+            },
+            {
+                "@type": "Organization",
+                "@id": "https://bibletree.healthyeduministry.com/#organization",
+                "name": "바이블트리 | Bibletree - 매일 성경 묵상 QT",
+                "url": "https://bibletree.healthyeduministry.com",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://bibletree.healthyeduministry.com/html/img/og-image.jpg",
+                    "width": 1200,
+                    "height": 630
+                },
+                "description": "바이블트리 - 매일 성경묵상(QT)과 주일공과를 함께하는 신앙 성장 앱. 묵상 나눔, 커뮤니티 기능 제공",
+                "sameAs": []
+            },
+            {
+                "@type": "WebApplication",
+                "@id": "https://bibletree.healthyeduministry.com/#webapp",
+                "name": "바이블트리 | Bibletree - 매일 성경 묵상 QT",
+                "url": "https://bibletree.healthyeduministry.com",
+                "description": "바이블트리 - 매일 성경묵상(QT)과 주일공과를 함께하는 신앙 성장 앱. 묵상 나눔, 커뮤니티 기능 제공",
+                "applicationCategory": "Lifestyle",
+                "operatingSystem": "Web",
+                "browserRequirements": "Requires JavaScript. Requires HTML5.",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "KRW"
+                },
+                "inLanguage": ["ko-KR", "vi-VN", "en-US"]
+            }
+        ]
+    }
+    </script>
+
+
+
+
+
+    <title>홈 - 바이블트리 | Bibletree - 매일 성경 묵상 QT</title>
+
+
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/html/img/icons/icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/html/img/icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/html/img/icons/icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="/html/img/icons/icon-167x167.png">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --content-reading: 640px;
+            --content-form: 560px;
++            --content-list: 768px;
+            --content-grid: 780px;
+            /* PC IA 재설계(J)의 "카드+레일" 2컬럼 래퍼 폭. 카드 폭(content-*) +
+               gap + 레일/사이드 폭을 각 화면에서 고정 계산한 값이다 - 계산 근거는
+               detail.html/dashboard.html/calendar.html의 래퍼 div 주석 참고. */
+            --page-rail-detail: 816px;
+            --page-rail-dashboard: 904px;
+            --page-rail-calendar: 920px;
+        }
+        body {
+            background-color: #f9fafb;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .mobile-container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+        @media (max-width: 480px) {
+            .mobile-container {
+                max-width: 100%;
+                box-shadow: none;
+            }
+        }
+        @media (min-width: 768px) {
+            .mobile-container { max-width: 760px; box-shadow: none; }
+        }
+        @media (min-width: 1024px) {
+            /* 레일-헤더-본문 좌표계 통합(A). 이전에는 레일(fixed, 뷰포트 기준) ·
+               mobile-container(뷰포트 중앙정렬 고정폭) · 본문(컨테이너 내부 중앙정렬)이
+               서로 다른 좌표계로 독립적으로 움직여 특정 폭에서만 우연히 맞았다.
+               지금부터는 mobile-container 자체를 뷰포트 전체 폭을 쓰는 그리드 셸로
+               삼아 좌표계를 하나로 합친다: 1열(84px)=레일, 2열(1fr)=헤더+본문(캔버스). */
+            .mobile-container {
+                max-width: none;
+                width: 100%;
+                padding-left: 0;
+                box-shadow: none;
+                background: #f9fafb; /* 캔버스 배경(B). 본문 카드는 각 페이지의 bg-white로 구분 */
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+            }
+            /* 레일(nav.html)이 실제로 있는 페이지만 84px 컬럼을 확보한다.
+               로그인/인트로 등 showNav=false 페이지는 :has()가 매치되지 않아
+               불필요한 빈 컬럼이 남지 않는다. */
+            .mobile-container:has(> nav) {
+                grid-template-columns: 84px 1fr;
+            }
+            .mobile-container > nav {
+                grid-column: 1;
+                grid-row: 1 / 3;
+            }
+            .mobile-container > header {
+                grid-row: 1;
+            }
+            .mobile-container > main {
+                grid-row: 2;
+                min-width: 0; /* 그리드 아이템 기본값(min-width:auto)으로 인한 폭 넘침 방지 */
+            }
+            .mobile-container:has(> nav) > header,
+            .mobile-container:has(> nav) > main {
+                grid-column: 2;
+            }
+            /* 헤더/서브헤더/본문 카드가 같은 폭(페이지 컬럼)을 쓰도록 하는 공용 클래스(C).
+               media query 안에 이미 lg 조건이 있으므로 마크업에는 lg: 접두어 없이
+               그냥 "page-col"만 붙이면 된다(0~1023px는 자동으로 영향 없음).
+               기본값은 content-reading(640px) 폭이며, :has()로 main 안의 실제
+               본문 폭 클래스를 감지해 그 화면만 폭을 다시 맞춘다(G) - 화면 파일을
+               건드리지 않고 셸(layout_main.html)만 고쳐서 21개 화면 전부 대응. */
+            .page-col {
+                width: 100%;
+                max-width: var(--content-reading);
+                margin-inline: auto;
+            }
+            /* 화면 하나가 폭 클래스 두 개를 동시에 쓰는 경우는 없었으나(전수 확인 완료),
+               PC IA 재설계(J)의 레일 래퍼(rail-*) 도입으로 detail/dashboard/calendar
+               3개 화면은 이제 main 안에 content-*와 rail-*가 함께 존재한다(레일 래퍼가
+               카드를 감싸는 바깥 div이므로 :has() 셀렉터 관점에서는 둘 다 매치됨).
+               같은 특이도(specificity)의 :has() 규칙끼리는 소스 순서상 뒤에 오는
+               규칙이 이기므로, content-grid > content-list > content-form 순으로
+               우선하던 기존 규칙 뒤에 rail-* 규칙을 배치해 rail-*가 항상 이기게 한다. */
+            .mobile-container:has(main .content-form) .page-col { max-width: var(--content-form); }
+            .mobile-container:has(main .content-list) .page-col { max-width: var(--content-list); }
+            .mobile-container:has(main .content-grid) .page-col { max-width: var(--content-grid); }
+            /* PC IA 재설계(J) 전용 레일 래퍼 폭(K). 위 content-* 규칙들보다 반드시
+               뒤에 와야 한다 - 예: calendar.html은 main 안에 content-grid(780px)와
+               rail-calendar(920px)가 동시에 있고 둘 다 :has() 특이도가 같으므로,
+               이 규칙이 뒤에 있어야 920px가 780px를 덮어쓴다(실측 확인 완료). */
+            .mobile-container:has(main .rail-detail) .page-col { max-width: var(--page-rail-detail); }
+            .mobile-container:has(main .rail-dashboard) .page-col { max-width: var(--page-rail-dashboard); }
+            .mobile-container:has(main .rail-calendar) .page-col { max-width: var(--page-rail-calendar); }
+            /* 본문 카드 프레이밍(H). 배경(bg-white)은 화면마다 이미 있으므로 여기서는
+               테두리/라운드/그림자만 셸에서 통합 적용한다 - detail.html/calendar.html에
+               개별로 붙어 있던 lg:border/lg:rounded-2xl/lg:shadow-sm 유틸리티는 제거하고
+               이 공용 규칙으로 대체했다(Tailwind CDN 유틸리티가 캐스케이드에서 이 규칙보다
+               우선하는 걸 실측 확인해서, 남겨두면 그 두 화면만 그림자 값이 달라져 오히려
+               불일치가 생겼을 것). intro.html은 그대로 둔다 - lg:shadow-xl/lg:max-w-[420px]
+               등 이 화면만의 다른 값(더 강한 그림자, 다른 폭)이 같은 이유로 항상 이 공용
+               규칙을 이겨서 그대로 유지되므로 손댈 필요가 없다(회귀 없음, 실측 확인).
+               content-form(로그인 등)도 화면 대부분이 자체 bg-white를 갖고 있어
+               같은 카드 규칙을 적용했다 - login/register/forgot-password/mypage/
+               board-write/community-create는 자연스럽고, merge_account.html만
+               내부에 배경 없는 래퍼라 테두리가 거의 안 보이는 정도로 무해하다. */
+            .content-reading, .content-form, .content-list, .content-grid {
+                border: 1px solid #f3f4f6;
+                border-radius: 1rem;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            }
+        }
+        .content-reading, .content-form, .content-list, .content-grid {
+            width: 100%;
+            margin-inline: auto;
+        }
+        .content-reading { max-width: var(--content-reading); }
+        .content-form    { max-width: var(--content-form); }
+        .content-list    { max-width: var(--content-list); }
+        .content-grid    { max-width: var(--content-grid); }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
+        @keyframes pop {
+            0% { transform: scale(0); }
+            70% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        .animate-pop { animation: pop 0.3s ease-out; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-10px); }
+            40% { transform: translateX(10px); }
+            60% { transform: translateX(-10px); }
++            80% { transform: translateX(10px); }
+        }
+        .animate-shake { animation: shake 0.5s ease-in-out !important; }
+        /* 빈칸 채우기 input 스타일 */
+        .fill-blank-input {
+            display: inline-block;
+            width: 6em;
+            padding: 4px 8px;
+            margin: 0 2px;
+            border: 2px solid #fbbf24;
+            border-radius: 8px;
+            background: #fffbeb;
+            font-size: inherit;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .fill-blank-input:focus {
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.2);
+        }
+        .fill-blank-input::placeholder {
+            color: #d1d5db;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+        .today-ring { box-shadow: 0 0 0 2px #16a34a; }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            background: #000;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+        }
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9998;
+            animation: fade-in 0.2s ease-out;
+        }
+        .modal-backdrop.show {
+            display: block;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            max-width: 400px;
+            width: 90%;
+        }
+        .modal.show {
+            display: block;
+            animation: pop 0.3s ease-out;
+        }
+        /* Safe area for iPhone notch/home indicator */
+        .pb-safe {
+            padding-bottom: max(2rem, env(safe-area-inset-bottom));
+        }
+        .h-full {
+            height: 100%;
+        }
+    </style>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": "https://bibletree.healthyeduministry.com/main/index.jsp?lang=ko",
+  "url": "https://bibletree.healthyeduministry.com/main/index.jsp?lang=ko",
+  "name": "홈 - 오늘의 QT",
+  "description": "오늘의 묵상 2026.07.20 월요일",
+  "isPartOf": {
+    "@id": "https://bibletree.healthyeduministry.com/#website"
+  },
+  "about": {
+    "@type": "Thing",
+    "name": "Daily Bible Meditation"
+  },
+  "inLanguage": "ko-KR"
+}
+</script>
+
+</head>
+<body>
+    <div class="mobile-container font-sans text-gray-900">
+
+        <!-- 공통 헤더. page-col은 lg(1024px) 이상에서만 발동하는 공용 클래스로,
+     본문 카드(content-reading 등)와 같은 폭으로 헤더를 맞춰 헤더/본문 폭이
+     서로 어긋나 보이던 문제(C)를 해결한다. 0~1023px는 영향 없음(기존 그대로). -->
+<header class="page-col bg-white/95 backdrop-blur px-4 h-14 flex items-center justify-between sticky top-0 z-50 border-b border-gray-100 shadow-sm">
+    <a href="index.jsp?lang=ko" class="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer">
+        <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white transition-colors bg-green-600">
+            <i data-lucide="tree-deciduous" class="w-5 h-5"></i>
+        </div>
+        <span class="font-bold text-lg tracking-tight">Bibletree</span>
+    </a>
+
+
+    <a href="login.jsp?lang=ko" class="flex items-center gap-1 px-2 py-1 rounded-md bg-green-600 hover:bg-green-700 text-xs font-bold text-white">
+        <i data-lucide="log-in" class="w-3 h-3"></i>
+        <span>로그인</span>
+    </a>
+
+</header>
+
+
+        <main class="flex-1 flex flex-col">
+        <!-- PC IA 재설계: lg(1024px) 이상에서 기존 콘텐츠(왼쪽) + 이번 달 진행률/최근 이야기
+     사이드(오른쪽) 2컬럼 래퍼(J). content-reading 자신의 max-width(640px)는 그대로 두고
+     이 래퍼에서만 폭을 조정한다 - card(640) + gap(24px) + sidebar(240px) = 904px 고정폭을
+     중앙정렬한다(lg 최소 뷰폭 940px 안에서 여유 있게 들어감, detail.html과 달리 카드 밖으로
+     튀어나오는 절대배치 버튼이 없어 gap을 좁게 잡아도 무방하다). 0~1023px는 이 div에
+     클래스가 전혀 없어(lg: 접두어만) 시각적으로 아무 영향이 없다. -->
+<div class="rail-dashboard lg:w-[904px] lg:mx-auto lg:grid lg:grid-cols-[640px_240px] lg:gap-6 lg:items-start">
+<!-- 홈 - 오늘의 묵상 -->
+<div class="content-reading flex-1 flex flex-col bg-gray-100 overflow-y-auto pb-16">
+
+    <!-- 에러 메시지 토스트 -->
+
+
+    <!-- 오늘의 묵상 카드 -->
+    <div class="px-4 pt-6 pb-4">
+
+
++        <!-- 비로그인: 단계별 묵상 선택 -->
+
+        <div class="space-y-3">
+            <!-- 날짜 헤더 -->
+            <div class="text-center mb-2">
+                <div class="text-sm text-gray-500">2026.07.20 월요일</div>
+            </div>
+
+            <!-- PC(lg 이상)에서는 4개 카드를 2x2 그리드로 전환해 화면 공간을 활용한다.
+                 데이터 변경 없이 순수 CSS 그리드 전환(0~1023px는 기존 세로 나열 그대로). -->
+            <div class="space-y-3 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
+            <!-- 저학년 -->
+
+            <a href="detail.jsp?date=2026-07-20&target=low&lang=ko" class="block bg-white rounded-2xl shadow-lg md:shadow-sm overflow-hidden border-l-4 border-yellow-500 hover:shadow-xl transition-shadow">
+                <div class="p-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="px-2 py-0.5 bg-yellow-100 text-yellow-700 text-xs font-bold rounded">저학년</span>
+                    </div>
+                    <h3 class="font-bold text-gray-900 mb-1">좋은 선물이에요</h3>
+                    <p class="text-sm text-gray-600">약 1:16-21</p>
+                </div>
+            </a>
+
+
+            <!-- 고학년 -->
+
+            <a href="detail.jsp?date=2026-07-20&target=high&lang=ko" class="block bg-white rounded-2xl shadow-lg md:shadow-sm overflow-hidden border-l-4 border-green-600 hover:shadow-xl transition-shadow">
+                <div class="p-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-bold rounded">고학년</span>
+                    </div>
+                    <h3 class="font-bold text-gray-900 mb-1">모든 좋은 은사의 근원</h3>
+                    <p class="text-sm text-gray-600">약 1:16-21</p>
+                </div>
+            </a>
+
+
+            <!-- 청소년 -->
+
+            <a href="detail.jsp?date=2026-07-20&target=youth&lang=ko" class="block bg-white rounded-2xl shadow-lg md:shadow-sm overflow-hidden border-l-4 border-blue-600 hover:shadow-xl transition-shadow">
+                <div class="p-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs font-bold rounded">청소년</span>
+                    </div>
+                    <h3 class="font-bold text-gray-900 mb-1">모든 선물의 출처</h3>
+                    <p class="text-sm text-gray-600">약 1:16-21</p>
+                </div>
+            </a>
+
+
+            <!-- 청년 -->
+
+            <a href="https://fastkorea12-png.github.io/bibletree-focus-preview/detail.html" class="block bg-white rounded-2xl shadow-lg md:shadow-sm overflow-hidden border-l-4 border-purple-600 hover:shadow-xl transition-shadow">
+                <div class="p-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="px-2 py-0.5 bg-purple-100 text-purple-700 text-xs font-bold rounded">청년</span>
+                    </div>
+                    <h3 class="font-bold text-gray-900 mb-1">위로부터 오는 선물</h3>
+                    <p class="text-sm text-gray-600">약 1:16-21</p>
+                </div>
+            </a>
+
+
+            <!-- 콘텐츠가 하나도 없는 경우 -->
+
+            </div>
+        </div>
+
+
+        <!-- 로그인 사용자: 콘텐츠 없음 -->
+
+    </div>
+
+    <!-- 이번 주 열매표 (로그인 사용자만) -->
+
+
+    <!-- 비로그인: 언어 선택 -->
+
+    <div class="px-4 pb-4">
+        <div class="bg-white rounded-2xl shadow-lg md:shadow-sm md:border md:border-gray-100 p-4">
+            <h3 class="text-sm font-bold text-gray-700 mb-3 text-center flex items-center justify-center gap-2">
+                <i data-lucide="globe" class="w-4 h-4"></i>
+                언어 선택
+            </h3>
+            <div class="grid grid-cols-3 gap-2">
+                <a href="index.jsp?lang=ko" class="py-3 rounded-xl text-sm font-bold border-2 transition-all text-center border-green-600 text-green-700 bg-white">한국어</a>
+                <a href="index.jsp?lang=vi" class="py-3 rounded-xl text-sm font-bold border-2 transition-all text-center bg-white text-gray-400 border-gray-200">Tiếng Việt</a>
+                <a href="index.jsp?lang=en" class="py-3 rounded-xl text-sm font-bold border-2 transition-all text-center bg-white text-gray-400 border-gray-200">English</a>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    <!-- PC(lg 이상) 전용 사이드: 이번 달 진행률 + 최근 이야기.
+         진행률은 개인 지표라 로그인 사용자에게만 의미가 있어 isLogin으로 게이팅한다
+         (비로그인은 monthProgress 등이 항상 0으로 내려와 빈 위젯이 뜨는 걸 방지).
+         최근 이야기는 커뮤니티 전체 댓글이라 로그인 여부와 무관하게 보여준다
+         (calendar-preview.jsp API와 동일하게 비로그인도 열람 가능한 정보). -->
+    <aside class="hidden lg:block lg:sticky lg:top-6 space-y-4">
+
+
+        <!-- 최근 이야기 -->
+        <div class="bg-white rounded-2xl shadow-lg md:shadow-sm md:border md:border-gray-100 p-4">
+            <h3 class="text-sm font-bold text-gray-700 mb-3">최근 나눔</h3>
+
+            <div class="space-y-3">
+
+                <a href="detail.jsp?date=2026-07-10&lang=ko" class="block hover:bg-gray-50 rounded-lg -mx-1 px-1 py-0.5 transition-colors">
+                    <span class="text-xs font-bold text-gray-700">은혜받은 베드로</span>
+                    <p class="text-xs text-gray-500 mt-0.5 leading-relaxed">사랑한다 말하시네</p>
+                </a>
+
+                <a href="detail.jsp?date=2026-06-19&lang=ko" class="block hover:bg-gray-50 rounded-lg -mx-1 px-1 py-0.5 transition-colors">
+                    <span class="text-xs font-bold text-gray-700">기도하는 요셉</span>
+                    <p class="text-xs text-gray-500 mt-0.5 leading-relaxed">게으른자여</p>
+                </a>
+
+                <a href="detail.jsp?date=2026-06-09&lang=ko" class="block hover:bg-gray-50 rounded-lg -mx-1 px-1 py-0.5 transition-colors">
+                    <span class="text-xs font-bold text-gray-700">감사하는 에스더</span>
+                    <p class="text-xs text-gray-500 mt-0.5 leading-relaxed">감사감사</p>
+                </a>
+
+            </div>
+            <div class="mt-3 pt-3 border-t border-gray-100 text-center">
+                <a href="calendar.jsp?lang=ko" class="text-xs font-bold text-gray-400 hover:text-green-600">더보기</a>
+            </div>
+
+
+        </div>
+    </aside>
+</div>
+
+        </main>
+
+        <!-- 하단 네비게이션 (lg=1024px 이상에서는 좌측 아이콘 레일로 전환).
+     레일은 이제 layout_main.html의 그리드 셸(1열)에 배치되는 그리드 아이템이다.
+     grid-row가 헤더+본문 두 행(1/3)에 걸쳐 있으므로 position:fixed로 뷰포트에
+     직접 고정할 필요가 없다 - lg:sticky + lg:top-0 + lg:h-screen으로 자신의
++     그리드 셀 안에서 스크롤 중에도 항상 보이도록 고정한다. -->
+<nav class="fixed bottom-0 left-0 right-0 lg:sticky lg:top-0 lg:bottom-auto lg:left-auto lg:right-auto lg:w-[84px] lg:h-screen
+            bg-white border-t border-gray-200 lg:border-t-0 lg:border-r lg:border-gray-100 z-50" aria-label="Main navigation">
+    <div class="max-w-lg mx-auto flex justify-around items-center h-14
+                lg:flex-col lg:justify-start lg:items-center lg:h-full lg:max-w-none lg:mx-0 lg:w-full lg:gap-6 lg:pt-8">
+        <a href="calendar.jsp?lang=ko" class="flex flex-col items-center justify-center gap-0.5 transition-colors min-w-[48px] min-h-[48px] lg:w-16 lg:py-2 lg:rounded-lg text-gray-500 hover:text-green-600 lg:border-l-[3px] lg:border-transparent">
+            <i data-lucide="calendar" class="w-5 h-5"></i>
+            <span class="text-[10px] lg:text-[9px] lg:leading-tight lg:text-center ">달력</span>
+        </a>
+        <a href="about.jsp?lang=ko" class="flex flex-col items-center justify-center gap-0.5 transition-colors min-w-[48px] min-h-[48px] lg:w-16 lg:py-2 lg:rounded-lg text-gray-500 hover:text-green-600 lg:border-l-[3px] lg:border-transparent">
+            <i data-lucide="info" class="w-5 h-5"></i>
+            <span class="text-[10px] lg:text-[9px] lg:leading-tight lg:text-center ">소개</span>
+        </a>
+        <a href="index.jsp?lang=ko" class="flex flex-col items-center justify-center gap-0.5 transition-colors min-w-[48px] min-h-[48px] lg:w-16 lg:py-2 lg:rounded-lg text-green-600">
+            <i data-lucide="home" class="w-5 h-5"></i>
+            <span class="text-[10px] lg:text-[9px] lg:leading-tight lg:text-center font-bold">홈</span>
+        </a>
+        <a href="community.jsp?lang=ko" class="flex flex-col items-center justify-center gap-0.5 transition-colors min-w-[48px] min-h-[48px] lg:w-16 lg:py-2 lg:rounded-lg text-gray-500 hover:text-green-600 lg:border-l-[3px] lg:border-transparent">
+            <i data-lucide="users" class="w-5 h-5"></i>
+            <span class="text-[10px] lg:text-[9px] lg:leading-tight lg:text-center ">커뮤니티</span>
+        </a>
+        <a href="mypage.jsp?lang=ko" class="flex flex-col items-center justify-center gap-0.5 transition-colors min-w-[48px] min-h-[48px] lg:w-16 lg:py-2 lg:rounded-lg text-gray-500 hover:text-green-600 lg:border-l-[3px] lg:border-transparent">
+            <i data-lucide="user" class="w-5 h-5"></i>
+            <span class="text-[10px] lg:text-[9px] lg:leading-tight lg:text-center ">MY</span>
+        </a>
+    </div>
+</nav>
+
+
+    </div>
+
+    <!-- 초대 코드 입력 모달 -->
+    <div id="inviteCodeBackdrop" class="modal-backdrop" onclick="BibleTree.closeInviteCodeModal()"></div>
+    <div id="inviteCodeModal" class="modal">
+        <div class="bg-white rounded-2xl p-6 shadow-2xl">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                    <i data-lucide="key" class="w-5 h-5 text-purple-600"></i>
+                </div>
+                <h3 class="font-bold text-lg text-gray-900" id="inviteModalTitle">초대 코드 입력</h3>
+            </div>
+            <p class="text-sm text-gray-500 mb-4" id="inviteModalDesc">비공개 커뮤니티의 초대 코드를 입력하세요</p>
+            <input type="text" id="inviteCodeInput"
+                   placeholder="예: ABC123"
+                   class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl text-center font-mono text-lg font-bold uppercase focus:outline-none focus:border-purple-500 mb-4"
+                   maxlength="10">
+            <div class="flex gap-2">
+                <button onclick="BibleTree.closeInviteCodeModal()"
+                        class="flex-1 py-3 bg-gray-100 text-gray-700 rounded-xl font-bold hover:bg-gray-200 transition-colors">
+                    취소
+                </button>
+                <button onclick="BibleTree.submitInviteCode()"
+                        class="flex-1 py-3 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700 transition-colors">
+                    가입
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/html/js/app.js"></script>
+    <script>
+        lucide.createIcons();
+
+        // Service Worker 등록
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('[PWA] Service Worker registered:', registration.scope);
+                    })
+                    .catch(function(error) {
+                        console.log('[PWA] Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+
+    <!-- Kakao SDK (공유 기능) -->
+
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" crossorigin="anonymous"></script>
+    <script>
+        if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
+            Kakao.init('c6154c34bdc8676e91726a2fd5c108b7');
+        }
+    </script>
+
+
+
+
+    <!-- Firebase SDK for Push Notifications -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging-compat.js"></script>
+    <script src="/html/js/firebase-push.js"></script>
+
+
+    <!-- Naver Analytics -->
+    <script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script>
+    <script type="text/javascript">
+        if(!wcs_add) var wcs_add = {};
+        wcs_add["wa"] = "17900014f54a260";
+        if(window.wcs) { wcs_do(); }
+    </script>
+
+</body>
+</html>
