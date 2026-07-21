@@ -1,5 +1,8 @@
 (function () {
   var contents = {
+    '2026-07-03': { day: '금', title: '여호와는 나의 목자', ref: '시 23:1', questions: ['목자이신 하나님은 나에게 어떤 분입니까?'] },
+    '2026-07-10': { day: '금', title: '합력하여 선을 이루시는 하나님', ref: '롬 8:28', questions: ['지금은 이해되지 않지만 하나님께 맡기고 싶은 일이 있습니까?'] },
+    '2026-07-17': { day: '금', title: '위로하시는 하나님', ref: '고후 1:3-7', questions: ['하나님이 환난 중에 우리를 위로하시는 목적은 무엇입니까?', '내가 받은 위로는 다른 사람에게 어떻게 이어질 수 있습니까?', '오늘 위로가 필요한 사람에게 어떻게 다가갈 수 있습니까?'] },
     '2026-07-19': { day: '일', title: '은사는 다르되 한 몸', ref: '고전 12:1-11', questions: ['은사가 여러 가지이지만 그 원천은 하나라고 한 이유는 무엇입니까?', '은사의 목적이 내 사용 방식에 어떤 변화를 요구합니까?', '내 은사가 공동체에서 어떻게 사용되고 있습니까?'] },
     '2026-07-20': { day: '월', title: '위로부터 오는 선물', ref: '약 1:16-21', questions: ['좋은 은사와 선물의 원천은 어디이며 하나님은 어떤 분입니까?', '듣기와 말하기와 성냄의 태도는 은사 사용과 어떻게 연결됩니까?', '오늘 받은 선물을 누구에게 어떻게 흘려보낼 수 있습니까?'] },
     '2026-07-21': { day: '화', title: '자유의 역설', ref: '갈 5:13-18', questions: ['바울은 자유를 어떻게 사용해야 한다고 말합니까?', '육체의 욕심과 성령의 인도 사이 갈등은 내 삶에 어떻게 나타납니까?', '오늘 자유를 이웃을 섬기는 데 어떻게 사용할 수 있습니까?'] },
@@ -7,6 +10,11 @@
     '2026-07-23': { day: '목', title: '약한 지체가 더 귀하다', ref: '고전 12:21-26', questions: ['오늘 말씀에서 가장 마음에 남는 문장은 무엇입니까?', '이 말씀이 지금 내 삶을 어떻게 비추고 있습니까?', '오늘 바로 실천할 한 가지는 무엇입니까?'] },
     '2026-07-24': { day: '금', title: '더욱 큰 은사를 사모하라', ref: '고전 12:27-31', questions: ['오늘 말씀에서 가장 마음에 남는 문장은 무엇입니까?', '이 말씀이 지금 내 삶을 어떻게 비추고 있습니까?', '오늘 바로 실천할 한 가지는 무엇입니까?'] },
     '2026-07-25': { day: '토', title: '사랑이 없으면', ref: '고전 13:1-7', questions: ['오늘 말씀에서 가장 마음에 남는 문장은 무엇입니까?', '이 말씀이 지금 내 삶을 어떻게 비추고 있습니까?', '오늘 바로 실천할 한 가지는 무엇입니까?'] }
+  };
+  var samples = {
+    '2026-07-03': ['시험 기간이라 불안했지만, 내가 어디로 가야 할지 모를 때에도 앞서 길을 아시는 목자라는 말씀이 마음을 붙잡아 주었다.'],
+    '2026-07-10': ['동아리 오디션에서 떨어진 일이 아직 속상하다. 지금은 이해하기 어렵지만 이 경험도 합력하여 선이 될 것을 믿고 하나님께 맡겨 보기로 했다.'],
+    '2026-07-17': ['내가 받은 위로로 다른 사람을 위로하게 하시려는 것이다. 위로가 나에게서 끝나지 않는다는 점이 마음에 남았다.', '작년에 힘들 때 말없이 곁에 있어 준 친구처럼, 나도 누군가에게 그런 사람이 될 수 있다고 생각했다.', '요즘 표정이 어두운 친구에게 먼저 안부를 묻고 이야기를 들어주고 싶다.']
   };
 
   function escapeHtml(value) {
@@ -20,8 +28,10 @@
       try {
         var saved = JSON.parse(localStorage.getItem('bibletree-beta-' + date) || '{}');
         var answers = Array.isArray(saved.answers) ? saved.answers : [];
-        if (!saved.complete && !answers.some(function (answer) { return String(answer || '').trim(); })) return null;
-        return { date: date, content: contents[date], answers: answers, complete: !!saved.complete, updatedAt: saved.updatedAt || '' };
+        var hasSavedRecord = saved.complete || answers.some(function (answer) { return String(answer || '').trim(); });
+        if (!hasSavedRecord && samples[date]) return { date: date, content: contents[date], answers: samples[date], complete: true, sample: true, updatedAt: '' };
+        if (!hasSavedRecord) return null;
+        return { date: date, content: contents[date], answers: answers, complete: !!saved.complete, sample: false, updatedAt: saved.updatedAt || '' };
       } catch (e) { return null; }
     }).filter(Boolean).sort(function (a, b) { return b.date.localeCompare(a.date); });
   }
@@ -38,7 +48,7 @@
     return '<article class="bt-record-card">' +
       '<button type="button" class="bt-record-toggle" aria-expanded="false" aria-controls="bt-record-detail-' + index + '">' +
         '<span class="bt-record-date"><b>' + dateNumber + '</b>' + record.content.day + '요일</span>' +
-        '<span class="bt-record-main"><small>' + (record.complete ? '🍇 묵상 완료' : '✍️ 작성 중') + '</small><strong>' + escapeHtml(record.content.title) + '</strong><em>' + escapeHtml(record.content.ref) + '</em><p>' + summary + '</p></span>' +
+        '<span class="bt-record-main"><small>' + (record.sample ? '📝 샘플 기록' : record.complete ? '🍇 묵상 완료' : '✍️ 작성 중') + '</small><strong>' + escapeHtml(record.content.title) + '</strong><em>' + escapeHtml(record.content.ref) + '</em><p>' + summary + '</p></span>' +
         '<span class="bt-record-arrow">⌄</span>' +
       '</button>' +
       '<div class="bt-record-detail" id="bt-record-detail-' + index + '">' + (qa || '<p class="bt-record-empty">작성한 답변은 없지만 묵상을 완료한 기록입니다.</p>') + '</div>' +
