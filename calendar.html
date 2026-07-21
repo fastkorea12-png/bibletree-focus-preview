@@ -1,4 +1,4 @@
-+
+
 
 
 
@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#22c55e">
 
-
+    
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-1659XVK3DD"></script>
     <script>
@@ -23,7 +23,7 @@
     <!-- SEO Meta Tags -->
     <meta name="description" content="바이블트리 - 매일 성경묵상(QT)과 주일공과를 함께하는 신앙 성장 앱. 묵상 나눔, 커뮤니티 기능 제공">
     <meta name="keywords" content="바이블트리, bibletree, 묵상, 성경묵상, QT, 큐티, 신앙, 주일공과, 매일묵상, 말씀묵상, 성경읽기, 기독교">
-    <link rel="canonical" href="https://bibletree.healthyeduministry.com/main/index.jsp">
+    <link rel="canonical" href="https://bibletree.healthyeduministry.com/main/calendar.jsp">
 
     <!-- Naver Webmaster Tools -->
     <meta name="naver-site-verification" content="ea630dbcd812c5b23376ed93b64c6d2fd9c738ec">
@@ -36,7 +36,7 @@
     <meta property="og:title" content="바이블트리 - 매일 성경묵상 QT">
     <meta property="og:description" content="바이블트리 - 매일 성경묵상(QT)과 주일공과를 함께하는 신앙 성장 앱. 묵상 나눔, 커뮤니티 기능 제공">
     <meta property="og:image" content="https://bibletree.healthyeduministry.com/html/img/og-image.jpg">
-    <meta property="og:url" content="https://bibletree.healthyeduministry.com/main/index.jsp">
+    <meta property="og:url" content="https://bibletree.healthyeduministry.com/main/calendar.jsp">
     <meta property="og:site_name" content="바이블트리 | Bibletree - 매일 성경 묵상 QT">
     <meta property="og:locale" content="ko_KR">
 
@@ -108,15 +108,15 @@
         ]
     }
     </script>
+    
 
-
-
-
-
-    <title>홈 - 바이블트리 | Bibletree - 매일 성경 묵상 QT</title>
-
-
-
+    
+    
+    
+    <title>달력 - 바이블트리 | Bibletree - 매일 성경 묵상 QT</title>
+    
+    
+    
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -134,12 +134,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-
+    
     <style>
         :root {
             --content-reading: 640px;
             --content-form: 560px;
-+            --content-list: 768px;
+            --content-list: 768px;
             --content-grid: 780px;
             /* PC IA 재설계(J)의 "카드+레일" 2컬럼 래퍼 폭. 카드 폭(content-*) +
                gap + 레일/사이드 폭을 각 화면에서 고정 계산한 값이다 - 계산 근거는
@@ -263,9 +263,9 @@
         .content-list    { max-width: var(--content-list); }
         .content-grid    { max-width: var(--content-grid); }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
-        @keyframes fade-in {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fade-in { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
         }
         .animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
         @keyframes pop {
@@ -279,7 +279,7 @@
             20% { transform: translateX(-10px); }
             40% { transform: translateX(10px); }
             60% { transform: translateX(-10px); }
-+            80% { transform: translateX(10px); }
+            80% { transform: translateX(10px); }
         }
         .animate-shake { animation: shake 0.5s ease-in-out !important; }
         /* 빈칸 채우기 input 스타일 */
@@ -303,19 +303,19 @@
         .fill-blank-input::placeholder {
             color: #d1d5db;
         }
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
+        .calendar-grid { 
+            display: grid; 
+            grid-template-columns: repeat(7, 1fr); 
+            gap: 4px; 
         }
         .today-ring { box-shadow: 0 0 0 2px #16a34a; }
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border-radius: 12px;
-            background: #000;
+        .video-container { 
+            position: relative; 
+            padding-bottom: 56.25%; 
+            height: 0; 
+            overflow: hidden; 
+            border-radius: 12px; 
+            background: #000; 
         }
         .video-container iframe {
             position: absolute;
@@ -358,224 +358,407 @@
             height: 100%;
         }
     </style>
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "@id": "https://bibletree.healthyeduministry.com/main/index.jsp?lang=ko",
-  "url": "https://bibletree.healthyeduministry.com/main/index.jsp?lang=ko",
-  "name": "홈 - 오늘의 QT",
-  "description": "오늘의 묵상 2026.07.20 월요일",
-  "isPartOf": {
-    "@id": "https://bibletree.healthyeduministry.com/#website"
-  },
-  "about": {
-    "@type": "Thing",
-    "name": "Daily Bible Meditation"
-  },
-  "inLanguage": "ko-KR"
-}
-</script>
-
+    
 </head>
 <body>
     <div class="mobile-container font-sans text-gray-900">
-
+        
         <!-- 공통 헤더. page-col은 lg(1024px) 이상에서만 발동하는 공용 클래스로,
      본문 카드(content-reading 등)와 같은 폭으로 헤더를 맞춰 헤더/본문 폭이
      서로 어긋나 보이던 문제(C)를 해결한다. 0~1023px는 영향 없음(기존 그대로). -->
 <header class="page-col bg-white/95 backdrop-blur px-4 h-14 flex items-center justify-between sticky top-0 z-50 border-b border-gray-100 shadow-sm">
     <a href="https://fastkorea12-png.github.io/bibletree-focus-preview/" class="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer">
-        <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white transition-colors bg-green-600">
+        <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white transition-colors bg-purple-600">
             <i data-lucide="tree-deciduous" class="w-5 h-5"></i>
         </div>
         <span class="font-bold text-lg tracking-tight">Bibletree</span>
     </a>
-
-
+    
+    
     <a href="login.jsp?lang=ko" class="flex items-center gap-1 px-2 py-1 rounded-md bg-green-600 hover:bg-green-700 text-xs font-bold text-white">
         <i data-lucide="log-in" class="w-3 h-3"></i>
         <span>로그인</span>
     </a>
-
+    
 </header>
 
-
+        
         <main class="flex-1 flex flex-col">
-        <!-- PC IA 재설계: lg(1024px) 이상에서 기존 콘텐츠(왼쪽) + 이번 달 진행률/최근 이야기
-     사이드(오른쪽) 2컬럼 래퍼(J). content-reading 자신의 max-width(640px)는 그대로 두고
-     이 래퍼에서만 폭을 조정한다 - card(640) + gap(24px) + sidebar(240px) = 904px 고정폭을
-     중앙정렬한다(lg 최소 뷰폭 940px 안에서 여유 있게 들어감, detail.html과 달리 카드 밖으로
-     튀어나오는 절대배치 버튼이 없어 gap을 좁게 잡아도 무방하다). 0~1023px는 이 div에
-     클래스가 전혀 없어(lg: 접두어만) 시각적으로 아무 영향이 없다. -->
-<div class="rail-dashboard lg:w-[904px] lg:mx-auto lg:grid lg:grid-cols-[640px_240px] lg:gap-6 lg:items-start">
-<!-- 홈 - 오늘의 묵상 -->
-<div class="content-reading flex-1 flex flex-col bg-gray-100 overflow-y-auto pb-16">
-
-    <!-- 에러 메시지 토스트 -->
+        <script>
+// 전역 변수로 로그인 상태 설정
 
 
-    <!-- 오늘의 묵상 카드 -->
-    <div class="px-4 pt-6 pb-4">
+const isLogin = false;
 
 
-+        <!-- 비로그인: 단계별 묵상 선택 -->
+// 서버에서 설정한 target 값을 JavaScript로 전달 (init에서 사용)
+window.serverTarget = 'young';
+</script>
 
-        <div class="space-y-3">
-            <!-- 날짜 헤더 -->
-            <div class="text-center mb-2">
-                <div class="text-sm text-gray-500">2026.07.20 월요일</div>
-            </div>
-
-            <!-- PC(lg 이상)에서는 4개 카드를 2x2 그리드로 전환해 화면 공간을 활용한다.
-                 데이터 변경 없이 순수 CSS 그리드 전환(0~1023px는 기존 세로 나열 그대로). -->
-            <div class="space-y-3 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-4">
-            <!-- 저학년 -->
-
-            <a href="detail.jsp?date=2026-07-20&target=low&lang=ko" class="block bg-white rounded-2xl shadow-lg md:shadow-sm overflow-hidden border-l-4 border-yellow-500 hover:shadow-xl transition-shadow">
-                <div class="p-4">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="px-2 py-0.5 bg-yellow-100 text-yellow-700 text-xs font-bold rounded">저학년</span>
-                    </div>
-                    <h3 class="font-bold text-gray-900 mb-1">좋은 선물이에요</h3>
-                    <p class="text-sm text-gray-600">약 1:16-21</p>
-                </div>
-            </a>
+<!-- 에러 메시지 토스트 -->
 
 
-            <!-- 고학년 -->
-
-            <a href="detail.jsp?date=2026-07-20&target=high&lang=ko" class="block bg-white rounded-2xl shadow-lg md:shadow-sm overflow-hidden border-l-4 border-green-600 hover:shadow-xl transition-shadow">
-                <div class="p-4">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-bold rounded">고학년</span>
-                    </div>
-                    <h3 class="font-bold text-gray-900 mb-1">모든 좋은 은사의 근원</h3>
-                    <p class="text-sm text-gray-600">약 1:16-21</p>
-                </div>
-            </a>
-
-
-            <!-- 청소년 -->
-
-            <a href="detail.jsp?date=2026-07-20&target=youth&lang=ko" class="block bg-white rounded-2xl shadow-lg md:shadow-sm overflow-hidden border-l-4 border-blue-600 hover:shadow-xl transition-shadow">
-                <div class="p-4">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs font-bold rounded">청소년</span>
-                    </div>
-                    <h3 class="font-bold text-gray-900 mb-1">모든 선물의 출처</h3>
-                    <p class="text-sm text-gray-600">약 1:16-21</p>
-                </div>
-            </a>
-
-
-            <!-- 청년 -->
-
-            <a href="https://fastkorea12-png.github.io/bibletree-focus-preview/detail.html" class="block bg-white rounded-2xl shadow-lg md:shadow-sm overflow-hidden border-l-4 border-purple-600 hover:shadow-xl transition-shadow">
-                <div class="p-4">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="px-2 py-0.5 bg-purple-100 text-purple-700 text-xs font-bold rounded">청년</span>
-                    </div>
-                    <h3 class="font-bold text-gray-900 mb-1">위로부터 오는 선물</h3>
-                    <p class="text-sm text-gray-600">약 1:16-21</p>
-                </div>
-            </a>
-
-
-            <!-- 콘텐츠가 하나도 없는 경우 -->
-
-            </div>
+<!-- PC IA 재설계: lg(1024px) 이상에서 달력(왼쪽) + 날짜 미리보기 패널(오른쪽) 2컬럼
+     래퍼(J). content-grid 자신의 max-width(780px)는 그대로 두고 이 래퍼에서만 폭을
+     조정한다 - card(780) + gap(12px) + panel(128px) = 920px 고정폭을 중앙정렬한다(lg
+     최소 뷰폭 940px 안에서 들어가도록 실측 계산 - content-grid 자체가 이미 넓어 패널은
+     좁게 잡았다). 0~1023px는 이 div에 클래스가 전혀 없어(lg: 접두어만) 시각적으로
+     아무 영향이 없다. -->
+<div class="rail-calendar lg:w-[920px] lg:mx-auto lg:grid lg:grid-cols-[780px_128px] lg:gap-3 lg:items-start">
+<!-- 달력 뷰. content-grid(780px, D)는 content-reading(640px)보다 넓어 7열 캘린더 셀이
+     너무 좁아 보이지 않도록 한 전용 폭 토큰이다. 카드 테두리/라운드/그림자는
+     layout_main.html의 .content-grid 공용 규칙(H)에서 셸이 자동으로 적용한다 - 예전에
+     여기 있던 lg:border/lg:rounded-2xl/lg:shadow-sm은 제거했다(Tailwind CDN 유틸리티가
+     캐스케이드 후순위 셸 규칙보다 우선 적용돼 그림자 값이 셸의 공용 그림자와 달라지는
+     것을 실측 확인해서 중복이 아니라 불일치였음). -->
+<div class="content-grid flex-1 p-6 pb-20 animate-fade-in bg-white overflow-y-auto">
+    <!-- 월 네비게이션 -->
+    <div class="flex justify-between items-center mb-8">
+        <button onclick="BibleTree.prevMonth()" class="p-2 hover:bg-gray-100 rounded-full">
+            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+        </button>
+        <h2 class="text-xl font-bold text-gray-800">2026년 7월</h2>
+        <button onclick="BibleTree.nextMonth()" class="p-2 hover:bg-gray-100 rounded-full">
+            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+        </button>
+    </div>
+    
+    <!-- 요일 헤더 -->
+    <div class="calendar-grid mb-2">
+        
+        <div class="text-center text-xs font-bold py-2 text-red-400">일</div>
+        
+        <div class="text-center text-xs font-bold py-2 text-gray-400">월</div>
+        
+        <div class="text-center text-xs font-bold py-2 text-gray-400">화</div>
+        
+        <div class="text-center text-xs font-bold py-2 text-gray-400">수</div>
+        
+        <div class="text-center text-xs font-bold py-2 text-gray-400">목</div>
+        
+        <div class="text-center text-xs font-bold py-2 text-gray-400">금</div>
+        
+        <div class="text-center text-xs font-bold py-2 text-gray-400">토</div>
+        
+    </div>
+    
+    <!-- 날짜 그리드 -->
+    <div class="calendar-grid" id="calendarGrid">
+        <!-- 빈 칸 (첫 주 시작 전) -->
+        
+        <div class="h-20"></div>
+        
+        <div class="h-20"></div>
+        
+        <div class="h-20"></div>
+        
+        
+        <!-- 날짜들 -->
+        
+        <div onclick="BibleTree.selectDate('2026-07-01')" data-date="2026-07-01"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">1</span>
+            
         </div>
-
-
-        <!-- 로그인 사용자: 콘텐츠 없음 -->
-
+        
+        <div onclick="BibleTree.selectDate('2026-07-02')" data-date="2026-07-02"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">2</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-03')" data-date="2026-07-03"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">3</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-04')" data-date="2026-07-04"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">4</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-05')" data-date="2026-07-05"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">5</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-06')" data-date="2026-07-06"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">6</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-07')" data-date="2026-07-07"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">7</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-08')" data-date="2026-07-08"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">8</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-09')" data-date="2026-07-09"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">9</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-10')" data-date="2026-07-10"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">10</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-11')" data-date="2026-07-11"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">11</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-12')" data-date="2026-07-12"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">12</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-13')" data-date="2026-07-13"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">13</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-14')" data-date="2026-07-14"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">14</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-15')" data-date="2026-07-15"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">15</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-16')" data-date="2026-07-16"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">16</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-17')" data-date="2026-07-17"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">17</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-18')" data-date="2026-07-18"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">18</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-19')" data-date="2026-07-19"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">19</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-20')" data-date="2026-07-20"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">20</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-21')" data-date="2026-07-21"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50 today-ring bg-green-50/50">
+            <span class="text-sm font-bold text-green-700" style="">21</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-22')" data-date="2026-07-22"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">22</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-23')" data-date="2026-07-23"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">23</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-24')" data-date="2026-07-24"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">24</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-25')" data-date="2026-07-25"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">25</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-26')" data-date="2026-07-26"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">26</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-27')" data-date="2026-07-27"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">27</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-28')" data-date="2026-07-28"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">28</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-29')" data-date="2026-07-29"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">29</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-30')" data-date="2026-07-30"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">30</span>
+            
+        </div>
+        
+        <div onclick="BibleTree.selectDate('2026-07-31')" data-date="2026-07-31"
+             class="h-20 flex flex-col items-center pt-2 rounded-xl transition-all relative cursor-pointer hover:bg-green-50">
+            <span class="text-sm text-gray-500" style="font-weight: 500;">31</span>
+            
+        </div>
+        
+    </div>
+    
+    <!-- 범례 -->
+    <div class="mt-8 p-4 bg-gray-50 rounded-xl flex items-center gap-3 text-xs text-gray-500">
+        <div class="flex items-center gap-1 text-purple-500">
+            <i data-lucide="grape" class="w-4 h-4"></i>
+            <span class="text-gray-500">묵상 완료</span>
+        </div>
     </div>
 
-    <!-- 이번 주 열매표 (로그인 사용자만) -->
-
-
-    <!-- 비로그인: 언어 선택 -->
-
-    <div class="px-4 pb-4">
-        <div class="bg-white rounded-2xl shadow-lg md:shadow-sm md:border md:border-gray-100 p-4">
-            <h3 class="text-sm font-bold text-gray-700 mb-3 text-center flex items-center justify-center gap-2">
-                <i data-lucide="globe" class="w-4 h-4"></i>
-                언어 선택
-            </h3>
-            <div class="grid grid-cols-3 gap-2">
-                <a href="index.jsp?lang=ko" class="py-3 rounded-xl text-sm font-bold border-2 transition-all text-center border-green-600 text-green-700 bg-white">한국어</a>
-                <a href="index.jsp?lang=vi" class="py-3 rounded-xl text-sm font-bold border-2 transition-all text-center bg-white text-gray-400 border-gray-200">Tiếng Việt</a>
-                <a href="index.jsp?lang=en" class="py-3 rounded-xl text-sm font-bold border-2 transition-all text-center bg-white text-gray-400 border-gray-200">English</a>
-            </div>
-        </div>
-    </div>
-
-    <section class="bt-month-wrap" data-monthly-qt aria-label="이번 달 나의 큐티"></section>
-
+    <section class="bt-month-wrap mt-6 !px-0" data-monthly-qt aria-label="이번 달 나의 큐티"></section>
 </div>
 
-    <!-- PC(lg 이상) 전용 사이드: 이번 달 진행률 + 최근 이야기.
-         진행률은 개인 지표라 로그인 사용자에게만 의미가 있어 isLogin으로 게이팅한다
-         (비로그인은 monthProgress 등이 항상 0으로 내려와 빈 위젯이 뜨는 걸 방지).
-         최근 이야기는 커뮤니티 전체 댓글이라 로그인 여부와 무관하게 보여준다
-         (calendar-preview.jsp API와 동일하게 비로그인도 열람 가능한 정보). -->
-    <aside class="hidden lg:block lg:sticky lg:top-6 space-y-4">
-
-
-        <!-- 최근 이야기 -->
-        <div class="bg-white rounded-2xl shadow-lg md:shadow-sm md:border md:border-gray-100 p-4">
-            <h3 class="text-sm font-bold text-gray-700 mb-3">최근 나눔</h3>
-
-            <div class="space-y-3">
-
-                <a href="detail.jsp?date=2026-07-10&lang=ko" class="block hover:bg-gray-50 rounded-lg -mx-1 px-1 py-0.5 transition-colors">
-                    <span class="text-xs font-bold text-gray-700">은혜받은 베드로</span>
-                    <p class="text-xs text-gray-500 mt-0.5 leading-relaxed">사랑한다 말하시네</p>
-                </a>
-
-                <a href="detail.jsp?date=2026-06-19&lang=ko" class="block hover:bg-gray-50 rounded-lg -mx-1 px-1 py-0.5 transition-colors">
-                    <span class="text-xs font-bold text-gray-700">기도하는 요셉</span>
-                    <p class="text-xs text-gray-500 mt-0.5 leading-relaxed">게으른자여</p>
-                </a>
-
-                <a href="detail.jsp?date=2026-06-09&lang=ko" class="block hover:bg-gray-50 rounded-lg -mx-1 px-1 py-0.5 transition-colors">
-                    <span class="text-xs font-bold text-gray-700">감사하는 에스더</span>
-                    <p class="text-xs text-gray-500 mt-0.5 leading-relaxed">감사감사</p>
-                </a>
-
-            </div>
-            <div class="mt-3 pt-3 border-t border-gray-100 text-center">
-                <a href="https://fastkorea12-png.github.io/bibletree-focus-preview/calendar.html" class="text-xs font-bold text-gray-400 hover:text-green-600">더보기</a>
+    <!-- PC(lg 이상) 전용 날짜 미리보기 패널. 날짜 클릭 시 calendar-preview.jsp를 fetch해
+         내용을 채운다(BibleTree.loadPreview, app.js). 상태별로 하나만 보이도록 hidden을
+         토글한다: prompt(초기)/loading(스켈레톤)/noContent/locked/content(정상)/error.
+         일요일 클릭은 selectDate()에서 이 패널을 거치지 않고 기존 주일 모달로 바로 분기한다. -->
+    <aside id="calendarPreviewPanel" class="hidden lg:block lg:sticky lg:top-6">
+        <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-3 min-h-[160px]">
+            <!-- 초기: 날짜 미선택 -->
+            <div id="preview-prompt" class="py-8 text-center">
+                <p class="text-[11px] text-gray-400 leading-relaxed">날짜를 선택해보세요</p>
             </div>
 
+            <!-- 로딩 스켈레톤 -->
+            <div id="preview-loading" class="hidden animate-pulse space-y-2" aria-label="불러오는 중...">
+                <div class="h-3 bg-gray-100 rounded w-3/4"></div>
+                <div class="h-3 bg-gray-100 rounded w-full"></div>
+                <div class="h-3 bg-gray-100 rounded w-2/3"></div>
+                <div class="h-8 bg-gray-100 rounded-lg mt-4"></div>
+            </div>
 
+            <!-- 콘텐츠 없음 -->
+            <div id="preview-noContent" class="hidden py-8 text-center">
+                <i data-lucide="book-open" class="w-6 h-6 mx-auto mb-2 text-gray-300"></i>
+                <p class="text-[11px] text-gray-400 leading-relaxed">아직 콘텐츠가 없어요</p>
+            </div>
+
+            <!-- 잠김 (미래 콘텐츠) -->
+            <div id="preview-locked" class="hidden py-8 text-center">
+                <i data-lucide="lock" class="w-6 h-6 mx-auto mb-2 text-gray-300"></i>
+                <p class="text-[11px] text-gray-400 leading-relaxed">곧 공개돼요</p>
+            </div>
+
+            <!-- 오류 -->
+            <div id="preview-error" class="hidden py-8 text-center">
+                <i data-lucide="alert-circle" class="w-5 h-5 mx-auto mb-2 text-red-300"></i>
+                <p class="text-[11px] text-gray-400 leading-relaxed mb-2">미리보기를 불러오지 못했어요</p>
+                <button onclick="BibleTree.retryPreview()" class="text-[11px] font-bold text-green-600 hover:text-green-700">다시 시도</button>
+            </div>
+
+            <!-- 정상: 제목/구절/완료여부 + 전체 보기 -->
+            <div id="preview-content" class="hidden">
+                <p id="previewTitle" class="text-xs font-bold text-gray-900 leading-snug mb-1"></p>
+                <p id="previewScripture" class="text-[11px] text-gray-500 leading-relaxed mb-2"></p>
+                <div id="previewCompletedBadge" class="hidden items-center gap-1 text-[10px] font-bold text-purple-600 mb-2">
+                    <i data-lucide="grape" class="w-3.5 h-3.5"></i>
+                    <span>묵상 완료</span>
+                </div>
+                <a id="previewViewFullBtn" href="#" class="block w-full py-2 rounded-lg text-[11px] font-bold text-white text-center bg-green-600 hover:bg-green-700 transition-colors">전체 보기</a>
+            </div>
         </div>
     </aside>
 </div>
 
-        </main>
+<!-- 주일 선택 모달 -->
+<div id="sundayModal" class="fixed inset-0 z-[60] bg-black/50 hidden items-center justify-center p-4 backdrop-blur-sm animate-fade-in" onclick="BibleTree.hideSundayModal()">
+    <div class="bg-white w-full max-w-sm rounded-2xl p-6 shadow-2xl" onclick="event.stopPropagation()">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="font-bold text-lg text-gray-800">주일 활동 선택</h3>
+            <button onclick="BibleTree.hideSundayModal()" class="p-1 rounded-full hover:bg-gray-100">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
 
+        <div class="text-center mb-6">
+            <p class="text-sm text-gray-600" id="sundayDateText"></p>
+        </div>
+
+        <!-- 주일 활동 선택 -->
+        <div class="space-y-3">
+            <button onclick="BibleTree.selectSundayType('meditation')" class="w-full py-4 bg-green-50 text-green-700 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-green-100 border border-green-200 transition-all">
+                <i data-lucide="book-open" class="w-5 h-5"></i> 묵상
+            </button>
+            <button onclick="BibleTree.selectSundayType('sermon')" class="w-full py-4 bg-blue-50 text-blue-700 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-blue-100 border border-blue-200 transition-all">
+                <i data-lucide="pen-tool" class="w-5 h-5"></i> 설교 노트
+            </button>
+            
+            <button onclick="BibleTree.selectSundayType('lesson')" class="w-full py-4 bg-purple-50 text-purple-700 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-purple-100 border border-purple-200 transition-all">
+                <i data-lucide="clipboard-list" class="w-5 h-5"></i> 공과 공부
+            </button>
+            
+        </div>
+    </div>
+</div>
+
+        </main>
+        
         <!-- 하단 네비게이션 (lg=1024px 이상에서는 좌측 아이콘 레일로 전환).
      레일은 이제 layout_main.html의 그리드 셸(1열)에 배치되는 그리드 아이템이다.
      grid-row가 헤더+본문 두 행(1/3)에 걸쳐 있으므로 position:fixed로 뷰포트에
      직접 고정할 필요가 없다 - lg:sticky + lg:top-0 + lg:h-screen으로 자신의
-+     그리드 셀 안에서 스크롤 중에도 항상 보이도록 고정한다. -->
+     그리드 셀 안에서 스크롤 중에도 항상 보이도록 고정한다. -->
 <nav class="fixed bottom-0 left-0 right-0 lg:sticky lg:top-0 lg:bottom-auto lg:left-auto lg:right-auto lg:w-[84px] lg:h-screen
             bg-white border-t border-gray-200 lg:border-t-0 lg:border-r lg:border-gray-100 z-50" aria-label="Main navigation">
     <div class="max-w-lg mx-auto flex justify-around items-center h-14
                 lg:flex-col lg:justify-start lg:items-center lg:h-full lg:max-w-none lg:mx-0 lg:w-full lg:gap-6 lg:pt-8">
-        <a href="https://fastkorea12-png.github.io/bibletree-focus-preview/calendar.html" class="flex flex-col items-center justify-center gap-0.5 transition-colors min-w-[48px] min-h-[48px] lg:w-16 lg:py-2 lg:rounded-lg text-gray-500 hover:text-green-600 lg:border-l-[3px] lg:border-transparent">
+        <a href="https://fastkorea12-png.github.io/bibletree-focus-preview/calendar.html" class="flex flex-col items-center justify-center gap-0.5 transition-colors min-w-[48px] min-h-[48px] lg:w-16 lg:py-2 lg:rounded-lg text-green-600">
             <i data-lucide="calendar" class="w-5 h-5"></i>
-            <span class="text-[10px] lg:text-[9px] lg:leading-tight lg:text-center ">달력</span>
+            <span class="text-[10px] lg:text-[9px] lg:leading-tight lg:text-center font-bold">달력</span>
         </a>
         <a href="about.jsp?lang=ko" class="flex flex-col items-center justify-center gap-0.5 transition-colors min-w-[48px] min-h-[48px] lg:w-16 lg:py-2 lg:rounded-lg text-gray-500 hover:text-green-600 lg:border-l-[3px] lg:border-transparent">
             <i data-lucide="info" class="w-5 h-5"></i>
             <span class="text-[10px] lg:text-[9px] lg:leading-tight lg:text-center ">소개</span>
         </a>
-        <a href="https://fastkorea12-png.github.io/bibletree-focus-preview/" class="flex flex-col items-center justify-center gap-0.5 transition-colors min-w-[48px] min-h-[48px] lg:w-16 lg:py-2 lg:rounded-lg text-green-600">
+        <a href="https://fastkorea12-png.github.io/bibletree-focus-preview/" class="flex flex-col items-center justify-center gap-0.5 transition-colors min-w-[48px] min-h-[48px] lg:w-16 lg:py-2 lg:rounded-lg text-gray-500 hover:text-green-600 lg:border-l-[3px] lg:border-transparent">
             <i data-lucide="home" class="w-5 h-5"></i>
-            <span class="text-[10px] lg:text-[9px] lg:leading-tight lg:text-center font-bold">홈</span>
+            <span class="text-[10px] lg:text-[9px] lg:leading-tight lg:text-center ">홈</span>
         </a>
         <a href="community.jsp?lang=ko" class="flex flex-col items-center justify-center gap-0.5 transition-colors min-w-[48px] min-h-[48px] lg:w-16 lg:py-2 lg:rounded-lg text-gray-500 hover:text-green-600 lg:border-l-[3px] lg:border-transparent">
             <i data-lucide="users" class="w-5 h-5"></i>
@@ -588,7 +771,7 @@
     </div>
 </nav>
 
-
+        
     </div>
 
     <!-- 초대 코드 입력 모달 -->
@@ -618,7 +801,7 @@
             </div>
         </div>
     </div>
-
+    
     <script src="/html/js/app.js"></script>
     <script src="https://fastkorea12-png.github.io/bibletree-focus-preview/monthly-progress.js"></script>
     <script>
@@ -639,23 +822,23 @@
     </script>
 
     <!-- Kakao SDK (공유 기능) -->
-
+    
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" crossorigin="anonymous"></script>
     <script>
         if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
             Kakao.init('c6154c34bdc8676e91726a2fd5c108b7');
         }
     </script>
+    
 
-
-
+    
 
     <!-- Firebase SDK for Push Notifications -->
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-messaging-compat.js"></script>
     <script src="/html/js/firebase-push.js"></script>
 
-
+    
     <!-- Naver Analytics -->
     <script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script>
     <script type="text/javascript">
@@ -663,6 +846,6 @@
         wcs_add["wa"] = "17900014f54a260";
         if(window.wcs) { wcs_do(); }
     </script>
-
+    
 </body>
 </html>
