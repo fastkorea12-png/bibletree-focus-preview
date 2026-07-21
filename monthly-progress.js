@@ -31,7 +31,7 @@
         var hasSavedRecord = saved.complete || answers.some(function (answer) { return String(answer || '').trim(); });
         if (!hasSavedRecord && samples[date]) return { date: date, content: contents[date], answers: samples[date], complete: true, sample: true, updatedAt: '' };
         if (!hasSavedRecord) return null;
-        return { date: date, content: contents[date], answers: answers, complete: !!saved.complete, sample: false, updatedAt: saved.updatedAt || '' };
+        return { date: date, content: contents[date], answers: answers, prayer: String(saved.prayer || ''), complete: !!saved.complete, sample: false, updatedAt: saved.updatedAt || '' };
       } catch (e) { return null; }
     }).filter(Boolean).sort(function (a, b) { return b.date.localeCompare(a.date); });
   }
@@ -45,6 +45,8 @@
       if (!value) return '';
       return '<div class="bt-record-qa"><b>Q' + (questionIndex + 1) + '. ' + escapeHtml(question) + '</b><p>' + escapeHtml(value) + '</p></div>';
     }).join('');
+    var prayer = String(record.prayer || '').trim();
+    if (prayer) qa += '<div class="bt-record-qa bt-record-prayer"><b>🙏 나의 기도</b><p>' + escapeHtml(prayer) + '</p></div>';
     return '<article class="bt-record-card">' +
       '<button type="button" class="bt-record-toggle" aria-expanded="false" aria-controls="bt-record-detail-' + index + '">' +
         '<span class="bt-record-date"><b>' + dateNumber + '</b>' + record.content.day + '요일</span>' +
