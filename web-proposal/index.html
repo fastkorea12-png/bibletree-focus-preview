@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>바이블트리 웹 질문 유형 제안</title>
+<meta name="description" content="2026년 11–12월 원고의 9가지 질문 유형을 웹에서 보여 주기 위한 제안과 샘플 화면">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Batang&family=Noto+Sans+KR:wght@400;500;700;900&family=Gaegu&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef; --paper:#ffffff; --ink:#22262b; --mute:#6b7280; --line:#e6e2d9; --soft:#faf8f3;
+  --mark:#fff3a3; --code:#f3f1ec;
+  --low:#e86b4f; --low-tint:#fde9e3; --high:#1f7fc4; --high-tint:#e2f1fb;
+  --youth:#168c82; --youth-tint:#dff2ef; --young:#30486b; --young-tint:#e5eaf2;
+  --ribbon:#3c4a8f; --ok:#1f8a4c; --bad:#c2410c;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15171a; --paper:#1d2024; --ink:#e7e9ec; --mute:#9aa3ad; --line:#30353b; --soft:#23272c;
+    --mark:#6b5d12; --code:#262a30;
+    --low-tint:#3a2620; --high-tint:#1b2c3a; --youth-tint:#16302d; --young-tint:#222b38;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15171a; --paper:#1d2024; --ink:#e7e9ec; --mute:#9aa3ad; --line:#30353b; --soft:#23272c;
+  --mark:#6b5d12; --code:#262a30;
+  --low-tint:#3a2620; --high-tint:#1b2c3a; --youth-tint:#16302d; --young-tint:#222b38;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 "Noto Sans KR",system-ui,sans-serif}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+header.top{padding:48px 0 28px}
+.eyebrow{font-size:13px;color:var(--mute);letter-spacing:.02em}
+h1{font-size:clamp(26px,4.4vw,40px);line-height:1.25;margin:.3em 0 .4em;font-weight:900;letter-spacing:-.01em}
+.lead{font-size:17px;max-width:760px;color:var(--ink)}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:24px 0 8px}
+.summary div{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.summary b{display:block;font-size:15px;margin-bottom:4px}
+.summary span{font-size:14px;color:var(--mute)}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+nav.toc a{font-size:14px;text-decoration:none;border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:6px 14px}
+section{padding:40px 0;border-top:1px solid var(--line)}
+h2{font-size:24px;margin:0 0 6px;font-weight:900}
+h2 + p{color:var(--mute);margin-top:0}
+h3{font-size:18px;margin:28px 0 8px}
+
+/* ── 샘플 화면 ── */
+.demo{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:32px;align-items:start}
+@media (max-width:860px){.demo{grid-template-columns:1fr}}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--paper)}
+.seg button{border:0;background:none;padding:8px 14px;font:inherit;font-size:14px;color:var(--ink);cursor:pointer;min-height:40px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+select{font:inherit;font-size:14px;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--ink);min-height:40px}
+.toggle{display:inline-flex;align-items:center;gap:6px;font-size:14px;cursor:pointer;min-height:40px}
+.phone{background:var(--paper);border:1px solid var(--line);border-radius:28px;box-shadow:0 10px 40px rgba(0,0,0,.08);overflow:hidden;max-width:420px}
+.phone .screen{max-height:780px;overflow:auto;padding:18px 18px 28px}
+@media (max-width:860px){.phone .screen{max-height:none}}
+.side h3:first-child{margin-top:0}
+.side ul{padding-left:1.1em;margin:.4em 0}
+.side li{margin:.25em 0}
+.typelist{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip{font-size:12.5px;border-radius:999px;padding:3px 10px;background:var(--soft);border:1px solid var(--line)}
+
+/* 묵상 화면(웹 시안) */
+.d{--c:var(--low);--t:var(--low-tint)}
+.d.high{--c:var(--high);--t:var(--high-tint)} .d.youth{--c:var(--youth);--t:var(--youth-tint)} .d.young{--c:var(--young);--t:var(--young-tint)}
+.d-head{background:var(--t);border-radius:18px;padding:14px;display:flex;gap:14px;align-items:center}
+.badge{background:var(--c);color:#fff;border-radius:14px;padding:8px 10px;text-align:center;font-family:Jua,sans-serif;min-width:64px;line-height:1.15}
+.badge .m,.badge .w{font-size:13px}.badge .dd{font-size:32px;line-height:1.05;margin:2px 0}
+.ribbon{display:inline-block;background:var(--ribbon);color:#fff;font-family:Jua,sans-serif;font-size:13px;padding:2px 14px 2px 10px;clip-path:polygon(0 0,100% 0,calc(100% - 8px) 50%,100% 100%,0 100%)}
+.d-title{font-family:Jua,sans-serif;color:var(--c);font-size:24px;line-height:1.2;margin:6px 0 2px}
+.theme{font-size:12.5px;color:var(--mute)}
+.d.youth .d-head,.d.young .d-head{background:none;padding:6px 0;gap:10px}
+.big{font-family:"Noto Sans KR";font-weight:900;color:var(--c);font-size:60px;line-height:.85;letter-spacing:-.04em}
+.vert{writing-mode:vertical-rl;font-weight:900;color:var(--c);font-size:12px;letter-spacing:.05em}
+.d.youth .d-title,.d.young .d-title{font-family:"Noto Sans KR";font-weight:900;color:var(--ink);font-size:22px}
+.tab{display:inline-block;margin:22px 0 10px;background:var(--t);color:var(--c);font-family:Jua,sans-serif;font-size:16px;padding:4px 14px;border-radius:0 999px 999px 0;margin-left:-18px;padding-left:18px}
+.d.youth .tab,.d.young .tab{background:none;margin-left:0;padding:0;font-family:"Noto Sans KR";font-weight:700;border-radius:0}
+.verses{font-family:"Gowun Batang",serif;font-size:16px;line-height:1.85}
+.verses sup{color:var(--c);font-family:"Noto Sans KR";font-weight:700;font-size:10.5px;margin-right:2px}
+mark{background:var(--mark);color:inherit;padding:0 1px;border-radius:2px}
+.vocab{border-left:3px solid var(--t);padding-left:12px;font-size:14px}
+.vocab div{margin:6px 0}.vocab b{color:var(--c)}
+.comm p{margin:.5em 0;text-indent:1em;font-size:15px}
+.q{margin:18px 0 6px}
+.q-head{display:flex;gap:8px;align-items:flex-start;font-weight:700}
+.q-no{background:var(--c);color:#fff;border-radius:6px;font-size:12px;padding:1px 7px;margin-top:3px;flex:none}
+.hint{font-size:12.5px;color:var(--mute);margin-top:6px}
+.stmt{text-align:center;font-weight:700;margin:10px 0}
+.ox{display:flex;gap:28px;justify-content:center;margin:10px 0}
+.ox button{width:72px;height:72px;border-radius:50%;border:3px solid #9ca3af;background:none;font:900 30px "Noto Sans KR";color:#6b7280;cursor:pointer}
+.ox button[aria-pressed="true"]{border-color:var(--c);color:var(--c);background:var(--t)}
+.opts{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.opt{display:flex;gap:10px;align-items:flex-start;text-align:left;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--paper);font:inherit;font-size:15px;color:var(--ink);cursor:pointer;min-height:44px}
+.opt .k{flex:none;width:22px;height:22px;border:2px solid #9ca3af;border-radius:6px;display:grid;place-items:center;font-size:12px;margin-top:2px}
+.opt.radio .k{border-radius:50%}
+.opt[aria-pressed="true"]{border-color:var(--c);background:var(--t)}
+.opt[aria-pressed="true"] .k{border-color:var(--c);background:var(--c);color:#fff}
+.match{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:10px 28px;margin-top:10px}
+.match svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.match button{font:inherit;font-size:14px;text-align:left;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:10px;padding:8px 10px;cursor:pointer;min-height:44px;position:relative;z-index:1}
+.match button.sel{border-color:var(--c);box-shadow:0 0 0 2px var(--t)}
+.match button.done{background:var(--t)}
+.cls .row{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:6px 8px 6px 12px;margin-top:8px;font-size:14px}
+.cls .row span{flex:1}
+.cls .row button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;min-width:44px;min-height:36px;cursor:pointer}
+.cls .row button[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#fff}
+.cls .legend{font-size:12.5px;color:var(--mute);margin-top:8px}
+.order .row{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-top:8px;font-size:14px}
+.order .num{flex:none;width:32px;height:32px;border-radius:50%;border:2px dashed #9ca3af;display:grid;place-items:center;font-weight:700;cursor:pointer;background:none;font-family:inherit;color:var(--ink)}
+.order .num.set{border-style:solid;border-color:var(--c);background:var(--t);color:var(--c)}
+.trace{position:relative;margin-top:10px}
+.trace .ghost{position:absolute;left:12px;top:9px;font-family:Gaegu,cursive;font-size:22px;color:#c8c8c8;pointer-events:none;white-space:nowrap;overflow:hidden;right:12px}
+.trace input{width:100%;font-family:Gaegu,cursive;font-size:22px;padding:8px 12px;border:0;border-bottom:2px solid #9ca3af;background:repeating-linear-gradient(transparent 0 20px,transparent 20px);color:var(--ink);background-color:transparent}
+.trace .match-rate{font-size:12.5px;color:var(--mute);margin-top:4px}
+textarea{width:100%;min-height:84px;margin-top:10px;font:inherit;font-size:15px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--soft);color:var(--ink);resize:vertical}
+.quote{border-left:3px solid var(--c);padding:4px 10px;margin:8px 0;background:var(--soft);font-size:14.5px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chips span{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+.guide{display:none;margin-top:8px;font-size:13px;background:var(--soft);border:1px dashed var(--line);border-radius:10px;padding:8px 10px}
+.teacher .guide{display:block}
+.check-res{font-size:12.5px;font-weight:700;margin-top:6px}
+.check-res.ok{color:var(--ok)}.check-res.bad{color:var(--bad)}
+.pray{background:var(--t);border-radius:16px;padding:14px 16px;font-size:15px}
+.save{margin-top:16px;width:100%;border:0;background:var(--c);color:#fff;font:700 15px "Noto Sans KR";padding:12px;border-radius:12px;cursor:pointer;min-height:48px}
+.typeTag{font-size:11px;font-weight:500;color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:0 6px;margin-left:auto;flex:none}
+
+/* 유형 갤러리 */
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px}
+.card h4{margin:0;font-size:15px}
+.card .meta{font-size:12.5px;color:var(--mute);margin:2px 0 6px}
+
+/* 표·코드 */
+.tbl{width:100%;border-collapse:collapse;font-size:14.5px;background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.tbl th,.tbl td{border-bottom:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+.tbl th{background:var(--soft);font-weight:700}
+.tblwrap{overflow-x:auto}
+pre{background:var(--code);border-radius:12px;padding:14px;overflow:auto;font-size:13px;line-height:1.55}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin:12px 0}
+.flow div{flex:1 1 150px;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:14px}
+.flow div b{display:block;font-size:13px;color:var(--mute);font-weight:500}
+.flow .new{border:2px solid var(--high)}
+.note{font-size:14px;color:var(--mute)}
+.qs li{margin:.5em 0}
+footer{padding:32px 0 60px;color:var(--mute);font-size:13px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="eyebrow">바이블트리 · HEM 콘텐츠팀 제안 · 2026-10-06 · 초안</div>
+  <h1>11–12월 원고의 질문 유형을<br>웹에서도 보여 주자는 제안</h1>
+  <p class="lead">인쇄본은 원고 표기를 읽어 OX 동그라미, 체크칸, 선 잇기 점을 자동으로 그립니다. 웹은 지금 질문을 글자로만 저장해서 모든 질문이 입력칸으로 보입니다. 원고는 그대로 두고, 질문 유형 정보만 새 칸에 함께 실어 보내면 웹도 같은 활동 화면을 보여 줄 수 있습니다. 아래 샘플 화면은 실제 11–12월 원고를 변환한 데이터로 동작합니다.</p>
+  <div class="summary">
+    <div><b>원고는 그대로</b><span>9가지 유형은 원고 표기(①, □, (O / X), A↔① …)에서 자동 판별합니다.</span></div>
+    <div><b>DB는 칸 하나 추가</b><span><code>question_meta</code>(JSON). 기존 <code>questions</code>·화면·편집기는 그대로 동작합니다.</span></div>
+    <div><b>적재는 지금처럼</b><span>원고 → SQL 생성기 → 서버 실행. 생성기가 새 칸을 함께 채웁니다.</span></div>
+    <div><b>개발 약 2–3주</b><span>생성기 2–3일 · 유형별 화면 1.5–2주 · 검수 2–3일(1인 기준).</span></div>
+  </div>
+  <nav class="toc" aria-label="목차"><a href="#demo">샘플 화면</a><a href="#types">유형 9가지</a><a href="#data">데이터 구조</a><a href="#flow">적재 경로</a><a href="#plan">작업 나눔</a><a href="#ask">합의할 것</a></nav>
+</div></header>
+
+<main class="wrap">
+<section id="demo">
+  <h2>샘플 화면</h2>
+  <p>날짜와 연령을 바꿔 보세요. 보기를 누르고, 선을 잇고, 따라 써 볼 수 있습니다. ‘교사 보기’를 켜면 답변 가이드와 정답 확인이 나옵니다.</p>
+  <div class="demo">
+    <div>
+      <div class="controls">
+        <select id="date" aria-label="날짜"></select>
+        <div class="seg" role="group" aria-label="연령" id="ages"></div>
+        <label class="toggle"><input type="checkbox" id="teacher"> 교사 보기</label>
+      </div>
+      <div class="phone"><div class="screen" id="screen"></div></div>
+    </div>
+    <div class="side">
+      <h3>이 날의 문항 판별 결과</h3>
+      <div id="judge"></div>
+      <h3>화면에서 달라지는 것</h3>
+      <ul>
+        <li><b>머리:</b> 날짜 배지·요일(‘주일’), 성경 주소 리본, 이번 주 주제. 청소년·청년은 큰 날짜 숫자와 굵은 제목.</li>
+        <li><b>성경:</b> 절 번호를 작게, 어휘 낱말에 형광펜.</li>
+        <li><b>해설:</b> 3문단을 문단 그대로(9–10월은 한 문단으로 붙어 보였음).</li>
+        <li><b>질문:</b> 유형별 활동 화면 + 문항 아래 작은 안내.</li>
+        <li><b>답변 가이드:</b> 독자에게는 숨기고 교사·관리자만.</li>
+      </ul>
+      <p class="note">샘플은 정적 페이지라 저장은 하지 않습니다. 실제 화면에서는 지금처럼 <code>personal_notes</code>에 문항별로 저장합니다(아래 ‘데이터 구조’ 참고).</p>
+    </div>
+  </div>
+</section>
+
+<section id="types">
+  <h2>유형 9가지</h2>
+  <p>11–12월 732문항(61일 × 4연령)을 변환기로 분류한 결과입니다. 카드마다 실제 원고 문항이 그대로 동작합니다.</p>
+  <div class="tblwrap"><table class="tbl" id="typeTable"></table></div>
+  <h3>유형별 실제 문항</h3>
+  <div class="gallery" id="gallery"></div>
+</section>
+
+<section id="data">
+  <h2>데이터 구조</h2>
+  <p>기존 <code>questions</code>(문장 3개)는 그대로 두고, 새 칸 <code>question_meta</code>에 문항 객체 배열을 싣습니다. 비어 있으면 지금처럼 입력칸으로 보입니다.</p>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>칸</th><th>지금</th><th>제안</th></tr>
+    <tr><td><code>questions</code></td><td>문장 3개 JSON 배열</td><td>그대로(하위 호환, 편집 화면 그대로)</td></tr>
+    <tr><td><code>question_meta</code></td><td>없음</td><td><b>추가</b> · TEXT(JSON) · NULL 허용</td></tr>
+    <tr><td><code>weekly_theme</code></td><td>없음(변환 때 버려짐)</td><td><b>추가</b> · VARCHAR(100)</td></tr>
+    <tr><td><code>commentary</code></td><td>문단이 공백으로 붙음</td><td>문단을 줄바꿈으로 보존</td></tr>
+    <tr><td><code>vocabulary</code></td><td>"- 단어: 뜻" 자유 텍스트</td><td>그대로 + 생성기가 형식 정리(긴 청소년·청년 풀이 대비)</td></tr>
+    <tr><td><code>answer_guide</code></td><td>독자에게 접힌 채 보임</td><td>교사·관리자만</td></tr>
+  </table></div>
+  <h3>예: 11월 1일 고학년 질문 1 (선 잇기)</h3>
+  <pre><code id="metaExample"></code></pre>
+  <h3>답 저장(지금 구조 그대로)</h3>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>유형</th><th>personal_notes에 저장하는 값</th></tr>
+    <tr><td>OX</td><td><code>O</code> / <code>X</code></td></tr>
+    <tr><td>객관식</td><td><code>②</code> 또는 <code>①,③</code></td></tr>
+    <tr><td>체크</td><td><code>1,3</code> (+ ‘다른 …’ 입력은 <code>1,3|다른: …</code>)</td></tr>
+    <tr><td>선 잇기</td><td><code>A-②,B-③,C-①</code></td></tr>
+    <tr><td>분류</td><td><code>가:㉠㉢|나:㉡㉣</code></td></tr>
+    <tr><td>순서</td><td><code>2,4,1,3</code></td></tr>
+    <tr><td>따라 쓰기·쓰기</td><td>입력한 글 그대로</td></tr>
+  </table></div>
+</section>
+
+<section id="flow">
+  <h2>적재 경로</h2>
+  <p>9–10월에 실제로 쓴 경로를 그대로 쓰고, SQL 생성 단계에서 새 칸을 함께 채웁니다.</p>
+  <div class="flow">
+    <div><b>1</b>날짜별 원고(Markdown)<br>4연령 · 질문·보기·가이드</div>
+    <div class="new"><b>2 · 새로 커밋</b>SQL 생성기(Python)<br>유형 판별 → <code>question_meta</code></div>
+    <div><b>3</b>연령별 UPSERT SQL<br><code>sql/2026/11-12/…</code></div>
+    <div><b>4</b>develop 서버 확인<br>→ 운영 DB 실행</div>
+  </div>
+  <ul>
+    <li>관리자 CSV 업로드(<code>/sysop/content/upload.jsp</code> → <code>CsvToSqlConverter</code>)는 1–4월 방식입니다. 답변 가이드·활동 칸을 모르고, 다시 올려도 제목·본문만 갱신되므로 새 경로로 쓰지 않습니다(레거시로 유지).</li>
+    <li>시트를 거쳐야 한다면 셀에 JSON을 넣지 않고 <code>질문N_유형</code>·<code>질문N_보기</code>·<code>질문N_정답</code> 열을 더합니다. 9/18 같은 칸 밀림 사고를 막기 위해 생성기가 칸 수·날짜·연령을 스스로 검사합니다.</li>
+    <li>9–10월 한국어 SQL 생성기 원본은 저장소에 없습니다. 이번 생성기를 저장소에 커밋해 다음 달에도 씁니다.</li>
+  </ul>
+</section>
+
+<section id="plan">
+  <h2>작업 나눔</h2>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>누가</th><th>무엇을</th><th>기간(1인)</th></tr>
+    <tr><td>콘텐츠팀</td><td>SQL 생성기(원고 → 연령별 UPSERT, <code>question_meta</code>·<code>weekly_theme</code> 포함), 문항별 판별 결과표 검수. 이 페이지의 변환기가 출발점.</td><td>2–3일</td></tr>
+    <tr><td>운영 개발</td><td><code>ADD COLUMN</code> 2개 + <code>schema.sql</code>, 학생 화면(<code>detail.jsp/html</code>, <code>app.js</code>)에 유형별 화면 9종, 답 저장 형식, 답변 가이드 권한.</td><td>1.5–2주</td></tr>
+    <tr><td>함께</td><td>develop 서버 검수 → 운영 적재. Java가 바뀌면 배포 후 <code>web.xml</code> touch.</td><td>2–3일</td></tr>
+  </table></div>
+  <h3>단계 제안</h3>
+  <ol>
+    <li><b>11/1 오픈:</b> 화면 정리(머리·주제·해설 문단·연령 색·답변 가이드 숨김). 질문은 지금 입력칸. 저학년은 기존 활동 화면용 원고(2활동)를 그대로 사용.</li>
+    <li><b>12월 이후:</b> <code>question_meta</code>를 채워 유형별 화면을 단계적으로 켬(NULL이면 자동으로 예전 화면).</li>
+  </ol>
+</section>
+
+<section id="ask">
+  <h2>합의할 것</h2>
+  <ol class="qs">
+    <li>새 칸 <code>question_meta</code>(권장) vs 기존 <code>questions</code> 원소를 객체로 바꾸기(학생 화면·편집 화면·노트 인덱스·베트남어 생성기를 동시에 고쳐야 함).</li>
+    <li>9–10월 한국어 SQL 생성기 원본 위치. 이번 생성기와 합쳐 저장소에 둘지.</li>
+    <li>정답 표시: 바로 채점(정답 공개) / 저장만 / 교사만 확인.</li>
+    <li>저학년 웹: 지금처럼 2활동(말씀 활동·실천 활동)만, 아니면 인쇄처럼 3문항 모두.</li>
+    <li>연령 색을 인쇄와 맞출지(저 코랄 · 고 하늘 · 청소년 청록 · 청년 남색).</li>
+  </ol>
+</section>
+</main>
+<footer><div class="wrap">샘플 데이터: 2026년 11–12월 바이블트리 원고(성경 본문 개역한글). 이 페이지는 제안용 정적 시안이며 실제 서비스가 아닙니다.</div></footer>
+
+<script id="json-data" type="application/json">{"2026-11-01": {"low": {"target": "low", "date": "2026-11-01", "weekday": "일", "weekly_theme": "감사를 고백한 사람들", "title": "아침의 기쁨", "scripture": "시편 30:1–6", "verses": [{"n": "1", "t": "여호와여 내가 주를 높일 것은 주께서 나를 끌어 내사 내 대적으로 나를 인하여 기뻐하지 못하게 하심이니이다"}, {"n": "2", "t": "여호와 내 하나님이여 내가 주께 부르짖으매 나를 고치셨나이다"}, {"n": "3", "t": "여호와여 주께서 내 영혼을 음부에서 끌어내어 나를 살리사 무덤으로 내려가지 않게 하셨나이다"}, {"n": "4", "t": "주의 성도들아 여호와를 찬송하며 그 거룩한 이름에 감사할찌어다"}, {"n": "5", "t": "그 노염은 잠간이요 그 은총은 평생이로다 저녁에는 울음이 기숙할찌라도 아침에는 기쁨이 오리로다"}, {"n": "6", "t": "내가 형통할 때에 말하기를 영영히 요동치 아니하리라 하였도다"}], "commentary": ["다윗은 아주 힘든 일을 겪었어요. 그때 다윗은 하나님께 “도와주세요!” 하고 부르짖었어요(큰 소리로 불렀어요). 하나님은 다윗을 고쳐 주셨어요. 죽을 것처럼 위험한 자리에서 다윗을 끌어내 살려 주셨어요.", "그래서 다윗은 감사의 노래를 지었어요. “저녁에는 울어도 아침에는 기쁨이 와요.” 다윗은 울던 밤이 있었다는 것을 숨기지 않아요. 그래도 하나님의 은총(사랑)이 울음보다 훨씬 길다고 노래해요. 다윗은 혼자만 부르지 않았어요. 하나님의 백성에게 “우리 함께 감사해요!” 하고 말했어요.", "우리에게도 울고 싶은 날이 있어요. 그런 날에도 하나님께 내 마음을 말할 수 있어요. 하나님이 전에 도와주신 일을 기억하면 마음속에 감사가 자라요. 오늘 다윗처럼 하나님이 하신 일을 떠올리며 감사의 노래를 불러 보아요."], "questions": ["다윗은 힘들 때 하나님을 불렀어요.", "울고 싶은 날, 다윗처럼 해 보고 싶은 일에 체크해요. 여러 개 골라도 좋아요.", "아래 문장을 따라 써요."], "question_meta": [{"no": 1, "prompt": "다윗은 힘들 때 하나님을 불렀어요.", "hint": "", "answer_text": "O. “내가 주께 부르짖으매”(2절)라고 했어요.", "type": "ox", "answer": "O"}, {"no": 2, "prompt": "울고 싶은 날, 다윗처럼 해 보고 싶은 일에 체크해요. 여러 개 골라도 좋아요.", "hint": "해 보고 싶은 보기에 체크해요.", "answer_text": "정답이 따로 없어요. 아이가 고른 일을 오늘 실제로 해 볼 수 있도록 어른이 함께 이야기해 주세요.", "type": "check", "multiple": true, "options": ["“하나님, 도와주세요.” 하고 기도해요.", "하나님이 전에 도와주신 일을 떠올려요.", "엄마나 선생님께 내 마음을 말해요."]}, {"no": 3, "prompt": "아래 문장을 따라 써요.", "hint": "문장을 보며 그대로 따라 써요.", "answer_text": "문장을 그대로 따라 써요.", "type": "trace", "trace": "하나님, 저를 건져 주시니 감사해요."}], "activity_general": "", "vocabulary": [{"word": "부르짖다", "meaning": "큰 소리로 간절하게 부르다"}, {"word": "은총", "meaning": "하나님이 베푸시는 사랑과 도움"}], "prayer": "하나님, 다윗이 부를 때 들으시고 건져 주신 하나님을 찬양해요. 울고 싶은 날에도 하나님께 제 마음을 말하게 해 주세요. 도와주신 일을 잊지 않고 기쁘게 감사하게 해 주세요. 예수님 이름으로 기도해요. 아멘."}, "high": {"target": "high", "date": "2026-11-01", "weekday": "일", "weekly_theme": "감사를 고백한 사람들", "title": "울음보다 긴 은총", "scripture": "시편 30:1–6", "verses": [{"n": "1", "t": "여호와여 내가 주를 높일 것은 주께서 나를 끌어 내사 내 대적으로 나를 인하여 기뻐하지 못하게 하심이니이다"}, {"n": "2", "t": "여호와 내 하나님이여 내가 주께 부르짖으매 나를 고치셨나이다"}, {"n": "3", "t": "여호와여 주께서 내 영혼을 음부에서 끌어내어 나를 살리사 무덤으로 내려가지 않게 하셨나이다"}, {"n": "4", "t": "주의 성도들아 여호와를 찬송하며 그 거룩한 이름에 감사할찌어다"}, {"n": "5", "t": "그 노염은 잠간이요 그 은총은 평생이로다 저녁에는 울음이 기숙할찌라도 아침에는 기쁨이 오리로다"}, {"n": "6", "t": "내가 형통할 때에 말하기를 영영히 요동치 아니하리라 하였도다"}], "commentary": ["시편 30편은 다윗이 지은 감사의 노래예요. 다윗은 큰 위험을 겪었고, 그때 하나님께 부르짖었어요. 하나님은 다윗을 고치시고 음부, 곧 죽음의 자리에서 끌어올려 살려 주셨어요. 대적(원수)들은 다윗이 무너지기를 바랐지만, 그 바람은 이루어지지 않았어요.", "5절에는 서로 짝을 이루는 말들이 나와요. 노염과 은총, 잠깐과 평생, 저녁과 아침, 울음과 기쁨이에요. 이 짝들은 하나님의 은총이 노염보다 훨씬 길다는 것을 보여 줘요. 슬픈 일이 꼭 하룻밤 만에 끝난다는 뜻은 아니에요. 울음이 있는 저녁에도 하나님의 은총이 더 크고 오래간다는 고백이에요.", "6절에서 다윗은 일이 잘 풀릴 때 “나는 영원히 흔들리지 않을 거야.” 하고 말했던 자신을 돌아봐요. 이 짧은 본문은 다윗이 그 생각을 어떻게 바꾸었는지까지 들려주지는 않아요. 다만 1–3절에서 자신을 끌어내고 살리신 분이 하나님이라고 고백해요. 기쁜 날에도 속상한 날에도 하나님이 하신 일을 기억하는 사람이 감사의 노래를 부를 수 있어요."], "questions": ["다음 짝을 선으로 이어 보거나, 답을 A–②처럼 적어 보세요.", "우리 팀이 이긴 날, 6절에서 자신을 돌아본 다윗의 고백과 더 가까운 말을 골라요.", "4절에서 다윗은 함께 하나님께 감사하자고 불러요. 가족이나 교회 친구와 나눌, 하나님께 감사하는 한 문장을 적어요."], "question_meta": [{"no": 1, "prompt": "다음 짝을 선으로 이어 보거나, 답을 A–②처럼 적어 보세요.", "hint": "선으로 잇거나 A–②처럼 짝을 적어요.", "answer_text": "A–②, B–③, C–①. 오른쪽의 은총·아침·기쁨은 하나님의 은총이 노염과 울음보다 길고 크다는 것을 보여 줘요.", "type": "match", "left": ["노염은 잠깐", "저녁", "울음"], "right": ["기쁨", "은총은 평생", "아침"], "answer": {"A": "②", "B": "③", "C": "①"}}, {"no": 2, "prompt": "우리 팀이 이긴 날, 6절에서 자신을 돌아본 다윗의 고백과 더 가까운 말을 골라요.", "hint": "", "answer_text": "②에 더 가까워요. 6절은 형통할 때 “영영히 요동치 아니하리라” 했던 자신만만한 생각을 돌아보는 말이고, 2–3절은 살리신 분이 하나님이라고 고백해요. 이긴 기쁨을 숨기라는 뜻은 아니에요.", "type": "choice", "multiple": false, "options": ["“우리가 최고야. 이제 아무도 우리를 못 이겨.”", "“이겨서 정말 기뻐요. 뛸 힘을 주신 하나님께 감사해요.”"], "answer": "②"}, {"no": 3, "prompt": "4절에서 다윗은 함께 하나님께 감사하자고 불러요. 가족이나 교회 친구와 나눌, 하나님께 감사하는 한 문장을 적어요.", "hint": "적은 문장을 가족이나 교회 친구와 나눠도 좋아요.", "answer_text": "예: “아팠을 때 낫게 해 주셨어요.” “새 학년에 친구를 만나게 하셨어요.” 작은 일이어도 좋아요.", "type": "write"}], "activity_general": "", "vocabulary": [{"word": "음부", "meaning": "죽은 사람이 내려간다고 여긴 죽음과 무덤의 세계(스올)"}, {"word": "은총", "meaning": "하나님이 사랑으로 베푸시는 너그러운 도움"}, {"word": "형통", "meaning": "하는 일이 막힘없이 잘 풀리는 것"}], "prayer": "하나님, 다윗의 부르짖음을 들으시고 죽음의 자리에서 건지신 주님을 찬양해요. 울음이 있는 저녁에도 주님의 은총이 더 길다는 것을 믿게 해 주세요. 일이 잘 풀릴 때 제 힘만 자랑하지 않고 주님이 하신 일을 기억하게 해 주세요. 오늘 가족과 함께 주님께 감사하게 해 주세요. 아멘."}, "youth": {"target": "youth", "date": "2026-11-01", "weekday": "일", "weekly_theme": "감사를 고백한 사람들", "title": "저녁의 울음, 아침의 기쁨", "scripture": "시편 30:1–6", "verses": [{"n": "1", "t": "여호와여 내가 주를 높일 것은 주께서 나를 끌어 내사 내 대적으로 나를 인하여 기뻐하지 못하게 하심이니이다"}, {"n": "2", "t": "여호와 내 하나님이여 내가 주께 부르짖으매 나를 고치셨나이다"}, {"n": "3", "t": "여호와여 주께서 내 영혼을 음부에서 끌어내어 나를 살리사 무덤으로 내려가지 않게 하셨나이다"}, {"n": "4", "t": "주의 성도들아 여호와를 찬송하며 그 거룩한 이름에 감사할찌어다"}, {"n": "5", "t": "그 노염은 잠간이요 그 은총은 평생이로다 저녁에는 울음이 기숙할찌라도 아침에는 기쁨이 오리로다"}, {"n": "6", "t": "내가 형통할 때에 말하기를 영영히 요동치 아니하리라 하였도다"}], "commentary": ["기다리던 일이 잘 풀리면 그 소식을 누군가에게 전하고 싶어져요. 시편 30편은 다윗이 죽음 가까이에서 건짐을 받은 뒤 부른 감사의 노래예요. 다윗은 하나님께 부르짖었고, 하나님이 자신을 고치고 음부에서 끌어올리셨다고 고백해요. 1–3절에서 무언가를 해내는 쪽은 다윗이 아니라 ‘주께서’예요.", "4절에서 다윗은 개인의 고백을 공동체의 노래로 넓혀요. 그리고 5절에서 이 시의 중심을 말해요. 노염은 잠깐이고 은총은 평생이에요. 저녁에는 울음이 깃들 수 있지만 아침에는 기쁨이 와요. ‘기숙하다’는 머물러 묵는다는 뜻이에요. 이 표현은 믿는 사람은 울지 않는다는 말이 아니에요. 울음이 손님처럼 찾아와 밤새 머물 수 있다는 것을 인정해요. 그러면서도 마지막 말을 하는 것은 울음이 아니라 하나님의 은총이라고 노래해요. 고통이 끝나는 날짜를 정해 주는 말이 아니라, 하나님의 은총이 고통보다 크다는 고백이에요.", "6절에서 다윗은 형통할 때 “영영히 요동치 아니하리라” 했던 자신을 돌아봐요. 성적이나 인기, 실력이 나를 지켜 줄 것처럼 느껴지는 때가 있어요. 그것들은 좋은 선물이지만 나를 끝까지 붙들지는 못해요. 그래서 감사는 좋은 일에 붙이는 인사말에서 그치지 않아요. 나를 살리고 붙드시는 분이 누구인지 기억하는 고백이에요."], "questions": ["5절을 가장 잘 풀어 쓴 문장을 골라요.", "6절의 “영영히 요동치 아니하리라”를 요즘 말 한 문장으로 바꾸어 써요.", "4절은 함께 감사하자고 부르는 노래예요. 오늘 부른 찬양이나 1–3절에서 하나님이 하신 일을 노래한 한 소절을 골라 적어요."], "question_meta": [{"no": 1, "prompt": "5절을 가장 잘 풀어 쓴 문장을 골라요.", "hint": "세 문장 가운데 하나를 골라요.", "answer_text": "②. “노염은 잠간이요 그 은총은 평생”, “울음이 기숙할찌라도”가 근거예요. ①은 울음을 부정하고, ③은 시의 표현을 해결 날짜로 바꿔 버려요.", "type": "choice", "multiple": false, "options": ["하나님을 믿는 사람에게는 우는 밤이 없다.", "울음이 머무는 밤도 있지만, 하나님의 은총이 더 길고 크다.", "오늘 밤 울면 내일 아침에는 반드시 문제가 해결된다."], "answer": "②"}, {"no": 2, "prompt": "6절의 “영영히 요동치 아니하리라”를 요즘 말 한 문장으로 바꾸어 써요.", "hint": "한 문장으로 짧게 써요.", "answer_text": "예: “요즘 다 잘 풀리니까 이제 걱정 없어.” “친구들이 다 내 편이니 끄떡없어.” 2–3절은 살리신 분이 하나님이라고 말하지만, 이런 말은 안정의 근거를 내가 가진 것에 둬요.", "type": "write"}, {"no": 3, "prompt": "4절은 함께 감사하자고 부르는 노래예요. 오늘 부른 찬양이나 1–3절에서 하나님이 하신 일을 노래한 한 소절을 골라 적어요.", "hint": "한 소절만 적으면 돼요.", "answer_text": "예: “나를 고치셨나이다”(2절), “나를 살리사”(3절). 오늘 부른 찬양 가운데 하나님이 하신 일을 노래한 가사를 적어도 좋아요.", "type": "write"}], "activity_general": "", "vocabulary": [{"word": "음부", "meaning": "죽은 사람이 내려간다고 여긴 죽음의 세계(스올). 성경에서는 하나님의 손이 닿지 않는 곳이 아니다. 시인은 “내 영혼을 음부에 버리지 아니하시며”(시 16:10)라고 고백했다."}, {"word": "형통", "meaning": "하는 일이 막힘없이 잘 풀림. 성경에서는 하나님이 함께하심을 가리킬 때가 많다. 종이 된 요셉도 “여호와께서 요셉과 함께하시므로 그가 형통한 자가 되어”(창 39:2)라고 불렸다."}, {"word": "은총", "meaning": "하나님이 사랑으로 베푸시는 너그러운 호의. 성경에서 은총은 하나님과 가까워지는 길로 이어진다. 모세는 “주의 목전에 은총을 입었사오면 원컨대 주의 길을 내게 보이사”(출 33:13)라고 구했다."}], "prayer": "하나님, 다윗을 스올에서 끌어올리신 주님의 은총을 찬양해요. 울음이 머무는 밤이 있어도 주님의 은총이 더 길다는 것을 믿게 해 주세요. 일이 잘 풀릴 때 성적이나 실력을 제 버팀목으로 삼지 않게 해 주세요. 오늘 예배에서 공동체와 함께 주님이 하신 일을 기억하며 진심으로 찬양하게 해 주세요. 아멘."}, "young": {"target": "young", "date": "2026-11-01", "weekday": "일", "weekly_theme": "감사를 고백한 사람들", "title": "은총은 울음보다 깁니다", "scripture": "시편 30:1–6", "verses": [{"n": "1", "t": "여호와여 내가 주를 높일 것은 주께서 나를 끌어 내사 내 대적으로 나를 인하여 기뻐하지 못하게 하심이니이다"}, {"n": "2", "t": "여호와 내 하나님이여 내가 주께 부르짖으매 나를 고치셨나이다"}, {"n": "3", "t": "여호와여 주께서 내 영혼을 음부에서 끌어내어 나를 살리사 무덤으로 내려가지 않게 하셨나이다"}, {"n": "4", "t": "주의 성도들아 여호와를 찬송하며 그 거룩한 이름에 감사할찌어다"}, {"n": "5", "t": "그 노염은 잠간이요 그 은총은 평생이로다 저녁에는 울음이 기숙할찌라도 아침에는 기쁨이 오리로다"}, {"n": "6", "t": "내가 형통할 때에 말하기를 영영히 요동치 아니하리라 하였도다"}], "commentary": ["시편 30편은 다윗의 감사 시입니다. 다윗은 위기를 자세히 밝히지 않지만, 그 위기에서 자신을 살린 분이 누구인지는 분명히 말합니다. 1–3절의 ‘끌어내사, 고치셨나이다, 살리사’라는 동사의 주어는 모두 여호와입니다. 이 시의 감사는 위기를 버텨 낸 나의 회복력을 기념하는 일이 아니라, 나를 건지신 분을 높이는 일입니다.", "4–5절에서 시인은 성도들을 찬양으로 부릅니다. 근거는 하나님의 노염은 잠깐이고 은총은 평생이라는 고백입니다. 저녁과 아침의 대조는 고통의 기간을 알려 주는 일정표가 아닙니다. 울음이 실제로 머무는 밤을 인정하면서도, 그 밤이 하나님의 은총보다 길지 않다는 믿음의 언어입니다. 그래서 아직 탄식 중인 사람도 이 공동체의 노래에서 밀려나지 않습니다.", "6절은 형통할 때의 자기 확신을 드러냅니다. 경력과 관계는 감사할 선물이지만, 그것을 흔들리지 않을 근거로 삼으면 은총을 잊기 쉽습니다. 이 시는 다윗이 그 확신을 어떻게 고쳤는지 설명하지 않습니다. 다만 1–3절은 자신을 살리신 분이 하나님이라고 고백합니다. 죽음의 자리에서 생명으로 끌어올리시는 하나님의 일은 예수 그리스도의 부활에서 가장 분명하게 드러났고, 그 소망이 오늘 감사를 떠받칩니다."], "questions": ["1–3절에서 하나님이 하신 일을 나타내는 동사 두 개를 적으십시오.", "6절에 비추어, 일이 잘 풀릴 때 나의 기도나 예배는 어떻게 달라집니까? 아래에서 하나를 골라 적으십시오.", "4절처럼 함께 하나님께 감사하려면, 이번 주 누구와 무엇을 하겠습니까?"], "question_meta": [{"no": 1, "prompt": "1–3절에서 하나님이 하신 일을 나타내는 동사 두 개를 적으십시오.", "hint": "동사 두 개만 적으면 됩니다.", "answer_text": "예: 끌어내사, 고치셨나이다, 살리사, 내려가지 않게 하셨나이다. 이 동사들의 주어는 하나님입니다.", "type": "write"}, {"no": 2, "prompt": "6절에 비추어, 일이 잘 풀릴 때 나의 기도나 예배는 어떻게 달라집니까? 아래에서 하나를 골라 적으십시오.", "hint": "시간·내용·관심사 가운데 하나를 골라 구체적으로 적습니다.", "answer_text": "예: 기도가 감사보다 계획 점검으로 바뀜, 예배 시간이 줄어듦. 자책보다 6절처럼 정직하게 돌아보는 데 목적이 있습니다.", "type": "options_write", "options": ["시간", "내용", "관심사"]}, {"no": 3, "prompt": "4절처럼 함께 하나님께 감사하려면, 이번 주 누구와 무엇을 하겠습니까?", "hint": "좋은 소식을 함께 기뻐할 사람이나 지금 힘든 때(5절의 ‘저녁’)를 지나는 사람 가운데 한 명을 떠올려 할 일 하나를 정합니다.", "answer_text": "예: 좋은 소식을 들은 친구와 함께 감사 기도하기, 힘든 때를 지나는 이와 함께 예배드리기로 약속하기. 힘든 때를 지나는 사람에게 5절을 서둘러 해결책으로 건네지 않도록 유의합니다.", "type": "write"}], "activity_general": "이름 대신 관계(동료, 친구 등)만 적어도 됩니다.", "vocabulary": [{"word": "음부", "meaning": "구약에서 죽은 자들이 내려간다고 표현된 죽음의 영역(스올). 시인은 하나님이 “내 영혼을 음부에 버리지 아니하시며”(시 16:10)라고 고백했고, 사도행전은 이 구절을 그리스도의 부활로 읽는다(행 2:27, 31)."}, {"word": "형통", "meaning": "하는 일이 막힘없이 잘 풀리는 상태. 성경에서는 환경보다 하나님의 함께하심과 자주 묶인다. 옥에 갇힌 요셉을 두고도 “여호와께서 요셉과 함께하심이라 여호와께서 그의 범사에 형통케 하셨더라”(창 39:23)고 한다."}, {"word": "요동하다", "meaning": "흔들려 움직이다(6절 ‘요동치 아니하리라’). 시편에서 같은 말이 둘로 갈린다. 악인은 스스로 요동치 않는다고 장담하지만(시 10:6), 시인은 “그가 내 우편에 계시므로 내가 요동치 아니하리로다”(시 16:8)라고 고백한다."}], "prayer": "생명의 하나님, 다윗의 부르짖음을 들으시고 스올에서 끌어올리신 주님을 높입니다. 일이 잘 풀릴 때 쌓아 온 것들을 제 버팀목으로 삼으며 은총을 잊었던 순간을 돌아봅니다. 울음이 머무는 밤에도 주님의 은총이 더 길다는 것을 믿게 하소서. 예수님을 죽음에서 일으키신 주님 안에서, 기뻐하는 이와 탄식하는 이가 함께 부르는 감사의 노래가 우리 공동체에 울리게 하소서. 아멘."}}, "2026-11-04": {"low": {"target": "low", "date": "2026-11-04", "weekday": "수", "weekly_theme": "감사를 고백한 사람들", "title": "구원은 하나님께", "scripture": "요나 2:6–10", "verses": [{"n": "6", "t": "내가 산의 뿌리까지 내려갔사오며 땅이 그 빗장으로 나를 오래도록 막았사오나 나의 하나님 여호와여 주께서 내 생명을 구덩이에서 건지셨나이다"}, {"n": "7", "t": "내 영혼이 내 속에서 피곤할 때에 내가 여호와를 생각하였삽더니 내 기도가 주께 이르렀사오며 주의 성전에 미쳤나이다"}, {"n": "8", "t": "무릇 거짓되고 헛된 것을 숭상하는 자는 자기에게 베푸신 은혜를 버렸사오나"}, {"n": "9", "t": "나는 감사하는 목소리로 주께 제사를 드리며 나의 서원을 주께 갚겠나이다 구원은 여호와께로서 말미암나이다 하니라"}, {"n": "10", "t": "여호와께서 그 물고기에게 명하시매 요나를 육지에 토하니라"}], "commentary": ["요나는 하나님 말씀을 듣기 싫어서 배를 타고 도망쳤어요. 바다에 큰 폭풍이 불었고, 요나는 바닷속으로 던져졌어요. 하나님은 큰 물고기를 보내 요나를 삼키게 하셨어요. 요나는 물고기 배 속에서 하나님께 기도했어요.", "요나는 깊은 바다 밑까지 내려갔어요. 혼자서는 절대 올라올 수 없었어요. 요나는 힘이 다 빠졌을 때 하나님을 생각했어요. 그리고 “구원은 여호와께 있어요!” 하고 감사했어요. 하나님이 물고기에게 말씀하시자, 물고기가 요나를 육지에 뱉어 냈어요.", "요나를 꺼내 주신 분은 하나님이에요. 요나가 먼저 착한 사람이 되어서가 아니에요. 하나님이 요나를 버리지 않으셨기 때문이에요. 우리도 잘못한 뒤에 숨고 싶을 때가 있어요. 그때도 하나님께 돌아가 말할 수 있어요. 하나님은 우리를 건지시는 분이에요."], "questions": ["요나를 육지로 나오게 하신 분은 누구인가요? 하나를 골라요.", "요나는 힘이 다 빠졌을 때 무엇을 했나요? 하나를 골라요.", "아래 문장을 따라 써요."], "question_meta": [{"no": 1, "prompt": "요나를 육지로 나오게 하신 분은 누구인가요? 하나를 골라요.", "hint": "", "answer_text": "①. “여호와께서 그 물고기에게 명하시매”(10절).", "type": "choice", "multiple": false, "options": ["하나님", "요나", "뱃사람들"], "answer": "①"}, {"no": 2, "prompt": "요나는 힘이 다 빠졌을 때 무엇을 했나요? 하나를 골라요.", "hint": "하나를 골라요.", "answer_text": "①. 7절에서 요나는 자기 영혼이 피곤할 때 여호와를 생각했다고 말해요.", "type": "choice", "multiple": false, "options": ["하나님을 생각했어요.", "배로 돌아갔어요.", "물고기에게 말했어요."], "answer": "①"}, {"no": 3, "prompt": "아래 문장을 따라 써요.", "hint": "문장을 보며 그대로 따라 써요.", "answer_text": "9절 “구원은 여호와께로서 말미암나이다”를 쉬운 말로 바꾼 문장이에요.", "type": "trace", "trace": "구원은 하나님께 있어요."}], "activity_general": "", "vocabulary": [{"word": "구원", "meaning": "위험에서 건져 살려 주심"}, {"word": "육지", "meaning": "바다가 아닌 마른 땅"}], "prayer": "하나님, 깊은 바다에서 요나를 건지신 하나님을 찬양해요. 제가 잘못하고 숨고 싶을 때도 하나님께 돌아갈 수 있게 해 주세요. 저를 건지시는 분은 하나님이세요. 감사해요. 예수님 이름으로 기도해요. 아멘."}, "high": {"target": "high", "date": "2026-11-04", "weekday": "수", "weekly_theme": "감사를 고백한 사람들", "title": "구덩이에서 건지신 하나님", "scripture": "요나 2:6–10", "verses": [{"n": "6", "t": "내가 산의 뿌리까지 내려갔사오며 땅이 그 빗장으로 나를 오래도록 막았사오나 나의 하나님 여호와여 주께서 내 생명을 구덩이에서 건지셨나이다"}, {"n": "7", "t": "내 영혼이 내 속에서 피곤할 때에 내가 여호와를 생각하였삽더니 내 기도가 주께 이르렀사오며 주의 성전에 미쳤나이다"}, {"n": "8", "t": "무릇 거짓되고 헛된 것을 숭상하는 자는 자기에게 베푸신 은혜를 버렸사오나"}, {"n": "9", "t": "나는 감사하는 목소리로 주께 제사를 드리며 나의 서원을 주께 갚겠나이다 구원은 여호와께로서 말미암나이다 하니라"}, {"n": "10", "t": "여호와께서 그 물고기에게 명하시매 요나를 육지에 토하니라"}], "commentary": ["요나는 니느웨로 가라는 하나님의 말씀을 피해 반대 방향으로 가는 배를 탔어요(1장). 큰 폭풍이 일자 요나는 바다에 던져졌고, 하나님이 준비하신 큰 물고기가 요나를 삼켰어요. 오늘 본문은 요나가 물고기 배 속에서 드린 기도의 뒷부분과 그다음 일을 들려줘요.", "6절에서 요나는 “내가 산의 뿌리까지 내려갔사오며 땅이 그 빗장으로 나를 오래도록 막았사오나”라고 말해요. 빗장은 문을 잠그는 막대기예요. 스스로 빠져나올 수 없었다는 뜻이에요. 그런데 바로 이어서 “주께서 내 생명을 구덩이에서 건지셨나이다”라고 고백해요. 요나는 힘이 다 빠졌을 때 하나님을 생각했고, 기도는 하나님께 닿았어요. 9절의 결론은 “구원은 여호와께로서 말미암나이다”예요.", "요나를 건지신 것은 처음부터 하나님의 일이었어요. 요나의 감사는 그 구원에 대한 응답이었어요. 동생과 다툰 뒤 먼저 말을 걸기 어렵거나, 잘못을 숨기고 싶을 때가 있지요. 하나님은 우리가 먼저 완벽해지기를 기다리지 않고 돌아갈 길을 열어 주세요."], "questions": ["요나 이야기를 일어난 순서대로 번호를 매겨 보세요.", "9–10절을 읽고, 본문과 더 가까운 문장을 골라요.", "“구원은 여호와께로서 말미암나이다”를 내 말로 바꾸어 한 문장 기도로 써 보세요."], "question_meta": [{"no": 1, "prompt": "요나 이야기를 일어난 순서대로 번호를 매겨 보세요.", "hint": "네 장면 앞 괄호에 1부터 4까지 번호를 써요.", "answer_text": "위에서부터 3, 1, 4,", "type": "order", "items": [{"key": "1", "text": "물고기 배 속에서 기도하고 감사해요."}, {"key": "2", "text": "하나님 말씀을 피해 배를 타요."}, {"key": "3", "text": "물고기가 요나를 육지에 토해요."}, {"key": "4", "text": "폭풍 속에서 바다에 던져져요."}]}, {"no": 2, "prompt": "9–10절을 읽고, 본문과 더 가까운 문장을 골라요.", "hint": "", "answer_text": "앞 장면이 헷갈리면 요나 1장을 함께 읽어 보세요. 2. ②. 6절은 하나님이 이미 “건지셨나이다”라고 말하고, 10절에서 요나를 육지로 보낸 것은 물고기에게 하신 하나님의 말씀이에요. 감사는 구원을 얻어 내는 값이 아니라 받은 구원에 대한 응답이에요.", "type": "choice", "multiple": false, "options": ["요나가 감사 기도를 잘해서 하나님이 상으로 꺼내 주셨어요.", "하나님이 요나를 건지셨고, 요나는 그 구원에 감사로 응답했어요."]}, {"no": 3, "prompt": "“구원은 여호와께로서 말미암나이다”를 내 말로 바꾸어 한 문장 기도로 써 보세요.", "hint": "한 문장으로 짧게 써요.", "answer_text": "예: “하나님, 저를 건지실 수 있는 분은 하나님뿐이에요.” “제가 잘못했을 때도 저를 구해 주시는 분은 하나님이세요.”", "type": "write"}], "activity_general": "", "vocabulary": [{"word": "말미암다", "meaning": "어떤 것에서 비롯되어 오다(구원이 여호와께로부터 온다는 뜻)"}, {"word": "서원", "meaning": "하나님께 무엇을 하겠다고 드리는 약속"}, {"word": "구원", "meaning": "죄와 위험에서 건져 살려 주시는 하나님의 일"}], "prayer": "하나님, 깊은 바다 밑에서 요나의 기도를 들으시고 구덩이에서 건지신 주님을 찬양해요. 구원은 하나님께 있다는 것을 기억하게 해 주세요. 잘못을 숨기고 싶을 때 도망치지 않고 하나님께 돌아가게 해 주세요. 동생이나 친구와 다투었을 때도 먼저 화해의 길을 찾게 도와주세요. 아멘."}, "youth": {"target": "youth", "date": "2026-11-04", "weekday": "수", "weekly_theme": "감사를 고백한 사람들", "title": "바닥에서 드린 감사", "scripture": "요나 2:6–10", "verses": [{"n": "6", "t": "내가 산의 뿌리까지 내려갔사오며 땅이 그 빗장으로 나를 오래도록 막았사오나 나의 하나님 여호와여 주께서 내 생명을 구덩이에서 건지셨나이다"}, {"n": "7", "t": "내 영혼이 내 속에서 피곤할 때에 내가 여호와를 생각하였삽더니 내 기도가 주께 이르렀사오며 주의 성전에 미쳤나이다"}, {"n": "8", "t": "무릇 거짓되고 헛된 것을 숭상하는 자는 자기에게 베푸신 은혜를 버렸사오나"}, {"n": "9", "t": "나는 감사하는 목소리로 주께 제사를 드리며 나의 서원을 주께 갚겠나이다 구원은 여호와께로서 말미암나이다 하니라"}, {"n": "10", "t": "여호와께서 그 물고기에게 명하시매 요나를 육지에 토하니라"}], "commentary": ["오래 연락을 미뤘던 사람에게 다시 말을 거는 일은 생각보다 어려워요. 요나는 하나님이 보내신 곳의 정반대로 도망쳤어요. 폭풍 속에서 바다에 던져졌고, 하나님이 준비하신 큰 물고기 배 속에서 기도했어요. 오늘 본문은 그 기도의 마지막 부분이에요.", "6절은 끝없이 내려가는 그림으로 가득해요. 산의 뿌리, 빗장으로 잠긴 땅, 구덩이. 요나는 스스로 올라올 수 없는 바닥까지 내려갔어요. 그런데 문장이 갑자기 방향을 바꿔요. “주께서 내 생명을 구덩이에서 건지셨나이다.” 7절에서 요나는 영혼이 피곤할 때 하나님을 생각했다고 말해요. 8절은 헛된 것을 섬기는 사람들이 자기에게 베푸신 은혜를 버린다고 하고, 9절은 감사의 제사와 서원을 말한 뒤 “구원은 여호와께로서 말미암나이다”로 마무리해요.", "요나서를 끝까지 읽으면 요나는 이후에도 하나님께 화를 내요(4장). 이 감사는 요나가 완벽해졌다는 증명이 아니라, 구원이 하나님께 속했다는 고백이에요. 예수님은 요나가 물고기 배 속에 있던 사흘을 자신의 죽음과 부활의 표적으로 말씀하셨어요(마태복음 12:40). 우리를 바닥에서 건지시는 구원도 우리의 자격이 아니라 죽음에서 살아나신 그리스도께 달려 있어요."], "questions": ["6절에서 아래로 내려가는 표현 하나와 하나님이 건지시는 표현 하나를 찾아 적어요.", "8절의 ‘거짓되고 헛된 것’처럼 요즘 청소년이 기대기 쉬운 것 하나를 골라요.", "“구원은 여호와께로서 말미암나이다”(9절)를 이번 주 자주 보는 곳에 적어 둬요."], "question_meta": [{"no": 1, "prompt": "6절에서 아래로 내려가는 표현 하나와 하나님이 건지시는 표현 하나를 찾아 적어요.", "hint": "찾은 표현 두 가지를 적어요.", "answer_text": "내려감: 산의 뿌리까지 내려갔사오며, 땅이 그 빗장으로 나를 오래도록 막았사오나. 건져 올림: 주께서 내 생명을 구덩이에서 건지셨나이다. 한 절 안에서 방향이 뒤집히는 것이 요나의 고백이에요.", "type": "write"}, {"no": 2, "prompt": "8절의 ‘거짓되고 헛된 것’처럼 요즘 청소년이 기대기 쉬운 것 하나를 골라요.", "hint": "", "answer_text": "어느 것을 골라도 돼요. 이것들 자체가 나쁘다는 뜻이 아니라, 구원처럼 기대게 될 때 ‘헛된 것’이 된다는 점을 함께 이야기해요.", "type": "check", "multiple": true, "options": ["친구들의 인정", "팔로워 수", "외모", "돈", "기타: ______"]}, {"no": 3, "prompt": "“구원은 여호와께로서 말미암나이다”(9절)를 이번 주 자주 보는 곳에 적어 둬요.", "hint": "휴대폰 메모, 필통, 책상처럼 실제로 한 곳을 정해 적어 두는 것으로 마쳐요.", "answer_text": "적어 둔 곳을 볼 때 짧게 하나님을 떠올리는 것만으로 충분해요.", "type": "write"}], "activity_general": "", "vocabulary": [{"word": "빗장", "meaning": "문을 잠그려고 가로질러 끼우는 막대기. 요나는 땅의 빗장이 자기를 가두었다고 했다. 그러나 성경은 하나님이 그런 빗장도 꺾으신다고 노래한다. “쇠 빗장을 꺾으셨음이로다”(시 107:16)."}, {"word": "숭상하다", "meaning": "높이 받들어 섬기다. 성경에서는 하나님 대신 헛된 것을 받드는 모습에 자주 쓰인다. 다윗은 “허탄한 거짓을 숭상하는 자를 미워하고 여호와를 의지하나이다”(시 31:6)라고 고백했다."}, {"word": "말미암다", "meaning": "어떤 것에서 비롯되어 오다(구원이 여호와께로부터 온다는 뜻). 성경은 늘 “구원은 여호와께 있사오니”(시 3:8)라고 고백한다. 신약도 구원을 “하나님의 선물”(엡 2:8)이라 한다."}], "prayer": "하나님, 스스로 올라올 수 없는 바닥에서 요나를 건지신 주님을 찬양해요. 저도 아직 정리되지 않은 마음이 있지만, 구원은 주님께 있다는 것을 붙들고 싶어요. 친구들의 인정이나 숫자에 기대어 은혜를 놓치지 않게 해 주세요. 마음이 지칠 때 주님을 생각하게 해 주세요. 아멘."}, "young": {"target": "young", "date": "2026-11-04", "weekday": "수", "weekly_theme": "감사를 고백한 사람들", "title": "구원은 여호와께 속했습니다", "scripture": "요나 2:6–10", "verses": [{"n": "6", "t": "내가 산의 뿌리까지 내려갔사오며 땅이 그 빗장으로 나를 오래도록 막았사오나 나의 하나님 여호와여 주께서 내 생명을 구덩이에서 건지셨나이다"}, {"n": "7", "t": "내 영혼이 내 속에서 피곤할 때에 내가 여호와를 생각하였삽더니 내 기도가 주께 이르렀사오며 주의 성전에 미쳤나이다"}, {"n": "8", "t": "무릇 거짓되고 헛된 것을 숭상하는 자는 자기에게 베푸신 은혜를 버렸사오나"}, {"n": "9", "t": "나는 감사하는 목소리로 주께 제사를 드리며 나의 서원을 주께 갚겠나이다 구원은 여호와께로서 말미암나이다 하니라"}, {"n": "10", "t": "여호와께서 그 물고기에게 명하시매 요나를 육지에 토하니라"}], "commentary": ["요나의 기도는 물고기 배 속에서 드려졌습니다. 그는 하나님의 명령을 피해 다시스로 향했고, 폭풍 속에서 바다에 던져졌습니다. 6절의 산의 뿌리, 땅의 빗장, 구덩이는 스스로 돌아올 수 없는 죽음의 자리를 그립니다. 그 바닥에서 요나는 “주께서 내 생명을 구덩이에서 건지셨나이다”라고 고백합니다.", "8–9절은 대조를 이룹니다. 헛된 것을 숭상하는 사람은 자기에게 베푸신 은혜를 버리지만, 요나는 감사의 목소리로 제사를 드리고 서원을 갚겠다고 말합니다. 그리고 “구원은 여호와께로서 말미암나이다”로 기도를 맺습니다. 10절에서 요나를 육지로 돌려보낸 것은 요나의 기도문이 아니라 물고기에게 내리신 하나님의 말씀이었습니다. 감사는 구원을 얻어 내는 조건이 아니라 구원에 대한 응답입니다.", "요나는 4장에서 다시 하나님께 분노합니다. 이 기도가 완전한 변화의 증거가 아니라는 사실은 오히려 위로가 됩니다. 하나님은 불완전한 사람의 감사를 받으시고 일을 계속하십니다. 예수님은 요나의 사흘을 자신의 죽음과 부활의 표적으로 말씀하셨습니다(마 12:40). 우리가 기대는 구원도 회개의 완성도가 아니라 죽음에서 살아나신 그리스도께 있습니다."], "questions": ["10절에서 요나를 육지로 돌려보낸 직접적인 원인은 무엇입니까? 하나를 고르십시오.", "하루를 버티는 근거를 한 문장으로 적고, 9절 “구원은 여호와께로서 말미암나이다”(구원은 여호와께로부터 옴)와 견주어 무엇이 다른지 적으십시오.", "9절의 요나처럼, 하나님이나 사람과 한 약속 가운데 미뤄 둔 하나를 이번 주 언제 갚겠습니까?"], "question_meta": [{"no": 1, "prompt": "10절에서 요나를 육지로 돌려보낸 직접적인 원인은 무엇입니까? 하나를 고르십시오.", "hint": "세 보기 가운데 하나를 고릅니다.", "answer_text": "②. 기도와 서원은 구원에 대한 요나의 응답이고, 구원을 실행한 것은 하나님의 말씀입니다. 이 구분은 감사를 거래로 만들지 않게 합니다.", "type": "choice", "multiple": false, "options": ["요나의 감사 기도", "물고기에게 하신 여호와의 말씀", "요나의 서원"], "answer": "②"}, {"no": 2, "prompt": "하루를 버티는 근거를 한 문장으로 적고, 9절 “구원은 여호와께로서 말미암나이다”(구원은 여호와께로부터 옴)와 견주어 무엇이 다른지 적으십시오.", "hint": "두 문장을 위아래로 나란히 적어 두면 견주기 쉽습니다.", "answer_text": "예: “통장 잔고가 있으니 괜찮다.” “인정받는 직장이 있으니 괜찮다.” 견주어 보면 내가 기대는 것이 9절에서 여호와께 둔 구원의 자리를 대신하고 있는지 보입니다. 정답을 적으려 하지 않아도 됩니다.", "type": "write"}, {"no": 3, "prompt": "9절의 요나처럼, 하나님이나 사람과 한 약속 가운데 미뤄 둔 하나를 이번 주 언제 갚겠습니까?", "hint": "‘약속 내용—실행할 날’ 두 칸으로 짧게 적습니다.", "answer_text": "예: 미뤄 둔 연락, 약속한 헌금이나 봉사, 가족과의 약속. 약속을 지킬 수 없는 사정이 생겼다면 정직하게 말하는 것도 갚는 방법입니다.", "type": "write"}], "activity_general": "", "vocabulary": [{"word": "숭상하다", "meaning": "높이 받들어 섬기다. 8절은 헛된 것을 숭상하는 자가 “자기에게 베푸신 은혜를 버렸사오나”(8절)라고 한다. 시편도 같은 말로 거짓을 받드는 자와 여호와를 의지하는 자를 나눈다(시 31:6). 무엇을 받드는지가 누구를 신뢰하는지를 드러낸다."}, {"word": "서원", "meaning": "하나님께 자원하여 드린 약속. 요나는 건짐받기 전, 물고기 뱃속에서 서원을 갚겠다고 고백한다(9절). 시편에서도 서원을 갚는 일은 건짐받은 이의 감사다. “여호와의 모든 백성 앞에서 나의 서원을 여호와께 갚으리로다”(시 116:14)."}, {"word": "말미암다", "meaning": "어떤 것에서 비롯되다(9절: 구원이 여호와께로부터 옴). 요나의 고백은 “구원은 여호와께 있사오니”(시 3:8)라는 시편의 신앙과 같다. 바울은 이를 넓혀 만물이 “주에게서 나오고 주로 말미암고 주에게로 돌아감이라”(롬 11:36)고 말한다."}], "prayer": "구원의 주인이신 하나님, 스스로 올라올 수 없는 구덩이에서 요나를 건지신 주님을 높입니다. 제가 하루를 버티는 근거로 삼아 온 헛된 것들을 내려놓게 하소서. 저의 감사와 회개가 완전하지 않아도, 죽음에서 살아나신 그리스도 안에서 구원이 주님께 속했음을 신뢰합니다. 미뤄 둔 서원과 약속을 정직하게 갚으며 받은 은혜에 응답하게 하소서. 아멘."}}, "2026-11-09": {"low": {"target": "low", "date": "2026-11-09", "weekday": "월", "weekly_theme": "감사는 믿음의 표현이에요", "title": "변함없는 사랑", "scripture": "시편 136:1-9", "verses": [{"n": "1", "t": "여호와께 감사하라 그는 선하시며 그 인자하심이 영원함이로다"}, {"n": "2", "t": "모든 신에 뛰어나신 하나님께 감사하라 그 인자하심이 영원함이로다"}, {"n": "3", "t": "모든 주에 뛰어나신 주께 감사하라 그 인자하심이 영원함이로다"}, {"n": "4", "t": "홀로 큰 기사를 행하시는이에게 감사하라 그 인자하심이 영원함이로다"}, {"n": "5", "t": "지혜로 하늘을 지으신이에게 감사하라 그 인자하심이 영원함이로다"}, {"n": "6", "t": "땅을 물 위에 펴신이에게 감사하라 그 인자하심이 영원함이로다"}, {"n": "7", "t": "큰 빛들을 지으신이에게 감사하라 그 인자하심이 영원함이로다"}, {"n": "8", "t": "해로 낮을 주관케 하신이에게 감사하라 그 인자하심이 영원함이로다"}, {"n": "9", "t": "달과 별들로 밤을 주관케 하신이에게 감사하라 그 인자하심이 영원함이로다"}], "commentary": ["아침이 되면 해가 떠요. 밤이 되면 달과 별이 반짝여요. 어제도 그랬고 오늘도 그래요. 시편 136편은 이렇게 날마다 보는 하늘을 바라보며 하나님께 감사하라고 노래해요.", "이 노래는 한 줄이 끝날 때마다 같은 말을 해요. “그 인자하심이 영원함이로다.” 하나님의 사랑은 끝나지 않는다는 뜻이에요. 하나님은 지혜로 넓은 하늘을 지으셨어요. 물 위에 땅을 펴셨어요. 해와 달과 별도 만드셨어요. 그리고 해에게는 낮을, 달과 별에게는 밤을 맡기셨어요.", "낮에도 밤에도 하나님의 사랑은 그대로예요. 신나는 날에도, 속상한 날에도 하나님의 사랑은 변하지 않아요. 그래서 우리는 낮에도 밤에도 언제나 하나님께 “감사해요.” 하고 말할 수 있어요."], "questions": ["이 노래에서 줄마다 끝에 똑같이 나오는 말은 무엇인가요? 하나를 골라요.", "하나님이 지으신 것 가운데 오늘 감사하고 싶은 것에 체크해요. 여러 개 골라도 돼요.", "아래 문장을 따라 써요."], "question_meta": [{"no": 1, "prompt": "이 노래에서 줄마다 끝에 똑같이 나오는 말은 무엇인가요? 하나를 골라요.", "hint": "", "answer_text": "①. 1절부터 9절까지 모든 절이 “그 인자하심이 영원함이로다”로 끝나요.", "type": "choice", "multiple": false, "options": ["그 인자하심이 영원함이로다", "하늘이 참 높도다", "밤이 참 길도다"], "answer": "①"}, {"no": 2, "prompt": "하나님이 지으신 것 가운데 오늘 감사하고 싶은 것에 체크해요. 여러 개 골라도 돼요.", "hint": "감사하고 싶은 것에 체크하고, 보기에 없으면 말로 해요.", "answer_text": "정답이 없어요. 고른 것을 보며 “하나님, ○○을 만들어 주셔서 감사해요.” 하고 말해 보게 도와주세요.", "type": "check", "multiple": true, "options": ["낮을 밝혀 주는 해", "밤에 반짝이는 달과 별", "내가 뛰어노는 땅", "다른 것을 말로 해요: ______"]}, {"no": 3, "prompt": "아래 문장을 따라 써요.", "hint": "문장을 보며 그대로 따라 써요.", "answer_text": "문장을 그대로 따라 써요.", "type": "trace", "trace": "하나님의 사랑은 영원해요."}], "activity_general": "", "vocabulary": [{"word": "인자하심", "meaning": "하나님의 변하지 않는 사랑과 친절"}, {"word": "주관하다", "meaning": "맡아서 다스리다. 해는 낮을, 달과 별은 밤을 맡았어요"}], "prayer": "하나님, 지혜로 하늘을 지으시고 해와 달과 별을 만들어 주셔서 감사해요. 낮에도 밤에도 하나님의 사랑은 변하지 않아요. 신나는 날에도 속상한 날에도 하나님의 사랑을 기억하며 감사하게 해 주세요. 아멘."}, "high": {"target": "high", "date": "2026-11-09", "weekday": "월", "weekly_theme": "감사는 믿음의 표현이에요", "title": "아홉 번 들린 고백", "scripture": "시편 136:1-9", "verses": [{"n": "1", "t": "여호와께 감사하라 그는 선하시며 그 인자하심이 영원함이로다"}, {"n": "2", "t": "모든 신에 뛰어나신 하나님께 감사하라 그 인자하심이 영원함이로다"}, {"n": "3", "t": "모든 주에 뛰어나신 주께 감사하라 그 인자하심이 영원함이로다"}, {"n": "4", "t": "홀로 큰 기사를 행하시는이에게 감사하라 그 인자하심이 영원함이로다"}, {"n": "5", "t": "지혜로 하늘을 지으신이에게 감사하라 그 인자하심이 영원함이로다"}, {"n": "6", "t": "땅을 물 위에 펴신이에게 감사하라 그 인자하심이 영원함이로다"}, {"n": "7", "t": "큰 빛들을 지으신이에게 감사하라 그 인자하심이 영원함이로다"}, {"n": "8", "t": "해로 낮을 주관케 하신이에게 감사하라 그 인자하심이 영원함이로다"}, {"n": "9", "t": "달과 별들로 밤을 주관케 하신이에게 감사하라 그 인자하심이 영원함이로다"}], "commentary": ["시편 136편은 모든 절이 “그 인자하심이 영원함이로다”로 끝나는 찬양이에요. 오늘 읽은 1–9절에서만 이 말이 아홉 번 나와요. 한 사람이 앞부분을 부르면 여러 사람이 뒷부분으로 응답하며 함께 불렀을 것으로 보여요.", "1–3절은 감사를 받으실 분이 누구신지 알려 줘요. 여호와는 선하시고, 모든 신에 뛰어나신 하나님, 모든 주(다스리는 이)에 뛰어나신 주세요. 4–9절은 하나님이 하신 일을 하나씩 말해요. 하나님은 지혜로 하늘을 지으시고 땅을 물 위에 펴셨어요. 해와 달과 별을 만드시고 낮과 밤을 맡기셨어요. 시인은 이 일들 하나하나 뒤에 같은 고백을 붙여요. 하나님이 하신 모든 일 속에 변하지 않는 사랑이 있다는 고백이에요.", "해가 뜨고 밤에 별이 보이는 일은 너무 익숙해서 그냥 지나치기 쉬워요. 시편 136편은 그 익숙한 것들 앞에서 잠깐 멈추게 해요. 등굣길에 본 하늘, 내가 딛고 선 땅에서도 하나님의 사랑을 발견하고 감사할 수 있어요."], "questions": ["아래 말들을 ‘가’(1–3절)와 ‘나’(4–9절) 두 묶음으로 나누어요.", "시인이 하나님이 하신 일마다 “그 인자하심이 영원함이로다”를 붙인 까닭을 골라요.", "시편 136편처럼 나만의 감사 노래 한 줄을 지어요."], "question_meta": [{"no": 1, "prompt": "아래 말들을 ‘가’(1–3절)와 ‘나’(4–9절) 두 묶음으로 나누어요.", "hint": "‘가’와 ‘나’ 옆에 기호를 나누어 적어요.", "answer_text": "가: ㉠㉢㉤ / 나: ㉡㉣㉥. 1–3절은 하나님이 누구신지, 4–9절은 하나님이 하신 일을 노래해요.", "type": "classify", "groups": [{"key": "가", "label": "하나님은 어떤 분이신가(1–3절)"}, {"key": "나", "label": "하나님이 하신 일(4–9절)"}], "items": [{"key": "㉠", "text": "선하시다"}, {"key": "㉡", "text": "지혜로 하늘을 지으셨다"}, {"key": "㉢", "text": "모든 신에 뛰어나시다"}, {"key": "㉣", "text": "땅을 물 위에 펴셨다"}, {"key": "㉤", "text": "모든 주(다스리는 이)에 뛰어나시다"}, {"key": "㉥", "text": "해로 낮을 주관하게 하셨다"}]}, {"no": 2, "prompt": "시인이 하나님이 하신 일마다 “그 인자하심이 영원함이로다”를 붙인 까닭을 골라요.", "hint": "", "answer_text": "②. ③은 본문과 달라요. 시인은 해와 달과 별이 아니라 그것들을 지으신 하나님께 감사하라고 해요.", "type": "choice", "multiple": false, "options": ["노래를 길게 만들고 싶어서", "하나님이 하신 모든 일에 변하지 않는 사랑이 담겨 있다고 고백하려고", "해와 달과 별에게도 감사하자고 말하려고"], "answer": "②"}, {"no": 3, "prompt": "시편 136편처럼 나만의 감사 노래 한 줄을 지어요.", "hint": "빈칸에 하나님이 하신 일이나 주신 것을 적고, 지은 한 줄을 가족에게 읽어 주어 가족이 “그 인자하심이 영원함이로다”로 응답하게 해 봐요.", "answer_text": "예: “아침마다 뜨는 해를 주신 하나님께 감사하라. 그 인자하심이 영원함이로다.” 오늘 본 것이나 받은 돌봄 무엇이든 좋아요.", "type": "write", "quote": "( )을/를 주신 하나님께 감사하라. 그 인자하심이 영원함이로다."}], "activity_general": "", "vocabulary": [{"word": "인자하심", "meaning": "하나님의 변하지 않는 사랑과 신실한 돌보심"}, {"word": "기사", "meaning": "놀랍고 신기한 일(4절 ‘큰 기사’)"}, {"word": "주관하다", "meaning": "맡아서 다스리다"}], "prayer": "선하신 하나님, 지혜로 하늘을 지으시고 해와 달과 별에게 낮과 밤을 맡기신 하나님을 찬양해요. 날마다 보는 하늘이 익숙해서 그냥 지나칠 때가 많았어요. 오늘 본 하늘과 내가 딛고 선 땅에서 하나님의 변하지 않는 사랑을 발견하고 감사하게 해 주세요. 아멘."}, "youth": {"target": "youth", "date": "2026-11-09", "weekday": "월", "weekly_theme": "감사는 믿음의 표현이에요", "title": "반복이 지루하지 않은 이유", "scripture": "시편 136:1-9", "verses": [{"n": "1", "t": "여호와께 감사하라 그는 선하시며 그 인자하심이 영원함이로다"}, {"n": "2", "t": "모든 신에 뛰어나신 하나님께 감사하라 그 인자하심이 영원함이로다"}, {"n": "3", "t": "모든 주에 뛰어나신 주께 감사하라 그 인자하심이 영원함이로다"}, {"n": "4", "t": "홀로 큰 기사를 행하시는이에게 감사하라 그 인자하심이 영원함이로다"}, {"n": "5", "t": "지혜로 하늘을 지으신이에게 감사하라 그 인자하심이 영원함이로다"}, {"n": "6", "t": "땅을 물 위에 펴신이에게 감사하라 그 인자하심이 영원함이로다"}, {"n": "7", "t": "큰 빛들을 지으신이에게 감사하라 그 인자하심이 영원함이로다"}, {"n": "8", "t": "해로 낮을 주관케 하신이에게 감사하라 그 인자하심이 영원함이로다"}, {"n": "9", "t": "달과 별들로 밤을 주관케 하신이에게 감사하라 그 인자하심이 영원함이로다"}], "commentary": ["좋아하는 노래의 후렴은 몇 번을 불러도 질리지 않아요. 공연장에서는 후렴이 돌아올 때 다 함께 목소리를 높이기도 해요. 시편 136편에도 그런 후렴이 있어요. 모든 절이 “그 인자하심이 영원함이로다”로 끝나요.", "1–3절은 감사를 받으실 분을 소개해요. 여호와는 선하시고, 모든 신에 뛰어나신 하나님, 모든 주에 뛰어나신 주세요. 4–9절은 창조를 노래해요. 하나님은 지혜로 하늘을 지으시고 땅을 물 위에 펴셨으며, 해와 달과 별을 만들어 낮과 밤을 맡기셨어요. 당시 주변 민족들은 해와 달을 신처럼 섬기기도 했어요. 그런데 이 시에서 해와 달과 별은 섬길 대상이 아니라 하나님이 지으시고 일을 맡기신 피조물이에요. ‘인자하심’은 하나님이 자기 백성에게 끝까지 지키시는 변함없는 사랑을 가리키는 말이에요.", "반복은 잊지 않기 위한 장치이기도 해요. 매일 보는 하늘은 너무 익숙해서 특별한 감사할 거리로 보이지 않을 때가 많아요. 이 시편은 익숙한 것을 다시 보게 하고, 그 뒤에 계신 하나님의 사랑을 함께 고백하게 해요. 이 감사는 기분이 좋을 때만 나오는 반응이 아니에요. 변하지 않으시는 하나님이 누구신지 아는 데서 시작되는 믿음의 표현이에요."], "questions": ["1–9절에서 하나님을 소개하는 표현 두 개를 찾아 그대로 적어요.", "다음 세 말 가운데 7–9절의 관점과 가장 가까운 것을 골라요.", "이번 주 하늘을 보며 “그 인자하심이 영원함이로다”를 말할 때를 골라요."], "question_meta": [{"no": 1, "prompt": "1–9절에서 하나님을 소개하는 표현 두 개를 찾아 그대로 적어요.", "hint": "본문에서 찾은 표현을 그대로 옮겨 적어요.", "answer_text": "예: “선하시며”, “모든 신에 뛰어나신 하나님”, “모든 주에 뛰어나신 주”, “홀로 큰 기사를 행하시는이”, “지혜로 하늘을 지으신이” 등.", "type": "write"}, {"no": 2, "prompt": "다음 세 말 가운데 7–9절의 관점과 가장 가까운 것을 골라요.", "hint": "", "answer_text": "③. 시인은 해와 달과 별을 하나님이 지으시고 낮과 밤을 맡기신 것으로 노래해요(7–9절). ①은 지으신 분을 빼고, ②는 피조물에게 삶의 방향을 묻는 쪽으로 기울어요.", "type": "choice", "multiple": false, "options": ["“해와 달과 별은 저절로 돌아가는 자연일 뿐이야.”", "“별자리가 내 성격이랑 운을 알려 준대.”", "“해와 달과 별은 하나님이 지으시고 낮과 밤을 맡기신 것들이야.”"], "answer": "③"}, {"no": 3, "prompt": "이번 주 하늘을 보며 “그 인자하심이 영원함이로다”를 말할 때를 골라요.", "hint": "고른 시간에 실제로 하늘을 보고, 마음속으로 후렴을 한 번 말해요.", "answer_text": "어떤 때를 골라도 좋아요. 짧게 하늘을 보고 한 번 고백하는 것으로 충분해요.", "type": "check", "multiple": true, "options": ["등굣길 아침 하늘", "학원이나 활동을 마치고 나온 저녁 하늘", "잠들기 전 창밖의 밤하늘", "다른 때: ______"]}], "activity_general": "", "vocabulary": [{"word": "인자하심", "meaning": "자기 백성을 끝까지 지키시는 하나님의 변함없는 사랑. 시편 136편은 절마다 이 사랑을 노래하고, 예레미야애가는 이 사랑 때문에 “우리가 진멸되지 아니함이니이다”(애 3:22)라고 고백한다."}, {"word": "피조물", "meaning": "하나님이 지으신 모든 것. 성경에서 피조물은 창조주를 대신할 수 없다. “피조물을 조물주보다 더 경배하고 섬김이라”(롬 1:25)는 것이 죄의 모습이다. 해와 달도 피조물일 뿐이다."}, {"word": "주관하다", "meaning": "맡아서 다스리다. 창조 때 하나님은 “큰 광명으로 낮을 주관하게 하시고”(창 1:16) 작은 광명으로 밤을 맡기셨다. 시편 136편은 바로 이 장면을 감사의 노래로 부른다."}], "prayer": "선하신 하나님, 지혜로 하늘을 지으시고 해와 달과 별에게 낮과 밤을 맡기신 하나님을 찬양해요. 매일 보는 것들이 너무 익숙해서 감사를 잊을 때가 많아요. 하늘을 볼 때마다 그것을 지으신 하나님을 기억하게 해 주세요. 제 기분이 오르내릴 때에도 변하지 않는 하나님의 사랑을 고백하게 해 주세요. 아멘."}, "young": {"target": "young", "date": "2026-11-09", "weekday": "월", "weekly_theme": "감사는 믿음의 표현이에요", "title": "모든 일 뒤의 같은 고백", "scripture": "시편 136:1-9", "verses": [{"n": "1", "t": "여호와께 감사하라 그는 선하시며 그 인자하심이 영원함이로다"}, {"n": "2", "t": "모든 신에 뛰어나신 하나님께 감사하라 그 인자하심이 영원함이로다"}, {"n": "3", "t": "모든 주에 뛰어나신 주께 감사하라 그 인자하심이 영원함이로다"}, {"n": "4", "t": "홀로 큰 기사를 행하시는이에게 감사하라 그 인자하심이 영원함이로다"}, {"n": "5", "t": "지혜로 하늘을 지으신이에게 감사하라 그 인자하심이 영원함이로다"}, {"n": "6", "t": "땅을 물 위에 펴신이에게 감사하라 그 인자하심이 영원함이로다"}, {"n": "7", "t": "큰 빛들을 지으신이에게 감사하라 그 인자하심이 영원함이로다"}, {"n": "8", "t": "해로 낮을 주관케 하신이에게 감사하라 그 인자하심이 영원함이로다"}, {"n": "9", "t": "달과 별들로 밤을 주관케 하신이에게 감사하라 그 인자하심이 영원함이로다"}], "commentary": ["일상이 안정될수록 그 안정이 어디서 오는지 묻지 않게 됩니다. 해가 뜨고 밤이 오는 일처럼 늘 반복되는 것은 배경이 되고, 감사의 목록에서 빠지기 쉽습니다. 시편 136편은 그 배경을 앞으로 불러냅니다.", "이 시편은 모든 절이 같은 후렴으로 끝나는 교독 형식의 찬양입니다. 1–3절은 감사의 대상을 선하신 여호와, 모든 신에 뛰어나신 하나님, 모든 주에 뛰어나신 주로 소개합니다. 4–9절은 창조를 노래합니다. 하나님은 지혜로 하늘을 지으시고 땅을 물 위에 펴셨으며, 해와 달과 별에게 낮과 밤을 주관하게 하셨습니다. 고대 세계에서 숭배되던 천체가 여기서는 창조주가 일을 맡기신 피조물로 등장합니다. 이어지는 10절 이하에서 시인은 출애굽의 구원으로 넘어가며 같은 후렴을 이어 갑니다. 창조와 구원이 하나님의 한결같은 인자하심으로 묶입니다.", "이 후렴은 형편에 대한 평가가 아니라 하나님에 대한 고백입니다. ‘요즘 형편이 좋다’가 아니라 ‘그분의 인자하심이 영원하다’고 말합니다. 그래서 조건이 흔들리는 날에도 감사할 근거가 남습니다. 감사는 결과를 확인한 뒤에 나오는 반응이기 전에, 변하지 않으시는 분을 신뢰하는 믿음의 언어입니다."], "questions": ["4–9절에서 하나님이 하신 일을 나타내는 표현을 세 개 찾아 적어 보십시오.", "다음 두 감사 가운데 136편 후렴의 근거와 더 가까운 것을 고르십시오.", "매일 반복되는 순간과 그때 보는 것을 하나씩 적고, 이번 주 그때마다 후렴 “그 인자하심이 영원함이로다”를 떠올리십시오."], "question_meta": [{"no": 1, "prompt": "4–9절에서 하나님이 하신 일을 나타내는 표현을 세 개 찾아 적어 보십시오.", "hint": "", "answer_text": "예: “홀로 큰 기사를 행하시는”, “지혜로 하늘을 지으신”, “땅을 물 위에 펴신”, “큰 빛들을 지으신”, “해로 낮을 주관케 하신”, “달과 별들로 밤을 주관케 하신”.", "type": "write"}, {"no": 2, "prompt": "다음 두 감사 가운데 136편 후렴의 근거와 더 가까운 것을 고르십시오.", "hint": "두 진술 가운데 하나를 고릅니다.", "answer_text": "②. ①도 좋은 감사입니다. 다만 후렴은 형편이 아니라 하나님의 영원한 인자하심을 근거로 삼습니다. 두 감사는 서로 부딪치지 않고, ②가 ①을 받쳐 줍니다.", "type": "choice", "multiple": false, "options": ["“요즘 일이 잘 풀려서 감사합니다.”", "“형편이 어떻든 하나님의 인자하심이 영원하시니 감사합니다.”"], "answer": "②"}, {"no": 3, "prompt": "매일 반복되는 순간과 그때 보는 것을 하나씩 적고, 이번 주 그때마다 후렴 “그 인자하심이 영원함이로다”를 떠올리십시오.", "hint": "‘언제 / 무엇을 보며’ 두 칸을 채우고, 그 순간 후렴을 한 번 떠올립니다.", "answer_text": "예: “아침 7시 반 / 버스 창밖의 하늘”, “저녁 식사 / 식탁 위의 음식”. 한 주 동안 이어 가기 어렵다면 하루라도 해 보고 무엇을 발견했는지 돌아봅니다.", "type": "write"}], "activity_general": "", "vocabulary": [{"word": "인자하심", "meaning": "맺은 약속(언약)을 끝까지 지키시는 하나님의 변함없는 사랑. 히브리어 헤세드로, 하나님이 자신을 “인자와 진실이 많은 하나님”(출 34:6)으로 알리실 때 쓰인 말이다. 시편 136편은 창조에서 구원까지 이 헤세드를 후렴으로 노래한다."}, {"word": "교독", "meaning": "인도자와 회중이 번갈아 읽거나 부르는 예배 방식. 성경에도 서로 화답하며 찬양한 장면이 있다. 성전 기초가 놓일 때 백성은 “서로 찬송가를 화답하며”(스 3:11) 그 인자하심이 영원하다는 시편 136편과 같은 고백을 불렀다."}, {"word": "주관하다", "meaning": "맡아서 다스리다. 8–9절은 “큰 광명으로 낮을 주관하게 하시고 작은 광명으로 밤을 주관하게 하시며”(창 1:16)를 되울린다. 해와 달을 신으로 섬기던 세계 속에서, 성경은 그것들을 하나님이 맡기신 일을 하는 피조물로 본다."}], "prayer": "선하신 하나님, 지혜로 하늘을 지으시고 낮과 밤의 질서를 세우신 주님을 찬양합니다. 날마다 반복되는 일상을 당연하게 여겨 그 뒤에 계신 주님을 잊고 지낼 때가 많았습니다. 형편이 좋을 때만 감사하지 않고, 영원한 주님의 인자하심을 근거로 감사하게 하소서. 오늘 보는 하늘과 걷는 땅에서 주님의 신실하심을 고백하게 하소서. 아멘."}}, "2026-11-27": {"low": {"target": "low", "date": "2026-11-27", "weekday": "금", "weekly_theme": "한 해를 돌아보며 감사해요", "title": "함께 기뻐한 날", "scripture": "느헤미야 12:41–47", "verses": [{"n": "41", "t": "제사장 엘리아김과 마아세야와 미냐민과 미가야와 엘료에내와 스가랴와 하나냐는 다 나팔을 잡았고"}, {"n": "42", "t": "또 마아세야와 스마야와 엘르아살과 웃시와 여호하난과 말기야와 엘람과 에셀이 함께 있으며 노래하는 자는 크게 찬송하였는데 그 감독은 예스라히야라"}, {"n": "43", "t": "이 날에 무리가 크게 제사를 드리고 심히 즐거워하였으니 이는 하나님이 크게 즐거워하게 하셨음이라 부녀와 어린 아이도 즐거워 하였으므로 예루살렘의 즐거워하는 소리가 멀리 들렸느니라"}, {"n": "44", "t": "그 날에 사람을 세워 곳간을 맡기고 제사장들과 레위 사람들에게 돌릴 것 곧 율법에 정한대로 거제물과 처음 익은 것과 십일조를 모든 성읍 밭에서 거두어 이 곳간에 쌓게 하였노니 이는 유다 사람이 섬기는 제사장들과 레위 사람들을 인하여 즐거워함을 인함이라"}, {"n": "45", "t": "저희는 하나님을 섬기는 일과 결례의 일을 힘썼으며 노래하는 자들과 문지기들도 그러하여 모두 다윗과 그 아들 솔로몬의 명을 좇아 행하였으니"}, {"n": "46", "t": "옛적 다윗과 아삽의 때에는 노래하는 자의 두목이 있어서 하나님께 찬송하는 노래와 감사하는 노래를 하였음이며"}, {"n": "47", "t": "스룹바벨과 느헤미야 때에는 온 이스라엘이 노래하는 자들과 문지기들에게 날마다 쓸 것을 주되 그 구별한 것을 레위 사람들에게 주고 레위 사람들은 그것을 또 구별하여 아론 자손에게 주었느니라"}], "commentary": ["큰일을 다 마치면 모두 함께 기뻐해요. 느헤미야 때 이스라엘 백성은 무너졌던 예루살렘 성벽을 다시 쌓았어요. 일을 다 마친 뒤, 백성은 모여서 하나님께 감사하는 날을 가졌어요.", "그날 제사장들은 나팔을 불었고, 노래하는 사람들은 큰 소리로 찬송했어요. 사람들은 하나님께 제사를 드리며 아주 즐거워했어요. 성경은 하나님이 그들을 크게 즐겁게 하셨다고 말해요. 부녀(여자들)와 어린아이들도 함께 즐거워했어요. 예루살렘에서 즐거워하는 소리가 멀리까지 들렸어요.", "그날 백성은 하나님을 섬기는 사람들도 챙겼어요. 곡식과 처음 익은 열매를 곳간(창고)에 모아, 제사장과 레위 사람들이 날마다 쓸 몫을 나누었어요. 올해를 마무리하며 우리도 하나님께 감사하고, 함께 섬기는 사람들에게도 고마움을 전해요."], "questions": ["맞으면 O, 틀리면 X에 표시해요.", "교회에서 우리를 위해 섬기는 선생님, 목사님께 고마움을 전할 방법을 골라요. 여러 개 골라도 돼요.", "아래 문장을 따라 써요."], "question_meta": [{"no": 1, "prompt": "맞으면 O, 틀리면 X에 표시해요.", "hint": "", "answer_text": "O. “부녀와 어린 아이도 즐거워 하였으므로”(43절).", "type": "ox", "statement": "감사하는 날에 어린아이들도 함께 즐거워했어요.", "answer": "O"}, {"no": 2, "prompt": "교회에서 우리를 위해 섬기는 선생님, 목사님께 고마움을 전할 방법을 골라요. 여러 개 골라도 돼요.", "hint": "해 보고 싶은 것에 체크해요.", "answer_text": "어느 것을 골라도 좋아요. 섬기는 분이 떠오르지 않으면 부모님이나 선생님을 생각해도 돼요.", "type": "check", "multiple": true, "options": ["“감사합니다.” 하고 인사하기", "고마운 마음을 그림 카드로 그리기", "그분들을 위해 기도하기"]}, {"no": 3, "prompt": "아래 문장을 따라 써요.", "hint": "문장을 보며 그대로 따라 써요.", "answer_text": "문장을 그대로 따라 써요.", "type": "trace", "trace": "하나님이 우리를 기쁘게 하셨어요."}], "activity_general": "", "vocabulary": [{"word": "곳간", "meaning": "곡식이나 물건을 모아 두는 창고"}, {"word": "섬기다", "meaning": "하나님과 사람을 위해 정성껏 일하고 돕다"}], "prayer": "하나님, 올해도 저와 가족을 즐겁게 해 주셔서 감사해요. 느헤미야 때 아이들도 함께 기뻐했던 것처럼 저도 기쁘게 찬양해요. 교회에서 섬기는 분들에게도 고마운 마음을 전하게 해 주세요. 아멘."}, "high": {"target": "high", "date": "2026-11-27", "weekday": "금", "weekly_theme": "한 해를 돌아보며 감사해요", "title": "즐거운 소리가 멀리 들렸어요", "scripture": "느헤미야 12:41–47", "verses": [{"n": "41", "t": "제사장 엘리아김과 마아세야와 미냐민과 미가야와 엘료에내와 스가랴와 하나냐는 다 나팔을 잡았고"}, {"n": "42", "t": "또 마아세야와 스마야와 엘르아살과 웃시와 여호하난과 말기야와 엘람과 에셀이 함께 있으며 노래하는 자는 크게 찬송하였는데 그 감독은 예스라히야라"}, {"n": "43", "t": "이 날에 무리가 크게 제사를 드리고 심히 즐거워하였으니 이는 하나님이 크게 즐거워하게 하셨음이라 부녀와 어린 아이도 즐거워 하였으므로 예루살렘의 즐거워하는 소리가 멀리 들렸느니라"}, {"n": "44", "t": "그 날에 사람을 세워 곳간을 맡기고 제사장들과 레위 사람들에게 돌릴 것 곧 율법에 정한대로 거제물과 처음 익은 것과 십일조를 모든 성읍 밭에서 거두어 이 곳간에 쌓게 하였노니 이는 유다 사람이 섬기는 제사장들과 레위 사람들을 인하여 즐거워함을 인함이라"}, {"n": "45", "t": "저희는 하나님을 섬기는 일과 결례의 일을 힘썼으며 노래하는 자들과 문지기들도 그러하여 모두 다윗과 그 아들 솔로몬의 명을 좇아 행하였으니"}, {"n": "46", "t": "옛적 다윗과 아삽의 때에는 노래하는 자의 두목이 있어서 하나님께 찬송하는 노래와 감사하는 노래를 하였음이며"}, {"n": "47", "t": "스룹바벨과 느헤미야 때에는 온 이스라엘이 노래하는 자들과 문지기들에게 날마다 쓸 것을 주되 그 구별한 것을 레위 사람들에게 주고 레위 사람들은 그것을 또 구별하여 아론 자손에게 주었느니라"}], "commentary": ["느헤미야와 백성은 무너진 예루살렘 성벽을 다시 쌓았어요(느 6:15). 공사를 마친 뒤 그들은 성벽을 하나님께 드리는 봉헌식을 열었어요(12:27). 두 무리의 찬양대가 감사 찬송을 부르며 성벽 위를 걸었고, 하나님의 성전에 함께 섰어요.", "41–42절에는 나팔을 잡은 제사장들과 함께 선 사람들의 이름이 하나하나 적혀 있어요. 노래하는 사람들은 감독 예스라히야와 함께 크게 찬송했어요. 그날 무리는 큰 제사를 드리고 몹시 즐거워했어요. 43절은 그 이유를 “하나님이 크게 즐거워하게 하셨음이라”라고 말해요. 부녀(여자들)와 어린아이들도 즐거워했고, 그 소리가 멀리까지 들렸어요.", "44–47절은 축제가 끝난 뒤를 준비한 이야기예요. 그날 사람들은 곳간을 맡을 사람을 세우고, 율법에 정한 대로 거제물과 처음 익은 것과 십일조를 모았어요. 백성은 섬기는 제사장과 레위 사람들 때문에 즐거워했어요. 한 해를 마무리하는 감사는 하나님을 찬양하고, 함께 섬기는 사람들을 돌보는 일로 이어져요."], "questions": ["사람과 하는 일을 선으로 이어요. 선 대신 A–①처럼 짝을 적어도 돼요.", "43절을 읽고, 무리가 크게 즐거워한 이유를 골라요.", "44절처럼 하나님을 섬기는 사람들을 기쁘게 돕는 방법 하나를 골라요."], "question_meta": [{"no": 1, "prompt": "사람과 하는 일을 선으로 이어요. 선 대신 A–①처럼 짝을 적어도 돼요.", "hint": "세 쌍을 선으로 잇거나 A–①처럼 적어요.", "answer_text": "A–②, B–③, C–①.", "type": "match", "left": ["제사장 엘리아김과 마아세야 등", "노래하는 자", "곳간을 맡은 사람"], "right": ["① 거제물과 처음 익은 것과 십일조를 거두어 쌓았어요.", "② 나팔을 잡았어요.", "③ 크게 찬송했어요."], "answer": {"A": "②", "B": "③", "C": "①"}}, {"no": 2, "prompt": "43절을 읽고, 무리가 크게 즐거워한 이유를 골라요.", "hint": "", "answer_text": "①. 43절은 즐거움의 근원이 하나님이라고 말해요.", "type": "choice", "multiple": false, "options": ["하나님이 크게 즐거워하게 하셨기 때문이에요.", "선물을 많이 받았기 때문이에요.", "더 이상 일하지 않아도 되었기 때문이에요."], "answer": "①"}, {"no": 3, "prompt": "44절처럼 하나님을 섬기는 사람들을 기쁘게 돕는 방법 하나를 골라요.", "hint": "고른 일을 이번 주일에 해 봐요.", "answer_text": "어느 것을 골라도 좋아요. 이번 주에 실제로 할 수 있는 것을 골라요.", "type": "check", "multiple": true, "options": ["예배가 끝난 뒤 정리를 함께 돕기", "주일학교 선생님께 감사 인사 전하기", "헌금을 준비하며 감사 기도하기", "다른 방법: ______"]}], "activity_general": "", "vocabulary": [{"word": "곳간", "meaning": "곡식이나 물건을 쌓아 두는 창고"}, {"word": "거제물", "meaning": "하나님께 들어 올려 드리는 예물"}, {"word": "십일조", "meaning": "얻은 것의 십분의 일을 하나님께 드리는 것"}], "prayer": "하나님, 성벽을 다시 쌓게 하시고 백성을 크게 즐겁게 하신 하나님을 찬양해요. 올해 저에게도 기쁨을 주셔서 감사해요. 한 해를 마무리하며 하나님께 찬송하고, 교회와 학교에서 저를 위해 수고한 분들도 기쁘게 돕게 해 주세요. 제가 받은 기쁨이 하나님께로부터 왔음을 기억하게 해 주세요. 아멘."}, "youth": {"target": "youth", "date": "2026-11-27", "weekday": "금", "weekly_theme": "한 해를 돌아보며 감사해요", "title": "축제 다음 날에도 이어지는 감사", "scripture": "느헤미야 12:41–47", "verses": [{"n": "41", "t": "제사장 엘리아김과 마아세야와 미냐민과 미가야와 엘료에내와 스가랴와 하나냐는 다 나팔을 잡았고"}, {"n": "42", "t": "또 마아세야와 스마야와 엘르아살과 웃시와 여호하난과 말기야와 엘람과 에셀이 함께 있으며 노래하는 자는 크게 찬송하였는데 그 감독은 예스라히야라"}, {"n": "43", "t": "이 날에 무리가 크게 제사를 드리고 심히 즐거워하였으니 이는 하나님이 크게 즐거워하게 하셨음이라 부녀와 어린 아이도 즐거워 하였으므로 예루살렘의 즐거워하는 소리가 멀리 들렸느니라"}, {"n": "44", "t": "그 날에 사람을 세워 곳간을 맡기고 제사장들과 레위 사람들에게 돌릴 것 곧 율법에 정한대로 거제물과 처음 익은 것과 십일조를 모든 성읍 밭에서 거두어 이 곳간에 쌓게 하였노니 이는 유다 사람이 섬기는 제사장들과 레위 사람들을 인하여 즐거워함을 인함이라"}, {"n": "45", "t": "저희는 하나님을 섬기는 일과 결례의 일을 힘썼으며 노래하는 자들과 문지기들도 그러하여 모두 다윗과 그 아들 솔로몬의 명을 좇아 행하였으니"}, {"n": "46", "t": "옛적 다윗과 아삽의 때에는 노래하는 자의 두목이 있어서 하나님께 찬송하는 노래와 감사하는 노래를 하였음이며"}, {"n": "47", "t": "스룹바벨과 느헤미야 때에는 온 이스라엘이 노래하는 자들과 문지기들에게 날마다 쓸 것을 주되 그 구별한 것을 레위 사람들에게 주고 레위 사람들은 그것을 또 구별하여 아론 자손에게 주었느니라"}], "commentary": ["학교 축제나 수련회가 끝나면 무대 위의 순간이 오래 기억에 남아요. 하지만 그 행사를 가능하게 한 사람들은 무대 뒤에 있어요. 느헤미야 12장은 큰 축제의 장면과 그 뒤를 함께 보여 줘요.", "느헤미야와 백성은 무너졌던 예루살렘 성벽을 다시 쌓았어요(6:15). 그리고 성벽을 하나님께 드리는 봉헌식을 열었어요(12:27). 두 감사 찬양대가 성벽 위를 행진한 뒤 하나님의 전에 섰어요(12:31, 40). 41–42절에는 나팔을 잡은 제사장들과 찬송한 사람들의 이름이 적혀 있어요. 한 사람 한 사람의 섬김이 기억된 거예요. 43절은 그날의 기쁨을 “즐거워”라는 말로 여러 번 표현해요. 기쁨의 근원도 분명히 밝혀요. “하나님이 크게 즐거워하게 하셨음이라.” 부녀(여자들)와 어린아이들도 함께였고, 그 기쁜 소리는 멀리까지 들렸어요.", "44절은 “그 날에”로 시작해요. 축제의 날에 백성은 곳간을 맡을 사람을 세우고 제사장과 레위 사람들의 몫을 모았어요. 섬기는 이들 때문에 즐거워했기 때문이에요. 47절은 노래하는 사람들과 문지기들에게 날마다 쓸 몫을 주었다고 말해요. 감사는 하루의 감정으로 끝나지 않고, 섬기는 사람들을 계속 돌보는 일로 이어졌어요."], "questions": ["43절에서 ‘즐거워’가 들어간 표현을 모두 찾아 적어요.", "44절에서 축제의 날에 곳간을 맡길 사람을 세운 까닭으로 가장 알맞은 것을 골라요.", "올해 행사 뒤에서 수고한 한 사람에게 이번 주 전할 구체적인 감사를 적어요."], "question_meta": [{"no": 1, "prompt": "43절에서 ‘즐거워’가 들어간 표현을 모두 찾아 적어요.", "hint": "43절에서 찾은 표현을 적어요.", "answer_text": "“심히 즐거워하였으니”, “크게 즐거워하게 하셨음이라”, “부녀와 어린 아이도 즐거워 하였으므로”, “즐거워하는 소리”. 여기에 44절의 “즐거워함을 인함이라”까지 찾아도 좋아요.", "type": "write"}, {"no": 2, "prompt": "44절에서 축제의 날에 곳간을 맡길 사람을 세운 까닭으로 가장 알맞은 것을 골라요.", "hint": "하나를 골라요.", "answer_text": "①. 44절은 섬기는 제사장과 레위 사람들로 말미암아 즐거워했다고 말하고, 47절은 날마다 쓸 몫을 주었다고 말해요.", "type": "choice", "multiple": false, "options": ["감사가 하루 행사로 끝나지 않고, 섬기는 사람들을 날마다 돌보는 일로 이어지게 하려고", "축제에 쓴 비용을 다시 거두려고", "제사장들이 일을 잘하는지 감시하려고"], "answer": "①"}, {"no": 3, "prompt": "올해 행사 뒤에서 수고한 한 사람에게 이번 주 전할 구체적인 감사를 적어요.", "hint": "‘누구에게—무엇을’ 두 칸으로 적고 이번 주에 전해요.", "answer_text": "예: “수련회 식사를 준비하신 집사님께 ‘덕분에 잘 먹고 은혜받았어요’라고 말씀드리기.” 말 대신 짧은 메모나 정리 돕기도 좋아요.", "type": "write"}], "activity_general": "", "vocabulary": [{"word": "봉헌식", "meaning": "완성한 것을 하나님께 드리며 감사하는 예식. 성경에서는 지은 것이 우리 것이 아니라 하나님의 것임을 고백하는 자리였다. 솔로몬도 성전을 완성하고 “하나님의 전의 낙성식”(대하 7:5)을 행했다."}, {"word": "곳간", "meaning": "곡식과 예물을 모아 두는 창고. 성경에서는 하나님의 일을 하는 사람들을 돌보는 데 쓰였다. 말라기는 “너희의 온전한 십일조를 창고에 들여 나의 집에 양식이 있게 하고”(말 3:10)라고 한다."}, {"word": "구별하다", "meaning": "거룩한 일에 쓰도록 따로 떼어 하나님께 드리다(47절). 성경에서는 물건뿐 아니라 사람에게도 쓰인다. 하나님은 이스라엘에게 “너희를 만민 중에서 구별하였음이니라”(레 20:26)라고 하셨다."}], "prayer": "하나님, 큰 기쁨을 주시고 그 소리가 멀리까지 들리게 하신 하나님을 찬양해요. 올해 저를 즐겁게 하신 일들을 기억하며 감사해요. 무대 위만 보지 않고 뒤에서 수고한 사람들도 보게 해 주세요. 제 감사가 하루로 끝나지 않고 섬기는 사람들을 돌보는 일로 이어지게 해 주세요. 아멘."}, "young": {"target": "young", "date": "2026-11-27", "weekday": "금", "weekly_theme": "한 해를 돌아보며 감사해요", "title": "감사의 축제와 곳간", "scripture": "느헤미야 12:41–47", "verses": [{"n": "41", "t": "제사장 엘리아김과 마아세야와 미냐민과 미가야와 엘료에내와 스가랴와 하나냐는 다 나팔을 잡았고"}, {"n": "42", "t": "또 마아세야와 스마야와 엘르아살과 웃시와 여호하난과 말기야와 엘람과 에셀이 함께 있으며 노래하는 자는 크게 찬송하였는데 그 감독은 예스라히야라"}, {"n": "43", "t": "이 날에 무리가 크게 제사를 드리고 심히 즐거워하였으니 이는 하나님이 크게 즐거워하게 하셨음이라 부녀와 어린 아이도 즐거워 하였으므로 예루살렘의 즐거워하는 소리가 멀리 들렸느니라"}, {"n": "44", "t": "그 날에 사람을 세워 곳간을 맡기고 제사장들과 레위 사람들에게 돌릴 것 곧 율법에 정한대로 거제물과 처음 익은 것과 십일조를 모든 성읍 밭에서 거두어 이 곳간에 쌓게 하였노니 이는 유다 사람이 섬기는 제사장들과 레위 사람들을 인하여 즐거워함을 인함이라"}, {"n": "45", "t": "저희는 하나님을 섬기는 일과 결례의 일을 힘썼으며 노래하는 자들과 문지기들도 그러하여 모두 다윗과 그 아들 솔로몬의 명을 좇아 행하였으니"}, {"n": "46", "t": "옛적 다윗과 아삽의 때에는 노래하는 자의 두목이 있어서 하나님께 찬송하는 노래와 감사하는 노래를 하였음이며"}, {"n": "47", "t": "스룹바벨과 느헤미야 때에는 온 이스라엘이 노래하는 자들과 문지기들에게 날마다 쓸 것을 주되 그 구별한 것을 레위 사람들에게 주고 레위 사람들은 그것을 또 구별하여 아론 자손에게 주었느니라"}], "commentary": ["한 해의 일을 마무리할 때 우리는 성과를 축하하는 자리를 만듭니다. 그러나 그 축하가 끝난 뒤에도 공동체는 계속 살아가야 합니다. 느헤미야 12장은 감사의 축제와 그 이후를 함께 기록합니다.", "성벽이 재건되고(6:15) 봉헌식이 열렸습니다(12:27). 두 감사 찬양대가 성벽 위를 행진해 하나님의 전에 섰고, 41–42절은 나팔을 잡은 제사장들과 찬양한 이들의 이름을 남깁니다. 43절은 큰 제사와 큰 기쁨을 말하며 그 근원을 밝힙니다. “하나님이 크게 즐거워하게 하셨음이라.” 부녀와 어린아이까지 포함된 공동체의 기쁨이 멀리 들렸습니다. 에스라 3:13에서 기쁨과 통곡이 섞여 멀리 들렸던 재건의 시작이, 여기서는 즐거움의 소리로 이어집니다.", "44–47절은 “그 날에” 세운 질서를 기록합니다. 곳간을 맡은 이들이 율법에 정한 몫을 모았고, 노래하는 자와 문지기는 다윗과 솔로몬 때의 전통을 따라 섬겼으며, 그들에게 날마다 쓸 몫이 돌아갔습니다. 감사가 섬기는 이들을 지탱하는 구조가 된 것입니다. 이 질서가 오래가지 못했다는 기록도 있습니다(13:10–11). 감사의 마무리는 지속적인 돌봄을 다시 세우는 일까지 포함합니다."], "questions": ["아래 내용을 ‘그날의 축제’와 ‘날마다 이어질 일’로 나누어 기호를 적어 보십시오.", "가정이나 교회, 일터에서 처음엔 함께 감사했지만 흐지부지된 섬김이나 도움 하나를 적으십시오.", "47절에서 섬기는 이들에게 날마다 몫을 주었듯, 올해 나를 섬긴 한 사람에게 실제로 돌려줄 것 하나를 정하십시오."], "question_meta": [{"no": 1, "prompt": "아래 내용을 ‘그날의 축제’와 ‘날마다 이어질 일’로 나누어 기호를 적어 보십시오.", "hint": "두 묶음으로 나누어 기호를 적습니다.", "answer_text": "그날의 축제: ㉠, ㉢ / 날마다 이어질 일: ㉡, ㉣.", "type": "classify", "groups": [{"key": "가", "label": "그날의 축제"}, {"key": "나", "label": "날마다 이어질 일"}], "items": [{"key": "㉠", "text": "큰 제사를 드리고 심히 즐거워함(43절)"}, {"key": "㉡", "text": "곳간을 맡을 사람을 세움(44절)"}, {"key": "㉢", "text": "즐거워하는 소리가 멀리 들림(43절)"}, {"key": "㉣", "text": "노래하는 자와 문지기에게 날마다 쓸 몫을 줌(47절)"}]}, {"no": 2, "prompt": "가정이나 교회, 일터에서 처음엔 함께 감사했지만 흐지부지된 섬김이나 도움 하나를 적으십시오.", "hint": "", "answer_text": "예: “새가족 환영은 처음엔 열심히 했지만 담당자 한 사람에게 맡겨졌다”, “부모님의 수고에 감사했지만 집안일 분담은 다시 줄었다.” 누구를 탓하기보다 다시 세울 질서를 찾는 출발점입니다.", "type": "write"}, {"no": 3, "prompt": "47절에서 섬기는 이들에게 날마다 몫을 주었듯, 올해 나를 섬긴 한 사람에게 실제로 돌려줄 것 하나를 정하십시오.", "hint": "‘누구에게—무엇을—언제’ 세 칸으로 정하고 실행합니다.", "answer_text": "예: “교회 행정 간사님 — 연말 행사 정리 시간에 두 시간 함께 돕기”, “멘토 선배 — 식사를 대접하며 올해 배운 점 구체적으로 전하기”. 상대가 부담스럽지 않은 방식을 고릅니다.", "type": "write"}], "activity_general": "", "vocabulary": [{"word": "봉헌", "meaning": "완성한 것을 하나님께 드려 구별함. 성경에서 봉헌은 소유를 하나님께 돌려 드리는 예배다. 솔로몬 성전의 “낙성식”(대하 7:5)이 그랬고, 예수께서 계셨던 “수전절”(요 10:22)도 더럽혀진 성전을 다시 봉헌한 일을 기념하는 절기였다."}, {"word": "구별하다", "meaning": "거룩한 일에 쓰도록 따로 떼어 두다(47절). 성경에서 구별은 세상을 떠나는 것보다 하나님께 속함을 뜻한다. 하나님은 이스라엘을 “나의 소유를 삼으려고”(레 20:26) 구별하셨고, 성령은 바나바와 사울을 “따로 세우라”(행 13:2) 하셨다."}, {"word": "섬기다", "meaning": "하나님과 공동체를 위해 맡은 일로 돕고 수고하다. 성경에서 하나님을 섬기는 일과 사람을 섬기는 일은 따로 있지 않다(45절). 예수께서는 “섬김을 받으려 함이 아니라 도리어 섬기려 하고”(막 10:45) 오셨다고 말씀하셨다."}], "prayer": "우리를 크게 즐거워하게 하시는 하나님, 올 한 해 주신 기쁨과 함께 이룬 일들을 기억하며 감사합니다. 축하의 순간에 머물지 않고, 저를 섬긴 이들과 공동체에서 수고하는 이들을 날마다 돌보는 질서를 세우게 하소서. 흐지부지된 섬김을 다시 일으키게 하시고, 한 해의 마무리가 하나님께 드리는 찬송과 이웃을 향한 구체적인 감사로 채워지게 하소서. 아멘."}}, "2026-12-22": {"low": {"target": "low", "date": "2026-12-22", "weekday": "화", "weekly_theme": "예수님을 기쁨으로 나눠요", "title": "마리아의 노래", "scripture": "누가복음 1:46–55", "verses": [{"n": "46", "t": "마리아가 가로되 내 영혼이 주를 찬양하며"}, {"n": "47", "t": "내 마음이 하나님 내 구주를 기뻐하였음은"}, {"n": "48", "t": "그 계집종의 비천함을 돌아 보셨음이라 보라 이제 후로는 만세에 나를 복이 있다 일컬으리로다"}, {"n": "49", "t": "능하신 이가 큰 일을 내게 행하셨으니 그 이름이 거룩하시며"}, {"n": "50", "t": "긍휼하심이 두려워하는 자에게 대대로 이르는도다"}, {"n": "51", "t": "그의 팔로 힘을 보이사 마음의 생각이 교만한 자들을 흩으셨고"}, {"n": "52", "t": "권세 있는 자를 그 위에서 내리치셨으며 비천한 자를 높이셨고"}, {"n": "53", "t": "주리는 자를 좋은 것으로 배불리셨으며 부자를 공수로 보내셨도다"}, {"n": "54", "t": "그 종 이스라엘을 도우사 긍휼히 여기시고 기억하시되"}, {"n": "55", "t": "우리 조상에게 말씀하신 것과 같이 아브라함과 및 그 자손에게 영원히 하시리로다 하니라"}], "commentary": ["너무 기쁜 일이 생기면 노래가 저절로 나와요. 예수님의 엄마 마리아도 기쁜 노래를 불렀어요.", "천사는 마리아에게 하나님의 아들을 낳게 될 거라고 알려 주었어요. 마리아는 서둘러 친척 엘리사벳을 찾아갔어요. 그리고 하나님을 찬양하며 노래했어요. “내 마음이 하나님 내 구주를 기뻐해요. 하나님이 비천한(낮고 작은) 저를 돌봐 주셨어요. 능력 많으신 하나님이 저에게 큰일을 하셨어요.”", "마리아는 하나님이 어떤 분인지도 노래했어요. 하나님은 잘난 척하는 사람을 흩으시고, 낮은 사람을 높이세요. 주리는 자(배고픈 사람)를 좋은 것으로 배부르게 하세요. 하나님은 약속을 잊지 않으세요. 아기 예수님을 보내 주신 하나님을 우리도 마리아처럼 기쁘게 찬양해요."], "questions": ["맞으면 O, 틀리면 X에 표시해요.", "하나님이 나에게 하신 좋은 일을 떠올려요. 생각나는 것에 모두 체크해요.", "아래 문장을 따라 써요."], "question_meta": [{"no": 1, "prompt": "맞으면 O, 틀리면 X에 표시해요.", "hint": "", "answer_text": "O. “내 영혼이 주를 찬양하며… 내 마음이 하나님 내 구주를 기뻐하였음은”(46–47절).", "type": "ox", "statement": "마리아는 하나님을 찬양하며 노래했어요.", "answer": "O"}, {"no": 2, "prompt": "하나님이 나에게 하신 좋은 일을 떠올려요. 생각나는 것에 모두 체크해요.", "hint": "떠오르는 것에 체크하거나 말해요.", "answer_text": "어느 것을 골라도 좋아요.", "type": "check", "multiple": true, "options": ["가족을 주셨어요.", "아플 때 돌봐 주셨어요.", "예수님을 보내 주셨어요.", "다른 좋은 일을 말로 해요."]}, {"no": 3, "prompt": "아래 문장을 따라 써요.", "hint": "문장을 보며 그대로 따라 써요.", "answer_text": "47절을 쉬운 말로 바꾼 문장이에요. 그대로 따라 써요.", "type": "trace", "trace": "내 마음이 하나님을 기뻐해요."}], "activity_general": "", "vocabulary": [{"word": "비천하다", "meaning": "신분이 낮고 보잘것없다"}, {"word": "긍휼", "meaning": "불쌍히 여기고 도와주시는 하나님의 마음"}], "prayer": "하나님, 낮고 작은 마리아를 돌보신 것처럼 저도 돌봐 주셔서 감사해요. 아기 예수님을 보내 주신 하나님을 찬양해요. 마리아처럼 기쁜 마음으로 노래하며 성탄절을 맞이하게 해 주세요. 아멘."}, "high": {"target": "high", "date": "2026-12-22", "weekday": "화", "weekly_theme": "예수님을 기쁨으로 나눠요", "title": "낮은 자를 높이신 하나님", "scripture": "누가복음 1:46–55", "verses": [{"n": "46", "t": "마리아가 가로되 내 영혼이 주를 찬양하며"}, {"n": "47", "t": "내 마음이 하나님 내 구주를 기뻐하였음은"}, {"n": "48", "t": "그 계집종의 비천함을 돌아 보셨음이라 보라 이제 후로는 만세에 나를 복이 있다 일컬으리로다"}, {"n": "49", "t": "능하신 이가 큰 일을 내게 행하셨으니 그 이름이 거룩하시며"}, {"n": "50", "t": "긍휼하심이 두려워하는 자에게 대대로 이르는도다"}, {"n": "51", "t": "그의 팔로 힘을 보이사 마음의 생각이 교만한 자들을 흩으셨고"}, {"n": "52", "t": "권세 있는 자를 그 위에서 내리치셨으며 비천한 자를 높이셨고"}, {"n": "53", "t": "주리는 자를 좋은 것으로 배불리셨으며 부자를 공수로 보내셨도다"}, {"n": "54", "t": "그 종 이스라엘을 도우사 긍휼히 여기시고 기억하시되"}, {"n": "55", "t": "우리 조상에게 말씀하신 것과 같이 아브라함과 및 그 자손에게 영원히 하시리로다 하니라"}], "commentary": ["천사 가브리엘은 마리아에게 성령으로 아들을 잉태하게 될 것이라고 전했어요(1:26–38). 마리아는 친척 엘리사벳을 찾아갔고, 엘리사벳은 마리아와 그 태중의 아기를 축복했어요(1:39–45). 그때 마리아가 부른 노래가 오늘 본문이에요.", "마리아는 먼저 자기에게 하신 일을 노래해요. 하나님은 여종의 비천함을 돌보셨고, 능하신 이가 큰일을 행하셨어요. 마리아는 갈릴리 나사렛의 평범한 젊은 여인이었어요. 하나님은 그런 마리아를 통해 구주를 보내셨어요. 그래서 마리아는 “내 마음이 하나님 내 구주를 기뻐하였음은” 하고 노래해요.", "51–53절에서 노래는 더 넓어져요. 하나님은 교만한 자들을 흩으시고, 권세 있는 자를 내리치시고, 비천한 자를 높이셨어요. 주리는 자를 좋은 것으로 배불리시고 부자는 공수로, 곧 빈손으로 보내셨어요. 54–55절은 이 모든 일이 아브라함에게 하신 약속을 기억하신 결과라고 말해요. 아기 예수님은 낮은 자를 높이시는 하나님의 약속으로 오셨어요."], "questions": ["51–53절의 사람들을 흩으시거나 낮추시거나 빈손으로 보내신 사람(가)과 높이시거나 채우신 사람(나)으로 나눠요.", "48절에서 마리아가 하나님을 기뻐한 이유를 골라요.", "53절처럼 성탄 주간에 낮고 배고픈 이웃을 돌보는 방법 하나를 골라요."], "question_meta": [{"no": 1, "prompt": "51–53절의 사람들을 흩으시거나 낮추시거나 빈손으로 보내신 사람(가)과 높이시거나 채우신 사람(나)으로 나눠요.", "hint": "‘가’와 ‘나’에 해당하는 기호를 나누어 적어요.", "answer_text": "가: ㉠㉡㉤ / 나: ㉢㉣.", "type": "classify", "groups": [{"key": "가", "label": "가"}, {"key": "나", "label": "나"}], "items": [{"key": "㉠", "text": "교만한 자들"}, {"key": "㉡", "text": "권세 있는 자"}, {"key": "㉢", "text": "비천한 자"}, {"key": "㉣", "text": "주리는 자(배고픈 사람)"}, {"key": "㉤", "text": "부자"}]}, {"no": 2, "prompt": "48절에서 마리아가 하나님을 기뻐한 이유를 골라요.", "hint": "", "answer_text": "①. 엘리사벳의 축복이 있었지만(42–45절), 마리아는 하나님이 자기의 비천함을 돌보셨기 때문이라고 노래해요(48절).", "type": "choice", "multiple": false, "options": ["하나님이 여종의 비천함을 돌보셨기 때문이에요.", "마리아가 부자가 되었기 때문이에요.", "엘리사벳이 마리아를 칭찬했기 때문이에요."], "answer": "①"}, {"no": 3, "prompt": "53절처럼 성탄 주간에 낮고 배고픈 이웃을 돌보는 방법 하나를 골라요.", "hint": "고른 일을 성탄절 전에 해 봐요.", "answer_text": "어느 것을 골라도 좋아요. 마리아의 노래는 하나님이 낮은 사람을 돌보시는 분임을 보여 줘요.", "type": "check", "multiple": true, "options": ["용돈 일부를 이웃 돕기 성금으로 드리기", "혼자 있는 친구나 이웃에게 간식 나누기", "어려운 이웃을 위해 가족과 함께 기도하기", "다른 방법: ______"]}], "activity_general": "", "vocabulary": [{"word": "비천하다", "meaning": "신분이나 형편이 낮고 보잘것없다"}, {"word": "권세", "meaning": "다른 사람을 다스리는 힘"}, {"word": "공수", "meaning": "빈손"}], "prayer": "하나님, 낮은 마리아를 돌보시고 그를 통해 아기 예수님을 보내 주셔서 감사해요. 교만한 사람을 흩으시고 낮은 사람을 높이시는 하나님을 찬양해요. 아브라함에게 하신 약속을 기억하신 하나님, 저도 마리아처럼 기뻐 노래하고 배고픈 이웃을 돌보게 해 주세요. 아멘."}, "youth": {"target": "youth", "date": "2026-12-22", "weekday": "화", "weekly_theme": "예수님을 기쁨으로 나눠요", "title": "뒤집히는 노래", "scripture": "누가복음 1:46–55", "verses": [{"n": "46", "t": "마리아가 가로되 내 영혼이 주를 찬양하며"}, {"n": "47", "t": "내 마음이 하나님 내 구주를 기뻐하였음은"}, {"n": "48", "t": "그 계집종의 비천함을 돌아 보셨음이라 보라 이제 후로는 만세에 나를 복이 있다 일컬으리로다"}, {"n": "49", "t": "능하신 이가 큰 일을 내게 행하셨으니 그 이름이 거룩하시며"}, {"n": "50", "t": "긍휼하심이 두려워하는 자에게 대대로 이르는도다"}, {"n": "51", "t": "그의 팔로 힘을 보이사 마음의 생각이 교만한 자들을 흩으셨고"}, {"n": "52", "t": "권세 있는 자를 그 위에서 내리치셨으며 비천한 자를 높이셨고"}, {"n": "53", "t": "주리는 자를 좋은 것으로 배불리셨으며 부자를 공수로 보내셨도다"}, {"n": "54", "t": "그 종 이스라엘을 도우사 긍휼히 여기시고 기억하시되"}, {"n": "55", "t": "우리 조상에게 말씀하신 것과 같이 아브라함과 및 그 자손에게 영원히 하시리로다 하니라"}], "commentary": ["학교에서는 성적, 인기, 외모 같은 보이지 않는 순위가 매겨지곤 해요. 누가 위에 있고 누가 아래에 있는지 다들 알고 있는 것 같아요. 그 순위 때문에 마음이 작아지는 날도 있어요. 마리아의 노래는 그 순위가 하나님 앞에서 어떻게 되는지 노래해요.", "천사에게서 성령으로 아들을 잉태하리라는 말을 들은 마리아는 친척 엘리사벳을 찾아가요(1:26–45). 그곳에서 부른 노래의 시작은 개인적인 고백이에요. “내 영혼이 주를 찬양하며… 내 마음이 하나님 내 구주를 기뻐하였음은.” 이유는 하나님이 여종의 비천함을 돌보셨기 때문이에요(48절). 갈릴리의 평범한 젊은 여인에게 능하신 이가 큰일을 행하셨어요. 이 노래는 사무엘상 2장 한나의 노래와 많이 닮았어요. 두 사람 모두 낮은 자를 높이시는 하나님을 찬양해요.", "51–53절은 세상의 순위가 뒤집히는 장면이에요. 교만한 자는 흩어지고, 권세 있는 자는 내려오고, 비천한 자는 높아지고, 주리는 자는 배부르고, 부자는 공수(빈손)로 돌아가요. 마리아는 이 일을 이미 일어난 일처럼 노래해요. 아기 예수님 안에서 하나님이 그 일을 시작하셨기 때문이에요. 54–55절은 이것이 아브라함에게 하신 약속을 기억하신 결과라고 말해요."], "questions": ["51–53절에서 서로 반대되는 짝을 두 개 찾아 적어요. (예: 권세 있는 자 ↔ 비천한 자)", "학교의 보이지 않는 순위 가운데 내가 가장 신경 쓰는 것을 골라요.", "마리아처럼 나만의 찬양 한 줄을 써요."], "question_meta": [{"no": 1, "prompt": "51–53절에서 서로 반대되는 짝을 두 개 찾아 적어요. (예: 권세 있는 자 ↔ 비천한 자)", "hint": "반대되는 짝 두 개를 적어요.", "answer_text": "예: “권세 있는 자 ↔ 비천한 자”, “주리는 자 ↔ 부자”.", "type": "write"}, {"no": 2, "prompt": "학교의 보이지 않는 순위 가운데 내가 가장 신경 쓰는 것을 골라요.", "hint": "하나를 골라 52절과 나란히 놓고 생각해 봐요.", "answer_text": "어느 것이든 좋아요. 52절은 하나님 앞에서 사람의 가치가 세상의 순위로 정해지지 않는다는 것을 보여 줘요. 순위가 높다고 나쁘다는 뜻도 아니에요.", "type": "check", "multiple": true, "options": ["성적", "인기와 친구 관계", "외모", "다른 것: ______"]}, {"no": 3, "prompt": "마리아처럼 나만의 찬양 한 줄을 써요.", "hint": "찬양 한 줄을 오늘 기도의 첫 문장으로 써요.", "answer_text": "예: “내 영혼이 주를 찬양함은 아무도 몰라주던 때에도 하나님이 나를 돌보셨기 때문이에요.”", "type": "write", "quote": "“내 영혼이 주를 찬양함은 ______ 때문이에요.”"}], "activity_general": "", "vocabulary": [{"word": "비천하다", "meaning": "신분이나 형편이 낮고 보잘것없다. 하나님은 낮은 사람을 잊지 않으신다. 시편은 “우리를 비천한데서 기념하신이에게 감사하라”(시 136:23)고 노래한다. 마리아도 그분을 찬양했다."}, {"word": "긍휼", "meaning": "고통받는 사람을 불쌍히 여기는 하나님의 깊은 사랑. 예레미야애가는 무너진 성에서도 “여호와의 자비와 긍휼이 무궁하시므로 우리가 진멸되지 아니함이니이다”(애 3:22)라고 고백한다."}, {"word": "권세", "meaning": "남을 다스리고 지배하는 힘. 사람의 권세는 하나님이 허락하신 만큼만 있다. 예수님은 빌라도에게 “위에서 주지 아니하셨더면 나를 해할 권세가 없었으리니”(요 19:11)라고 하셨다."}], "prayer": "하나님, 비천한 마리아를 돌보시고 그를 통해 아기 예수님을 보내셨으니 찬양해요. 세상의 순위로 저와 친구들을 판단하지 않게 해 주세요. 교만한 마음은 내려놓고, 낮은 자리에 있는 친구를 귀하게 여기게 해 주세요. 저를 돌보시는 하나님을 신뢰하며, 마리아처럼 기쁨으로 노래하게 해 주세요. 아멘."}, "young": {"target": "young", "date": "2026-12-22", "weekday": "화", "weekly_theme": "예수님을 기쁨으로 나눠요", "title": "비천함을 돌보신 하나님", "scripture": "누가복음 1:46–55", "verses": [{"n": "46", "t": "마리아가 가로되 내 영혼이 주를 찬양하며"}, {"n": "47", "t": "내 마음이 하나님 내 구주를 기뻐하였음은"}, {"n": "48", "t": "그 계집종의 비천함을 돌아 보셨음이라 보라 이제 후로는 만세에 나를 복이 있다 일컬으리로다"}, {"n": "49", "t": "능하신 이가 큰 일을 내게 행하셨으니 그 이름이 거룩하시며"}, {"n": "50", "t": "긍휼하심이 두려워하는 자에게 대대로 이르는도다"}, {"n": "51", "t": "그의 팔로 힘을 보이사 마음의 생각이 교만한 자들을 흩으셨고"}, {"n": "52", "t": "권세 있는 자를 그 위에서 내리치셨으며 비천한 자를 높이셨고"}, {"n": "53", "t": "주리는 자를 좋은 것으로 배불리셨으며 부자를 공수로 보내셨도다"}, {"n": "54", "t": "그 종 이스라엘을 도우사 긍휼히 여기시고 기억하시되"}, {"n": "55", "t": "우리 조상에게 말씀하신 것과 같이 아브라함과 및 그 자손에게 영원히 하시리로다 하니라"}], "commentary": ["성취와 비교가 일상이 된 환경에서, 자신의 자리가 낮게 느껴질 때가 있습니다. 마리아의 찬가는 그런 자리에서 시작된 노래입니다. 갈릴리 나사렛의 약혼한 젊은 여인 마리아는 성령으로 잉태하리라는 소식을 받고, 엘리사벳을 방문한 자리에서 이 노래를 부릅니다(1:26–45).", "46–50절은 개인적 고백입니다. 마리아의 기쁨의 근거는 자신의 자격이 아니라 하나님의 시선입니다. “그 계집종의 비천함을 돌아 보셨음이라.” 능하신 이가 큰일을 행하셨고, 그 긍휼은 두려워하는 자에게 대대로 이릅니다. 이 노래는 한나의 노래(삼상 2:1–10)와 같은 흐름을 따릅니다. 하나님은 낮은 자를 들어 쓰시는 분입니다.", "51–55절은 공동체와 역사로 확장됩니다. 교만한 자, 권세 있는 자, 부자의 자리가 흔들리고 비천한 자와 주리는 자가 채워집니다. 마리아는 이 반전을 완료된 일처럼 노래합니다. 아기 그리스도 안에서 하나님의 일이 이미 시작되었다는 확신입니다. 그리고 그 근거를 아브라함에게 하신 약속에 둡니다. 성탄의 기쁨은 세상의 질서를 바꾸시는 하나님의 신실하심을 기뻐하는 것입니다."], "questions": ["46–55절을 두 부분으로 나눈다면 어디서 나누겠습니까? 앞부분과 뒷부분의 초점을 한 단어씩 적어 보십시오.", "51–53절의 교만(내 생각을 믿는 마음), 권세, 부 가운데 내가 안정감을 위해 가장 기대는 것은 무엇입니까?", "53절을 떠올리며, 성탄 주간에 주린 이웃을 돕는 일(예: 푸드뱅크 기부, 무료 급식 봉사) 하나를 정해 실행해 보십시오."], "question_meta": [{"no": 1, "prompt": "46–55절을 두 부분으로 나눈다면 어디서 나누겠습니까? 앞부분과 뒷부분의 초점을 한 단어씩 적어 보십시오.", "hint": "나눌 지점과 두 단어를 적습니다.", "answer_text": "예: 50절까지(개인—마리아에게 하신 일)와 51절부터(공동체—이스라엘과 세상에 하신 일).", "type": "write"}, {"no": 2, "prompt": "51–53절의 교만(내 생각을 믿는 마음), 권세, 부 가운데 내가 안정감을 위해 가장 기대는 것은 무엇입니까?", "hint": "하나를 고르고 그 이유를 한 줄로 적습니다.", "answer_text": "예: “권세 — 직장에서 인정받는 위치가 흔들릴까 불안하다.” 이것들을 모두 버리라는 뜻은 아닙니다. 궁극적인 안정의 근거가 어디에 있는지 묻는 질문입니다.", "type": "write"}, {"no": 3, "prompt": "53절을 떠올리며, 성탄 주간에 주린 이웃을 돕는 일(예: 푸드뱅크 기부, 무료 급식 봉사) 하나를 정해 실행해 보십시오.", "hint": "‘무엇을—언제—누구와’를 정하고 실행합니다.", "answer_text": "예: “푸드뱅크에 식료품 기부하기”, “혼자 성탄을 보내는 이웃이나 동료를 식사에 초대하기”, “지역 무료 급식 봉사에 하루 참여하기”.", "type": "write"}], "activity_general": "", "vocabulary": [{"word": "비천함", "meaning": "지위와 형편이 낮고 보잘것없음. 마리아의 노래는 한나의 노래와 닮았다. 하나님은 “가난한 자를 진토에서 일으키시며”(삼상 2:8) 낮은 자를 높이신다. 이 뒤집힘은 스스로 낮추신 그리스도에게서 절정에 이른다(빌 2:8)."}, {"word": "긍휼", "meaning": "고통받는 이를 불쌍히 여기시는 하나님의 언약적 사랑. 마리아의 노래에서 긍휼(50, 54절)은 아브라함에게 하신 약속을 기억하시는 신실함과 이어진다. 예레미야애가도 “여호와의 자비와 긍휼이 무궁하시므로”(애 3:22) 우리가 산다고 고백한다."}, {"word": "찬가", "meaning": "하나님을 찬양하는 노래. 성경에는 구원을 경험한 이들의 찬가가 이어진다. 홍해를 건넌 뒤의 노래(출 15장), 사무엘을 얻은 한나의 노래(삼상 2:1–10)가 그렇다. 마리아의 찬가는 이 흐름을 잇는다."}], "prayer": "여종의 비천함을 돌보신 하나님, 마리아를 통해 구주를 보내신 은혜를 찬양합니다. 교만과 권세와 부에 안정감을 걸던 마음을 내려놓고, 낮은 자를 높이시는 주님의 시선을 따르게 하소서. 아브라함에게 하신 약속을 기억하신 신실하심을 신뢰하며, 이 성탄에 주린 이웃을 좋은 것으로 채우는 손이 되어 성탄의 기쁨을 함께 나누게 하소서. 아멘."}}}</script>
+<script id="stats" type="application/json">{"count": {"low": {"ox": 24, "check": 59, "trace": 61, "choice": 39}, "high": {"match": 35, "choice": 50, "write": 55, "order": 14, "check": 13, "classify": 16}, "youth": {"choice": 34, "write": 114, "check": 35}, "young": {"write": 117, "options_write": 18, "choice": 37, "check": 9, "classify": 2}}, "marks": {"ox": "(O / X)", "choice": "① ② ③", "check": "□", "match": "A·B·C ↔ ①②③", "classify": "가/나 + ㉠㉡", "order": "( ) 항목", "trace": "> 따라 쓸 문장", "options_write": "보기 목록 + 쓰기", "write": "보기 없음"}}</script>
+<script>
+(() => {
+const DATA = JSON.parse(document.getElementById('json-data').textContent);
+const STATS = JSON.parse(document.getElementById('stats').textContent);
+const AGE = {low:'저학년', high:'고학년', youth:'청소년', young:'청년'};
+const TYPE = {ox:'OX', choice:'객관식', check:'체크', match:'선 잇기', classify:'분류', order:'순서', trace:'따라 쓰기', options_write:'보기+쓰기', write:'쓰기'};
+const MON = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+const WD = {'월':'월요일','화':'화요일','수':'수요일','목':'목요일','금':'금요일','토':'토요일','일':'주일'};
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const CIRC = '①②③④⑤⑥⑦⑧⑨';
+let state = {date: Object.keys(DATA)[0], age: 'low', teacher: false};
+
+function stem(w){
+  let s = w.replace(/\(.*?\)/g,'').trim();
+  for (const suf of ['하다','되다','롭다','스럽다','다']) if (s.endsWith(suf) && s.length > suf.length + 1) { s = s.slice(0, -suf.length); break; }
+  return s;
+}
+function verses(d){
+  const marks = d.vocabulary.map(v => stem(v.word)).filter(Boolean).map(s => s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));
+  const re = marks.length ? new RegExp('(' + marks.join('|') + ')','g') : null;
+  return d.verses.map(v => `<sup>${esc(v.n)}</sup>${re ? esc(v.t).replace(re,'<mark>$1</mark>') : esc(v.t)}`).join(' ');
+}
+function head(d){
+  const [y,m,dd] = d.date.split('-').map(Number);
+  if (d.target === 'youth' || d.target === 'young') {
+    return `<div class="d-head"><div class="big">${dd}</div><div class="vert">${MON[m-1]} ${WD[d.weekday]}</div>
+      <div><div class="ribbon">${esc(d.scripture)}</div><div class="d-title">${esc(d.title)}</div><div class="theme">이번 주 주제 · ${esc(d.weekly_theme)}</div></div></div>`;
+  }
+  return `<div class="d-head"><div class="badge"><div class="m">${m}월</div><div class="dd">${String(dd).padStart(2,'0')}</div><div class="w">${WD[d.weekday]}</div></div>
+    <div><div class="ribbon">${esc(d.scripture)}</div><div class="d-title">${esc(d.title)}</div><div class="theme">이번 주 주제 · ${esc(d.weekly_theme)}</div></div></div>`;
+}
+function grade(q, el, ok){
+  const r = el.querySelector('.check-res'); if (!r) return;
+  if (!state.teacher || ok === null) { r.textContent=''; r.className='check-res'; return; }
+  r.textContent = ok ? '정답과 같아요' : '정답과 달라요'; r.className = 'check-res ' + (ok ? 'ok' : 'bad');
+}
+function qHTML(q, uid){
+  const head = `<div class="q-head"><span class="q-no">질문 ${q.no}</span><span>${esc(q.prompt)}</span><span class="typeTag">${TYPE[q.type]}</span></div>`;
+  let body = '';
+  if (q.type === 'ox') {
+    body = (q.statement ? `<div class="stmt">“${esc(q.statement.replace(/^“|”$/g,''))}”</div>` : '') +
+      `<div class="ox"><button aria-pressed="false" data-v="O">O</button><button aria-pressed="false" data-v="X">X</button></div>`;
+  } else if (q.type === 'choice' || q.type === 'check') {
+    const multi = q.type === 'check' || q.multiple;
+    body = `<div class="opts">` + q.options.map((o,i) => `<button class="opt ${multi?'':'radio'}" aria-pressed="false" data-i="${i}"><span class="k">${q.type==='choice' && CIRC[i] && !/^[㉠-㉧]/.test(o) ? CIRC[i] : ''}</span><span>${esc(o)}</span></button>`).join('') + `</div>`;
+  } else if (q.type === 'match') {
+    body = `<div class="match"><svg aria-hidden="true"></svg>` +
+      q.left.map((l,i) => `<button data-side="L" data-i="${i}">${'ABCD'[i]} · ${esc(l)}</button><button data-side="R" data-i="${i}">${CIRC[i]} ${esc(q.right[i] ?? '')}</button>`).join('') + `</div>
+      <div class="hint">왼쪽을 누른 뒤 오른쪽을 누르면 이어져요. 다시 누르면 지워져요.</div>`;
+  } else if (q.type === 'classify') {
+    body = `<div class="cls"><div class="legend">${q.groups.map(g => `<b>${esc(g.key)}</b> ${esc(g.label)}`).join(' · ')}</div>` +
+      q.items.map((it,i) => `<div class="row"><span>${esc(it.key)} ${esc(it.text)}</span>${q.groups.map(g => `<button aria-pressed="false" data-i="${i}" data-g="${esc(g.key)}">${esc(g.key)}</button>`).join('')}</div>`).join('') + `</div>`;
+  } else if (q.type === 'order') {
+    body = `<div class="order">` + q.items.map((it,i) => `<div class="row"><button class="num" data-i="${i}" aria-label="순서 정하기"></button><span>${esc(it.text)}</span></div>`).join('') + `</div><div class="hint">일어난 순서대로 눌러요. 다시 누르면 지워져요.</div>`;
+  } else if (q.type === 'trace') {
+    body = `<div class="trace"><div class="ghost">${esc(q.trace)}</div><input aria-label="따라 쓰기" autocomplete="off"><div class="match-rate"></div></div>`;
+  } else if (q.type === 'options_write') {
+    body = `<div class="chips">${q.options.map(o => `<span>${esc(o.replace(/^-\s*/,''))}</span>`).join('')}</div><textarea aria-label="답 쓰기"></textarea>`;
+  } else {
+    body = (q.quote ? `<div class="quote">${esc(q.quote)}</div>` : '') + `<textarea aria-label="답 쓰기"></textarea>`;
+  }
+  const hint = q.hint ? `<div class="hint">${esc(q.hint)}</div>` : '';
+  const guide = q.answer_text ? `<div class="guide"><b>답변 가이드</b> · ${esc(q.answer_text)}</div><div class="check-res"></div>` : '<div class="check-res"></div>';
+  return `<div class="q" data-uid="${uid}">${head}${body}${hint}${guide}</div>`;
+}
+function wire(root, q){
+  if (q.type === 'ox') root.querySelectorAll('.ox button').forEach(b => b.onclick = () => {
+    root.querySelectorAll('.ox button').forEach(x => x.setAttribute('aria-pressed', x===b)); grade(q, root, q.answer ? b.dataset.v === q.answer : null); });
+  if (q.type === 'choice' || q.type === 'check') {
+    const multi = q.type === 'check' || q.multiple;
+    root.querySelectorAll('.opt').forEach(b => b.onclick = () => {
+      if (!multi) root.querySelectorAll('.opt').forEach(x => x.setAttribute('aria-pressed','false'));
+      b.setAttribute('aria-pressed', multi ? String(b.getAttribute('aria-pressed') !== 'true') : 'true');
+      const sel = [...root.querySelectorAll('.opt[aria-pressed="true"]')].map(x => CIRC[+x.dataset.i]);
+      grade(q, root, q.answer && !multi ? sel[0] === q.answer : null); });
+  }
+  if (q.type === 'match') {
+    const box = root.querySelector('.match'), svg = box.querySelector('svg'); let pick = null; const links = {};
+    const draw = () => {
+      const r0 = box.getBoundingClientRect(); svg.innerHTML = '';
+      for (const [l, r] of Object.entries(links)) {
+        const a = box.querySelector(`[data-side="L"][data-i="${l}"]`).getBoundingClientRect(), b = box.querySelector(`[data-side="R"][data-i="${r}"]`).getBoundingClientRect();
+        svg.insertAdjacentHTML('beforeend', `<line x1="${a.right-r0.left}" y1="${a.top+a.height/2-r0.top}" x2="${b.left-r0.left}" y2="${b.top+b.height/2-r0.top}" stroke="var(--c)" stroke-width="2.5" stroke-linecap="round"/>`);
+      }
+      box.querySelectorAll('button').forEach(x => x.classList.toggle('done', x.dataset.side==='L' ? x.dataset.i in links : Object.values(links).includes(x.dataset.i)));
+      if (q.answer && Object.keys(links).length === q.left.length) grade(q, root, Object.entries(links).every(([l,r]) => q.answer['ABCD'[l]] === CIRC[r])); else grade(q, root, null);
+    };
+    box.querySelectorAll('button').forEach(b => b.onclick = () => {
+      if (b.dataset.side === 'L') { if (b.dataset.i in links) { delete links[b.dataset.i]; draw(); return; } box.querySelectorAll('.sel').forEach(x=>x.classList.remove('sel')); pick = b.dataset.i; b.classList.add('sel'); }
+      else if (pick !== null) { for (const k in links) if (links[k] === b.dataset.i) delete links[k]; links[pick] = b.dataset.i; pick = null; box.querySelectorAll('.sel').forEach(x=>x.classList.remove('sel')); draw(); }
+    });
+    new ResizeObserver(draw).observe(box);
+  }
+  if (q.type === 'classify') root.querySelectorAll('.cls .row').forEach(row => row.querySelectorAll('button').forEach(b => b.onclick = () => {
+    row.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x===b)); }));
+  if (q.type === 'order') { let n = 0; root.querySelectorAll('.num').forEach(b => b.onclick = () => {
+    if (b.textContent) { b.textContent=''; b.classList.remove('set'); const used=[...root.querySelectorAll('.num')].map(x=>+x.textContent||0); n=Math.max(0,...used); return; }
+    b.textContent = ++n; b.classList.add('set'); }); }
+  if (q.type === 'trace') { const inp = root.querySelector('input'), g = root.querySelector('.ghost'), r = root.querySelector('.match-rate');
+    inp.oninput = () => { g.style.visibility = inp.value ? 'hidden' : 'visible'; const t = q.trace.replace(/\s/g,''), v = inp.value.replace(/\s/g,'');
+      let same = 0; for (let i=0;i<Math.min(t.length,v.length);i++) if (t[i]===v[i]) same++; r.textContent = v ? `견본과 ${Math.round(same/t.length*100)}% 같아요` : ''; }; }
+}
+function render(){
+  const d = DATA[state.date][state.age];
+  const s = document.getElementById('screen');
+  s.innerHTML = `<div class="d ${d.target} ${state.teacher?'teacher':''}">${head(d)}
+    <div class="tab">오늘의 말씀</div><div class="verses">${verses(d)}</div>
+    <div class="tab">낱말 풀이</div><div class="vocab">${d.vocabulary.map(v => `<div><b>${esc(v.word)}</b> ${esc(v.meaning)}</div>`).join('')}</div>
+    <div class="tab">${d.target==='low'||d.target==='high'?'말씀을 이해해요':'본문 해설'}</div><div class="comm">${d.commentary.map(p => `<p>${esc(p)}</p>`).join('')}</div>
+    <div class="tab">${d.target==='low'||d.target==='high'?'읽고 발견해요':'말씀 묵상'}</div>
+    ${d.activity_general ? `<div class="hint">${esc(d.activity_general)}</div>` : ''}
+    ${d.question_meta.map((q,i) => qHTML(q, 'q'+i)).join('')}
+    <div class="tab">${d.target==='low'||d.target==='high'?'기도하고 실천해요':'말씀으로 기도하기'}</div><div class="pray">${esc(d.prayer)}</div>
+    <button class="save" type="button">저장하기 (샘플)</button></div>`;
+  d.question_meta.forEach((q,i) => wire(s.querySelector(`[data-uid="q${i}"]`), q));
+  s.scrollTop = 0;
+  document.getElementById('judge').innerHTML = `<div class="typelist">${d.question_meta.map(q => `<span class="chip">질문 ${q.no} · ${TYPE[q.type]}${q.answer ? ' · 정답 있음' : ''}</span>`).join('')}</div>`;
+  document.querySelectorAll('#ages button').forEach(b => b.setAttribute('aria-pressed', b.dataset.age === state.age));
+}
+// controls
+const sel = document.getElementById('date');
+sel.innerHTML = Object.keys(DATA).map(k => { const d = DATA[k].low; const [y,m,dd]=k.split('-').map(Number); return `<option value="${k}">${m}월 ${dd}일 ${WD[d.weekday]} · ${esc(d.scripture)}</option>`; }).join('');
+sel.onchange = () => { state.date = sel.value; render(); };
+document.getElementById('ages').innerHTML = Object.entries(AGE).map(([k,v]) => `<button type="button" data-age="${k}" aria-pressed="false">${v}</button>`).join('');
+document.querySelectorAll('#ages button').forEach(b => b.onclick = () => { state.age = b.dataset.age; render(); });
+document.getElementById('teacher').onchange = e => { state.teacher = e.target.checked; render(); };
+render();
+
+// type table + gallery
+const ages = ['low','high','youth','young'];
+document.getElementById('typeTable').innerHTML = `<tr><th>유형</th><th>원고 표기</th>${ages.map(a=>`<th>${AGE[a]}</th>`).join('')}</tr>` +
+  Object.entries(STATS.marks).map(([t,mk]) => `<tr><td><b>${TYPE[t]}</b></td><td>${esc(mk)}</td>${ages.map(a => `<td>${STATS.count[a][t]||'–'}</td>`).join('')}</tr>`).join('') +
+  `<tr><td><b>합계</b></td><td></td>${ages.map(a => `<td>${Object.values(STATS.count[a]).reduce((x,y)=>x+y,0)}</td>`).join('')}</tr>`;
+const g = document.getElementById('gallery');
+Object.keys(TYPE).forEach(t => {
+  for (const date of Object.keys(DATA)) for (const a of ages) {
+    const d = DATA[date][a], i = d.question_meta.findIndex(q => q.type === t);
+    if (i < 0) continue;
+    const q = d.question_meta[i]; const [y,m,dd] = date.split('-').map(Number);
+    const el = document.createElement('div'); el.className = `card d ${a}`;
+    el.innerHTML = `<h4>${TYPE[t]}</h4><div class="meta">${m}월 ${dd}일 · ${AGE[a]} · 질문 ${q.no}</div>${qHTML(q, 'g'+t)}`;
+    g.appendChild(el); wire(el.querySelector('.q'), q); return;
+  }
+});
+const ex = DATA['2026-11-01'].high.question_meta[0];
+document.getElementById('metaExample').textContent = JSON.stringify(ex, null, 2);
+})();
+</script>
+</body>
+</html>
