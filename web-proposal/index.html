@@ -149,6 +149,39 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
 .note{font-size:14px;color:var(--mute)}
 .qs li{margin:.5em 0}
 footer{padding:32px 0 60px;color:var(--mute);font-size:13px}
+
+/* 집중 묵상(운영 focus.jsp 흐름을 따른 시안) */
+.fx{min-height:640px;display:flex;flex-direction:column;border-radius:18px;margin:-18px -18px -28px;padding:16px 18px 20px;transition:background .6s}
+.fx[data-step="0"]{background:linear-gradient(180deg,#e9eefb,#f7f5ff 55%,var(--paper))}
+.fx[data-step="1"]{background:linear-gradient(180deg,#f4f8ff,var(--paper) 45%)}
+.fx[data-step="2"]{background:linear-gradient(180deg,var(--t),var(--paper) 60%)}
+.fx[data-step="3"]{background:linear-gradient(180deg,#f3f5f8,var(--paper) 50%)}
+.fx[data-step="4"]{background:linear-gradient(180deg,#fdeee4,#fbf3ee 45%,var(--paper))}
+.fx[data-step="5"]{background:radial-gradient(90% 55% at 50% 38%,#fbeccb,transparent 70%),linear-gradient(180deg,#fffaf0,var(--paper))}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .fx{background:var(--paper)!important}}
+.fx-top{display:flex;justify-content:space-between;font-size:12.5px;color:var(--mute)}
+.fx-bar{height:4px;background:var(--line);border-radius:4px;margin:8px 0 4px;overflow:hidden}.fx-bar i{display:block;height:100%;background:var(--c);transition:width .4s}
+.fx-steps{display:flex;justify-content:space-between;font-size:11px;color:var(--mute)}.fx-steps b{color:var(--c)}
+.fx-body{flex:1;padding:18px 2px 8px}
+.fx-h1{font-weight:900;font-size:26px;line-height:1.25;margin:6px 0}.fx-ref{color:var(--mute);font-size:14px}
+.fx-breath{width:120px;height:120px;border-radius:50%;margin:34px auto 14px;background:radial-gradient(circle,var(--t),transparent 70%);border:2px solid var(--c);animation:br 6s ease-in-out infinite}
+@keyframes br{0%,100%{transform:scale(.82);opacity:.6}50%{transform:scale(1);opacity:1}}
+@media (prefers-reduced-motion: reduce){.fx-breath{animation:none}}
+.fx-center{text-align:center;color:var(--mute);font-size:14px}
+.fx-h2{font-weight:900;font-size:19px;margin:0 0 10px}
+.fx-verse{display:flex;gap:8px;font-family:"Gowun Batang",serif;font-size:16.5px;line-height:1.8;margin:4px 0}.fx-verse .vn{color:var(--c);font-family:"Noto Sans KR";font-weight:700;font-size:12px;min-width:18px;padding-top:4px}
+.fx-word{border:1px solid var(--line);border-radius:12px;margin-bottom:12px;background:var(--paper)}.fx-word summary{cursor:pointer;padding:8px 12px;font-size:14px;font-weight:700}.fx-word div{padding:0 12px 10px;font-size:13.5px}.fx-word div p{margin:6px 0}
+.fx-para{font-size:17px;line-height:1.95;min-height:240px}.fx-pos{font-size:12.5px;color:var(--mute)}
+.fx-dots{display:flex;gap:6px;justify-content:center;margin-top:10px}.fx-dots i{width:7px;height:7px;border-radius:50%;background:var(--line)}.fx-dots i.on{background:var(--c)}
+.fx-qnav{display:flex;gap:6px;margin-bottom:10px}.fx-qnav button{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;font:inherit;font-size:13px;padding:4px 12px;min-height:36px;cursor:pointer}.fx-qnav button[aria-current="true"]{background:var(--c);border-color:var(--c);color:#fff}
+.fx-private{font-size:12px;color:var(--mute);margin:-4px 0 10px}
+.fx-hint{margin-top:12px;border:1px dashed var(--line);border-radius:12px}.fx-hint summary{cursor:pointer;padding:8px 12px;font-size:13.5px}.fx-hint div{padding:0 12px 10px;font-size:13.5px}
+.fx-pray{font-size:19px;line-height:1.8;text-align:center;min-height:200px;display:flex;align-items:center;justify-content:center;padding:0 6px}
+.fx-fruit{text-align:center;padding-top:30px}.fx-fruit .tree{font-size:56px;line-height:1}.fx-fruit p{color:var(--mute);font-size:14px}
+.fx-sum{text-align:left;margin-top:14px;font-size:13.5px;border-top:1px solid var(--line);padding-top:10px}
+.fx-actions{display:flex;gap:8px;margin-top:10px}.fx-actions button{min-height:48px;border-radius:14px;font:700 15px "Noto Sans KR";cursor:pointer}
+.fx-ghost{width:56px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}.fx-primary{flex:1;border:0;background:var(--c);color:#fff}
+.lowfocus{border:1px dashed var(--line);border-radius:14px;padding:16px;font-size:14px;color:var(--mute);margin-top:12px}
 </style>
 </head>
 <body>
@@ -168,12 +201,13 @@ footer{padding:32px 0 60px;color:var(--mute);font-size:13px}
 <main class="wrap">
 <section id="demo">
   <h2>샘플 화면</h2>
-  <p>날짜와 연령을 바꿔 보세요. 보기를 누르고, 선을 잇고, 따라 써 볼 수 있습니다. ‘교사 보기’를 켜면 답변 가이드와 정답 확인이 나옵니다.</p>
+  <p>날짜와 연령을 바꿔 보세요. 보기를 누르고, 선을 잇고, 따라 써 볼 수 있습니다. ‘교사 보기’를 켜면 답변 가이드와 정답 확인이 나옵니다. ‘집중 묵상’은 운영 중인 단계형 화면(준비 → 말씀 → 묵상 → 기록 → 기도 → 열매)에 질문 유형을 넣은 모습입니다.</p>
   <div class="demo">
     <div>
       <div class="controls">
         <select id="date" aria-label="날짜"></select>
         <div class="seg" role="group" aria-label="연령" id="ages"></div>
+        <div class="seg" role="group" aria-label="보기 방식" id="modes"><button type="button" data-mode="detail" aria-pressed="true">일반 보기</button><button type="button" data-mode="focus" aria-pressed="false">집중 묵상</button></div>
         <label class="toggle"><input type="checkbox" id="teacher"> 교사 보기</label>
       </div>
       <div class="phone"><div class="screen" id="screen"></div></div>
@@ -182,12 +216,14 @@ footer{padding:32px 0 60px;color:var(--mute);font-size:13px}
       <h3>이 날의 문항 판별 결과</h3>
       <div id="judge"></div>
       <h3>화면에서 달라지는 것</h3>
+      <p class="note" id="modeNote"></p>
       <ul>
         <li><b>머리:</b> 날짜 배지·요일(‘주일’), 성경 주소 리본, 이번 주 주제. 청소년·청년은 큰 날짜 숫자와 굵은 제목.</li>
         <li><b>성경:</b> 절 번호를 작게, 어휘 낱말에 형광펜.</li>
         <li><b>해설:</b> 3문단을 문단 그대로(9–10월은 한 문단으로 붙어 보였음).</li>
         <li><b>질문:</b> 유형별 활동 화면 + 문항 아래 작은 안내.</li>
         <li><b>답변 가이드:</b> 독자에게는 숨기고 교사·관리자만.</li>
+        <li><b>집중 묵상(focus.jsp):</b> 6단계 흐름은 그대로, ‘기록’ 단계만 질문 하나씩 유형별 화면으로.</li>
       </ul>
       <p class="note">샘플은 정적 페이지라 저장은 하지 않습니다. 실제 화면에서는 지금처럼 <code>personal_notes</code>에 문항별로 저장합니다(아래 ‘데이터 구조’ 참고).</p>
     </div>
@@ -250,7 +286,7 @@ footer{padding:32px 0 60px;color:var(--mute);font-size:13px}
   <div class="tblwrap"><table class="tbl">
     <tr><th>누가</th><th>무엇을</th><th>기간(1인)</th></tr>
     <tr><td>콘텐츠팀</td><td>SQL 생성기(원고 → 연령별 UPSERT, <code>question_meta</code>·<code>weekly_theme</code> 포함), 문항별 판별 결과표 검수. 이 페이지의 변환기가 출발점.</td><td>2–3일</td></tr>
-    <tr><td>운영 개발</td><td><code>ADD COLUMN</code> 2개 + <code>schema.sql</code>, 학생 화면(<code>detail.jsp/html</code>, <code>app.js</code>)에 유형별 화면 9종, 답 저장 형식, 답변 가이드 권한.</td><td>1.5–2주</td></tr>
+    <tr><td>운영 개발</td><td><code>ADD COLUMN</code> 2개 + <code>schema.sql</code>, 일반 화면(<code>detail.jsp/html</code>, <code>app.js</code>)과 집중 묵상(<code>focus.jsp/html</code>의 기록 단계)에 유형별 화면 9종(한 번 만들어 두 화면에서 공유), 답 저장 형식, 답변 가이드 권한.</td><td>1.5–2주</td></tr>
     <tr><td>함께</td><td>develop 서버 검수 → 운영 적재. Java가 바뀌면 배포 후 <code>web.xml</code> touch.</td><td>2–3일</td></tr>
   </table></div>
   <h3>단계 제안</h3>
@@ -268,6 +304,7 @@ footer{padding:32px 0 60px;color:var(--mute);font-size:13px}
     <li>정답 표시: 바로 채점(정답 공개) / 저장만 / 교사만 확인.</li>
     <li>저학년 웹: 지금처럼 2활동(말씀 활동·실천 활동)만, 아니면 인쇄처럼 3문항 모두.</li>
     <li>연령 색을 인쇄와 맞출지(저 코랄 · 고 하늘 · 청소년 청록 · 청년 남색).</li>
+    <li>집중 묵상: 저학년도 짧은 단계형(말씀 → 활동 → 기도)을 둘지, 지금처럼 일반 화면만 둘지.</li>
   </ol>
 </section>
 </main>
@@ -285,7 +322,7 @@ const MON = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','
 const WD = {'월':'월요일','화':'화요일','수':'수요일','목':'목요일','금':'금요일','토':'토요일','일':'주일'};
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const CIRC = '①②③④⑤⑥⑦⑧⑨';
-let state = {date: Object.keys(DATA)[0], age: 'low', teacher: false};
+let state = {date: Object.keys(DATA)[0], age: 'low', teacher: false, mode: 'detail', step: 0, para: 0, q: 0, pray: 0};
 
 function stem(w){
   let s = w.replace(/\(.*?\)/g,'').trim();
@@ -377,7 +414,57 @@ function wire(root, q){
     inp.oninput = () => { g.style.visibility = inp.value ? 'hidden' : 'visible'; const t = q.trace.replace(/\s/g,''), v = inp.value.replace(/\s/g,'');
       let same = 0; for (let i=0;i<Math.min(t.length,v.length);i++) if (t[i]===v[i]) same++; r.textContent = v ? `견본과 ${Math.round(same/t.length*100)}% 같아요` : ''; }; }
 }
+
+const FX_STEPS = ['준비','말씀','묵상','기록','기도','열매'];
+function prayLines(p){ return p.split(/(?<=[.!?])\s+/).filter(Boolean); }
+function renderFocus(){
+  const d = DATA[state.date][state.age];
+  const s = document.getElementById('screen');
+  const [y,m,dd] = d.date.split('-').map(Number);
+  if (d.target === 'low') {
+    s.innerHTML = `<div class="d low">${head(d)}<div class="lowfocus"><b>저학년은 집중 묵상이 없습니다.</b><br>운영 화면도 저학년은 활동형 일반 화면으로 보냅니다(<code>focus.jsp</code> 23–24행). 저학년은 ‘일반 보기’의 OX·체크·따라 쓰기 화면을 그대로 씁니다.<br><br>제안: 저학년도 짧은 3단계(말씀 → 활동 → 기도)를 둘지 합의할 것.</div></div>`;
+    return;
+  }
+  const st = state.step, lines = prayLines(d.prayer);
+  let body = '';
+  if (st === 0) body = `<div class="fx-ref">${m}월 ${dd}일 ${WD[d.weekday]} · 오늘의 말씀</div><div class="fx-h1">${esc(d.title)}</div><div class="fx-ref">${esc(d.scripture)}</div><div class="fx-breath" aria-hidden="true"></div><p class="fx-center">숨을 고르고, 마음을 모아요.<br>“주님, 오늘 말씀으로 저를 만나 주세요.”</p>`;
+  if (st === 1) body = `<div class="fx-h2">말씀 읽기</div><details class="fx-word"><summary>어려운 단어 ${d.vocabulary.length}개 ▾</summary><div>${d.vocabulary.map(v => `<p><b>${esc(v.word)}</b> ${esc(v.meaning)}</p>`).join('')}</div></details>` + d.verses.map(v => `<div class="fx-verse"><span class="vn">${esc(v.n)}</span><span>${esc(v.t)}</span></div>`).join('');
+  if (st === 2) { const n = d.commentary.length, i = Math.min(state.para, n-1);
+    body = `<div class="fx-h2">말씀 묵상</div><div class="fx-pos">${i+1} / ${n}</div><div class="fx-para">${esc(d.commentary[i])}</div><div class="fx-dots">${d.commentary.map((_,k)=>`<i class="${k===i?'on':''}"></i>`).join('')}</div>`; }
+  if (st === 3) { const q = d.question_meta[state.q];
+    body = `<div class="fx-h2">나의 기록</div><div class="fx-private">나만 볼 수 있어요</div><div class="fx-qnav">${d.question_meta.map((x,k)=>`<button type="button" data-q="${k}" aria-current="${k===state.q}">${['관찰','묵상','적용'][k] || '질문 '+(k+1)}</button>`).join('')}</div>${qHTML(q,'fxq')}
+      <details class="fx-hint"><summary>📖 본문 다시 보기</summary><div>${d.verses.map(v => `<div class="fx-verse"><span class="vn">${esc(v.n)}</span><span>${esc(v.t)}</span></div>`).join('')}</div></details>
+      <details class="fx-hint"><summary>💡 해설 다시 보기</summary><div>${d.commentary.map(p=>`<p>${esc(p)}</p>`).join('')}</div></details>`; }
+  if (st === 4) { const i = Math.min(state.pray, lines.length-1);
+    body = `<div class="fx-h2">기도</div><div class="fx-pray">${esc(lines[i])}</div><div class="fx-dots">${lines.map((_,k)=>`<i class="${k===i?'on':''}"></i>`).join('')}</div><p class="fx-center">한 줄씩 소리 내어 기도해요</p>`; }
+  if (st === 5) body = `<div class="fx-fruit"><div class="tree" aria-hidden="true">🌳</div><div class="fx-h1">오늘의 묵상을 마쳤어요</div><p>기록은 저장되고, 이번 주 열매에 하나가 더해져요.</p><div class="fx-sum">${d.question_meta.map(q=>`<div>· ${['관찰','묵상','적용'][q.no-1]} — ${TYPE[q.type]}</div>`).join('')}</div></div>`;
+  const nextLabel = st===0?'시작하기':st===1?'다 읽었어요':st===2?(state.para < d.commentary.length-1?'다음 문단':'기록하러 가기'):st===3?(state.q < d.question_meta.length-1?'다음 질문':'기도하러 가기'):st===4?(state.pray < lines.length-1?'다음 줄':'마치기'):'처음으로';
+  s.innerHTML = `<div class="d ${d.target} ${state.teacher?'teacher':''}"><div class="fx" data-step="${st}">
+    <div class="fx-top"><span>‹ 나가기</span><b>${m}월 ${dd}일</b><span>${AGE[d.target]}</span></div>
+    <div class="fx-bar"><i style="width:${(st+1)/6*100}%"></i></div>
+    <div class="fx-steps">${FX_STEPS.map((x,k)=> k===st?`<b>${x}</b>`:`<span>${x}</span>`).join('')}</div>
+    <div class="fx-body">${body}</div>
+    <div class="fx-actions">${st>0?'<button type="button" class="fx-ghost" data-act="back" aria-label="이전">←</button>':''}<button type="button" class="fx-primary" data-act="next">${nextLabel}</button></div>
+  </div></div>`;
+  if (st === 3) { wire(s.querySelector('[data-uid="fxq"]'), d.question_meta[state.q]);
+    s.querySelectorAll('.fx-qnav button').forEach(b => b.onclick = () => { state.q = +b.dataset.q; renderFocus(); }); }
+  s.querySelector('[data-act="next"]').onclick = () => {
+    if (st===2 && state.para < d.commentary.length-1) state.para++;
+    else if (st===3 && state.q < d.question_meta.length-1) state.q++;
+    else if (st===4 && state.pray < lines.length-1) state.pray++;
+    else if (st===5) { state.step=0; state.para=0; state.q=0; state.pray=0; }
+    else state.step++;
+    renderFocus(); s.scrollTop = 0; };
+  const back = s.querySelector('[data-act="back"]');
+  if (back) back.onclick = () => {
+    if (st===2 && state.para>0) state.para--; else if (st===3 && state.q>0) state.q--; else if (st===4 && state.pray>0) state.pray--; else state.step--;
+    renderFocus(); };
+}
+
 function render(){
+  document.querySelectorAll('#modes button').forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === state.mode));
+  document.getElementById('modeNote').textContent = state.mode === 'focus' ? '집중 묵상: 운영 중인 focus.jsp의 6단계 흐름 그대로. 바뀌는 곳은 ‘기록’ 단계 — 지금은 질문이 모두 글쓰기 칸이지만, question_meta가 있으면 질문 하나씩 유형별 화면(선 잇기·분류·객관식…)으로 보여 준다.' : '';
+  if (state.mode === 'focus') { renderFocus(); renderJudge(); document.querySelectorAll('#ages button').forEach(b => b.setAttribute('aria-pressed', b.dataset.age === state.age)); return; }
   const d = DATA[state.date][state.age];
   const s = document.getElementById('screen');
   s.innerHTML = `<div class="d ${d.target} ${state.teacher?'teacher':''}">${head(d)}
@@ -391,15 +478,18 @@ function render(){
     <button class="save" type="button">저장하기 (샘플)</button></div>`;
   d.question_meta.forEach((q,i) => wire(s.querySelector(`[data-uid="q${i}"]`), q));
   s.scrollTop = 0;
-  document.getElementById('judge').innerHTML = `<div class="typelist">${d.question_meta.map(q => `<span class="chip">질문 ${q.no} · ${TYPE[q.type]}${q.answer ? ' · 정답 있음' : ''}</span>`).join('')}</div>`;
+  renderJudge();
   document.querySelectorAll('#ages button').forEach(b => b.setAttribute('aria-pressed', b.dataset.age === state.age));
 }
+function renderJudge(){ const d = DATA[state.date][state.age];
+  document.getElementById('judge').innerHTML = `<div class="typelist">${d.question_meta.map(q => `<span class="chip">질문 ${q.no} · ${TYPE[q.type]}${q.answer ? ' · 정답 있음' : ''}</span>`).join('')}</div>`; }
 // controls
+document.querySelectorAll('#modes button').forEach(b => b.onclick = () => { state.mode = b.dataset.mode; state.step=0; state.para=0; state.q=0; state.pray=0; if (state.mode==='focus' && state.age==='low') state.age='high'; render(); });
 const sel = document.getElementById('date');
 sel.innerHTML = Object.keys(DATA).map(k => { const d = DATA[k].low; const [y,m,dd]=k.split('-').map(Number); return `<option value="${k}">${m}월 ${dd}일 ${WD[d.weekday]} · ${esc(d.scripture)}</option>`; }).join('');
-sel.onchange = () => { state.date = sel.value; render(); };
+sel.onchange = () => { state.date = sel.value; state.step=0; state.para=0; state.q=0; state.pray=0; render(); };
 document.getElementById('ages').innerHTML = Object.entries(AGE).map(([k,v]) => `<button type="button" data-age="${k}" aria-pressed="false">${v}</button>`).join('');
-document.querySelectorAll('#ages button').forEach(b => b.onclick = () => { state.age = b.dataset.age; render(); });
+document.querySelectorAll('#ages button').forEach(b => b.onclick = () => { state.age = b.dataset.age; state.step=0; state.para=0; state.q=0; state.pray=0; render(); });
 document.getElementById('teacher').onchange = e => { state.teacher = e.target.checked; render(); };
 render();
 
